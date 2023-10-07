@@ -65,7 +65,7 @@ export default function Dashboard({navigation}) {
   }, []);
 
   const handleAppStateChange = nextAppState => {
-    console.log('App State: ' + nextAppState);
+    console.log('App State: ' + nextAppState);    
     if (appState != nextAppState) {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
         console.log('App State: ' + 'App has come to the foreground!');
