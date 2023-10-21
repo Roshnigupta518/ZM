@@ -65,7 +65,7 @@ export default function Dashboard({navigation}) {
   }, []);
 
   const handleAppStateChange = nextAppState => {
-    console.log('App State: ' + nextAppState);    
+    console.log('App State: ' + nextAppState);
     if (appState != nextAppState) {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
         console.log('App State: ' + 'App has come to the foreground!');
@@ -256,7 +256,7 @@ export default function Dashboard({navigation}) {
   };
 
   const gotoProfileTab = fromWall => {
-    console.log({fromWall})
+    console.log({fromWall});
     if (login_data?.response?.ZRTC == fromWall) {
       navigation.navigate('Profile');
     } else {
@@ -284,9 +284,9 @@ export default function Dashboard({navigation}) {
   };
 
   const gotoInterest = () => {
-    navigation.navigate('Interest')
-  }
-  
+    navigation.navigate('Interest');
+  };
+
   const gotoNotes = () => {
     navigation.navigate('Notes');
   };
@@ -481,7 +481,6 @@ export default function Dashboard({navigation}) {
           setCreatePost(true);
         }}
       />
-      {/* <Rightsheet gotoNotes={gotoNotes} gotoSavedPost={gotoSavedPost} /> */}
     </View>
   );
 }

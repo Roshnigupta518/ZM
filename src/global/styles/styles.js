@@ -68,6 +68,8 @@ export default StyleSheet.create({
 
   txDecor: {textDecorationLine: 'underline'},
 
+  txbold: {fontFamily: family.semibold},
+
   tx10: darktheme => ({
     fontSize: size.subtitle,
     color: darktheme === 'dark' ? colors.black : colors.white,

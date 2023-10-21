@@ -43,9 +43,9 @@ const Saved = ({navigation}) => {
       if (!loading && !isListEnd) {
         setLoading(true);
         const result = await postApi(url, reqData, login_data.accessToken);
-
+ 
         console.log({offset, pageSize});
-        console.log({result: result.data});
+        console.log({result: result});
         if (result.status == 200) {
           let newData = result.data.Response;
           console.log({newData: newData[0]});

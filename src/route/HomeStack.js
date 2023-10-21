@@ -33,6 +33,8 @@ import Report from '../screens/drawer/report';
 import ReportDetails from '../screens/drawer/report/ReportDetails';
 import ScheduleList from '../screens/drawer/scheduleList';
 import ViewOtherProfile from '../screens/drawer/wallContent/ViewOtherProfile';
+import Terms from '../screens/drawer/terms';
+import PrivacyPolicy from '../screens/drawer/privacy';
 
 const Stack = createNativeStackNavigator();
 
@@ -189,6 +191,16 @@ const HomeStack = ({InitialRoute}) => {
       <Stack.Screen
         name="ViewOtherProfile"
         component={ViewOtherProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={Terms}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
         options={{headerShown: false}}
       />
       {/*  */}

@@ -118,6 +118,8 @@ const styles = StyleSheet.create({});
 const list = [
   {name: 'Help', iconName: 'help-circle-outline', screenName: 'About'},
   {name: 'About', iconName: 'information-circle-outline', screenName: 'About'},
+  {name: 'Terms & Conditions', iconName: 'document-text', screenName: 'Terms'},
+  {name: 'Privacy Policy', iconName: 'lock-closed-outline', screenName: 'PrivacyPolicy'},
   {name: 'Theme', iconName: 'color-palette-outline', screenName: 'Theme'},
   {name: 'Log-out', iconName: 'log-out-outline', screenName: 'logout'},
 ];

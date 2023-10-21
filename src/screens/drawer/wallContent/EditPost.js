@@ -152,10 +152,11 @@ const EditPost = ({navigation, route}) => {
     const reqData = {
       iPostId: postId,
     };
-    console.log({reqData});
+  
 
     setLoading(true);
     const api = API.EditPostData;
+    console.log({api, reqData});
     try {
       const result = await postApi(api, reqData, login_data.accessToken);
       console.log({EditPost_handle: result.data});
@@ -706,15 +707,15 @@ const EditPost = ({navigation, route}) => {
                       }}
                     />
 
-                   {i?.YouTubeId && (
-                    <View style={st.mt_t10}>
-                      <YoutubePlayer
-                        height={200}
-                        play={false}
-                        videoId={i?.YouTubeId}
-                      />
-                    </View>
-                  )}
+                    {i?.YouTubeId && (
+                      <View style={st.mt_t10}>
+                        <YoutubePlayer
+                          height={200}
+                          play={false}
+                          videoId={i?.YouTubeId}
+                        />
+                      </View>
+                    )}
                   </View>
                 </View>
               </View>

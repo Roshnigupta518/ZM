@@ -88,7 +88,7 @@ export default function PersonalInformation({navigation}) {
     };
     try {
       const result = await postApi(url, param, login_data.accessToken);
-      // console.log({getUserProfile_handle: result.data});
+      console.log({url, param,});
       if (result.status == 200) {
         const tempdata = JSON.parse(result.data.Response);
         let data = null;
