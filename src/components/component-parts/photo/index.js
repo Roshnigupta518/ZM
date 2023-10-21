@@ -139,7 +139,7 @@ const Photo = ({
                   gotoProfileTab(item?.TaggUser);
                   break;
                 case 'hashtag':
-                  console.log('hashtag pressed!');
+                  console.log('hashtag presseddd!');
                   gotoInterest();
                   break;
                 default:

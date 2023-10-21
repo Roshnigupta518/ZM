@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useFocusEffect, useCallback} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Text,
   ActivityIndicator,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import st from '../../../global/styles/styles';
 import {naugets_data} from '../../../utils/array';
@@ -43,7 +44,7 @@ const Saved = ({navigation}) => {
       if (!loading && !isListEnd) {
         setLoading(true);
         const result = await postApi(url, reqData, login_data.accessToken);
- 
+
         console.log({offset, pageSize});
         console.log({result: result});
         if (result.status == 200) {

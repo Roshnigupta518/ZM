@@ -11,6 +11,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {ActivityIndicator} from 'react-native';
 import Init from '../screens/Auth/init';
 import Interest from '../screens/Auth/interest';
+import HandleBackPress from '../components/Backhandle';
 
 const Route = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +29,8 @@ const Route = () => {
     }, 2000);
   }, []);
 
+  HandleBackPress();
+  
   return (
     <NavigationContainer
       fallback={<ActivityIndicator />}

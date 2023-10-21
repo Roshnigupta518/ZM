@@ -101,6 +101,27 @@ const EditPost = ({navigation, route}) => {
     }
   };
 
+  const checkYoutbURl = url => {
+    console.log({url});
+    var regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    const tempdata = [...data];
+    if (match && match[7].length == 11) {
+      console.log('true', match);
+      if (tempdata) {
+        tempdata[0].P_CONTENT = url;
+        tempdata[0].YouTubeId = match[7];
+        setData(tempdata);
+        console.log({tempdata});
+      } else {
+        tempdata[0].YouTubeId = null;
+      }
+    } else {
+      // tempdata[0].YouTubeId = null;
+    }
+  };
+
   const onChange_Mentionhandle = (text, postId) => {
     const tempdata = [...data];
     if (tempdata) {
@@ -152,7 +173,6 @@ const EditPost = ({navigation, route}) => {
     const reqData = {
       iPostId: postId,
     };
-  
 
     setLoading(true);
     const api = API.EditPostData;
@@ -215,7 +235,12 @@ const EditPost = ({navigation, route}) => {
     const reqData = {
       ieditPId: postId,
       ipostType: status,
-      ipostData: type == 3 ? quizQus?.question : data && data[0]?.P_CONTENT,
+      ipostData:
+        data && data[0]?.P_CONTENT
+          ? replaceMentionValues(data[0]?.P_CONTENT, ({name}) => `#${name}`)
+          : quizQus?.question
+          ? replaceMentionValues(quizQus?.question, ({name}) => `#${name}`)
+          : '', //type == 3 ? quizQus?.question : data && data[0]?.P_CONTENT
       ipostTags: '',
       imediaIds: sharedData?.length > 0 ? data && data[0]?.SHARED_ID : mediaId,
       irmediaIds: removeId ? removeId : '',
@@ -224,6 +249,8 @@ const EditPost = ({navigation, route}) => {
       ischdlat: '',
       ishareId: sharedData?.length > 0 ? data && data[0]?.SHARED_ID : '',
       iTaggUser: tempUserMention,
+      iYoutubeId: data && data[0]?.YoutubeId ? data[0]?.YoutubeId : '',
+      // interestId: intID ? intID : '',
     };
 
     console.log({reqData});
@@ -595,6 +622,7 @@ const EditPost = ({navigation, route}) => {
                         // defaultValue={i?.P_CONTENT.replace(regex, '')}
                         onChange={text => {
                           onChange_handle(text, postId);
+                          checkYoutbURl(text, postId);
                         }}
                         partTypes={[
                           {
@@ -649,6 +677,31 @@ const EditPost = ({navigation, route}) => {
                           placeholderTextColor={colors.grey}
                         />
                       )}
+
+                      {i?.YouTubeId && (
+                        <View style={st.mt_t10}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              console.log('hi');
+                              const tempdata = [...data];
+                              if (tempdata) {
+                                tempdata[0].YouTubeId = '';
+                                setData(tempdata);
+                              }
+                            }}>
+                            <Icon
+                              name="close-circle"
+                              size={25}
+                              color={colors.skyblue}
+                            />
+                          </TouchableOpacity>
+                          <YoutubePlayer
+                            height={200}
+                            play={false}
+                            videoId={i?.YouTubeId}
+                          />
+                        </View>
+                      )}
                     </View>
                   </View>
                 );
@@ -677,9 +730,6 @@ const EditPost = ({navigation, route}) => {
                     />
                   )}
                   <View style={st.pd_H20}>
-                    {/* <Text style={st.tx14(darktheme)}>
-                      {i?.P_CONTENT.replace(regex, '')} {i?.TaggUser}
-                    </Text> */}
                     <Autolink
                       text={
                         i?.P_CONTENT?.replace(regex, '') +
@@ -694,7 +744,7 @@ const EditPost = ({navigation, route}) => {
                       onPress={(url, match) => {
                         switch (match.getType()) {
                           case 'mention':
-                            console.log('Mention pressed!', item?.TaggUser);
+                            console.log('Mention pressed!');
                             // gotoProfileTab(item?.TaggUser);
                             break;
                           case 'hashtag':
@@ -741,14 +791,30 @@ const EditPost = ({navigation, route}) => {
                         defaultValue={i.P_CONTENT.replace(regex, '')}
                       />
                       {quizQus?.question && (
-                        <LinkPreview
-                          text={`${quizQus?.question}`}
-                          textContainerStyle={{height: 0}}
-                          containerStyle={{marginTop: -20, marginBottom: 10}}
-                          renderText={''}
-                          metadataTextContainerStyle={{
-                            overflow: 'hidden',
-                            height: 0,
+                        <Autolink
+                          text={
+                            quizQus?.question?.replace(regex, '') +
+                            ' ' +
+                            (i?.TaggUser ? i?.TaggUser : '')
+                          }
+                          email
+                          hashtag="instagram"
+                          mention="twitter"
+                          phone="sms"
+                          url
+                          onPress={(url, match) => {
+                            switch (match.getType()) {
+                              case 'mention':
+                                console.log('Mention pressed!', i?.TaggUser);
+                                // gotoProfileTab(item?.TaggUser);
+                                break;
+                              case 'hashtag':
+                                console.log('hashtag pressed!');
+                                // gotoInterest();
+                                break;
+                              default:
+                                console.log('Link pressed!');
+                            }
                           }}
                         />
                       )}

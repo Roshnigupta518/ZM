@@ -256,7 +256,7 @@ import {
     };
 
     const gotoInterest = () => {
-      navigation.navigate('Interest')
+      navigation.goBack()
     }
   
     useEffect(() => {
@@ -334,7 +334,6 @@ import {
             getInterestHandle(0, 5, '', false);
           }}
         /> */}
-  
         <FlatList
           contentContainerStyle={[st.pd20]}
           keyboardShouldPersistTaps={'handled'}
