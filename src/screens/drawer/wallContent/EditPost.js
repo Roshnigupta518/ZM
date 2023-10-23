@@ -88,6 +88,7 @@ const EditPost = ({navigation, route}) => {
   const [mentionUser, setMentionUser] = useState('');
   const [showMention, setShowMention] = useState(false);
   const [sharedData, setSharedData] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const postId = route?.params?.postId;
   const UserMeta = useSelector(state => state.UserMeta?.data);
@@ -162,7 +163,12 @@ const EditPost = ({navigation, route}) => {
       userMediaPost_handle();
     } else {
       if (attachment == null && data[0]?.POST_PICS == null) {
+        if(data && data[0].P_CONTENT){
         savePost_handle('', '1', data[0]?.POST_MEDIA, removeMdia);
+        setErrors({userNumber:''})
+        }else{
+                setErrors({userNumber:'*Required'})
+        }
       } else {
         savePost_handle(data[0]?.POST_MEDIA, data[0]?.POST_TYPE, '', '');
       }
@@ -358,7 +364,7 @@ const EditPost = ({navigation, route}) => {
   const quizValidation = async () => {
     Keyboard.dismiss();
     let isValid = true;
-    const emptyQues = ValueEmpty(quizQus.question);
+    const emptyQues = ValueEmpty(data && data[0].P_CONTENT);
 
     for (let i = 0; i < options.length; i++) {
       if (i == 0 || i == 1) {
@@ -381,9 +387,7 @@ const EditPost = ({navigation, route}) => {
 
     if (isValid) {
       modifyQuizHandle();
-      // alert('Sucess');
     } else {
-      // alert('fail');
     }
     console.log('dfbgfdg', emptyQues);
   };
@@ -567,7 +571,7 @@ const EditPost = ({navigation, route}) => {
         title={'Edit'}
         darktheme={darktheme}
         edit={true}
-        onEditHandle={onEditHandle}
+        onEditHandle={() => onEditHandle()}
       />
       <ScrollView keyboardShouldPersistTaps={'handled'}>
         <View style={st.pd20}>
@@ -623,6 +627,8 @@ const EditPost = ({navigation, route}) => {
                         onChange={text => {
                           onChange_handle(text, postId);
                           checkYoutbURl(text, postId);
+                          setDisabled(false);
+                          setErrors({userNumber:''})
                         }}
                         partTypes={[
                           {
@@ -640,6 +646,10 @@ const EditPost = ({navigation, route}) => {
                         placeholder="Share your thought's..."
                         placeholderTextColor={colors.grey}
                       />
+                    )}
+
+                    {errors?.userNumber && (
+                      <Text style={st.error}>{errors?.userNumber}</Text>
                     )}
 
                     <View style={st.mt_t10}>
@@ -778,18 +788,35 @@ const EditPost = ({navigation, route}) => {
                   {i.POST_TYPE == '2' && <AvatarImageWithPicker />}
                   {i.POST_TYPE == '3' && (
                     <View style={st.mt_t10}>
-                      <Input
-                        onChangeText={text => {
-                          handleOnchange(text, 'question');
+                      <MentionInput
+                        value={i.P_CONTENT.replace(regex, '')}
+                        onChange={text => {
+                          onChange_handle(text, 'P_CONTENT');
+                          checkYoutbURl(text);
                           setDisabled(false);
+                          // quizUtubehandle(text);
                         }}
-                        onFocus={() => handleQuizError(null, 'question')}
+                        partTypes={[
+                          {
+                            trigger: '#',
+                            allowedSpacesCount: 0,
+                            renderSuggestions: renderHashtagSuggestions,
+                          },
+                          {
+                            pattern:
+                              /(https?:\/\/|www\.)[-a-zA-Z0-9@:%._\+~#=]{1,256}\.(xn--)?[a-z0-9-]{2,20}\b([-a-zA-Z0-9@:%_\+\[\],.~#?&\/=]*[-a-zA-Z0-9@:%_\+\]~#?&\/=])*/gi,
+                            textStyle: {color: 'blue'},
+                          },
+                        ]}
+                        style={[styles.inputsty, st.tx14_s(darktheme), st.mt_B]}
                         placeholder="Ask a Question..."
-                        placeholderTextColor="#808080"
-                        darktheme={darktheme}
-                        error={quizQusErr?.question}
-                        defaultValue={i.P_CONTENT.replace(regex, '')}
+                        placeholderTextColor={colors.grey}
                       />
+
+                      {quizQusErr?.question && (
+                        <Text style={st.error}>{quizQusErr?.question}</Text>
+                      )}
+
                       {quizQus?.question && (
                         <Autolink
                           text={

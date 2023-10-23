@@ -76,6 +76,11 @@ export default StyleSheet.create({
     fontFamily: family.regular,
     textAlign: 'center',
   }),
+  error:{
+    fontSize: size.label,
+    color: colors.danger,
+    fontFamily: family.light,
+  },
   tx12: darktheme => ({
     fontSize: size.label,
     color: darktheme === 'dark' ? colors.black : colors.white,
