@@ -31,6 +31,7 @@ const PostMenu = ({
     <View style={[st.align_E]}>
       <Menu
         visible={visible}
+        // ref={}
         anchor={
           <Material
             name={'more-vert'}

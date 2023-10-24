@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   AppState,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import st from '../../../global/styles/styles';
 import {instaStory} from '../../../utils/array';
 import InstaStory from 'react-native-insta-story';
@@ -373,8 +373,10 @@ export default function Dashboard({navigation}) {
         // console.log('Before update: ', tempdata[objIndex]);
         if (like == 'true') {
           tempdata[objIndex].ULIKED = 'false';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES - 1;
         } else {
           tempdata[objIndex].ULIKED = 'true';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES + 1;
         }
         setData(tempdata);
 

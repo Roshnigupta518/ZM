@@ -100,9 +100,11 @@ const QuixPost = ({
                 break;
               default:
                 console.log('Link pressed!');
-              // gotoInterest();
+             
             }
           }}
+          linkStyle={{ color: 'blue' }} 
+          style={st.tx14(darktheme)}
         />
 
         {item?.YouTubeId && (

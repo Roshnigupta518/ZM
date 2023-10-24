@@ -50,7 +50,7 @@ export default function OtpScreen({navigation}) {
 
   const resendOtpHandle = async () => {
     const reqData = {
-      iDentity: '', //number
+      iDentity: '', 
     };
     const url = API.OTPActResend;
     try {

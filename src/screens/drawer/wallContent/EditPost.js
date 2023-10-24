@@ -163,11 +163,11 @@ const EditPost = ({navigation, route}) => {
       userMediaPost_handle();
     } else {
       if (attachment == null && data[0]?.POST_PICS == null) {
-        if(data && data[0].P_CONTENT){
-        savePost_handle('', '1', data[0]?.POST_MEDIA, removeMdia);
-        setErrors({userNumber:''})
-        }else{
-                setErrors({userNumber:'*Required'})
+        if (data && data[0].P_CONTENT) {
+          savePost_handle('', '1', data[0]?.POST_MEDIA, removeMdia);
+          setErrors({userNumber: ''});
+        } else {
+          setErrors({userNumber: '*Required'});
         }
       } else {
         savePost_handle(data[0]?.POST_MEDIA, data[0]?.POST_TYPE, '', '');
@@ -255,7 +255,7 @@ const EditPost = ({navigation, route}) => {
       ischdlat: '',
       ishareId: sharedData?.length > 0 ? data && data[0]?.SHARED_ID : '',
       iTaggUser: tempUserMention,
-      iYoutubeId: data && data[0]?.YoutubeId ? data[0]?.YoutubeId : '',
+      iYoutubeId: data && data[0]?.YouTubeId ? data[0]?.YouTubeId : '',
       // interestId: intID ? intID : '',
     };
 
@@ -628,7 +628,7 @@ const EditPost = ({navigation, route}) => {
                           onChange_handle(text, postId);
                           checkYoutbURl(text, postId);
                           setDisabled(false);
-                          setErrors({userNumber:''})
+                          setErrors({userNumber: ''});
                         }}
                         partTypes={[
                           {
