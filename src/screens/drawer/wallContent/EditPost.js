@@ -322,7 +322,12 @@ const EditPost = ({navigation, route}) => {
       const result = await postApi(url, params, login_data.accessToken);
       console.log({quizEdit: result.data});
       if (result.status == 200) {
-        savePost_handle(quizId, '3');
+        const data  = result.data
+        if(data.ResponseId == -2){
+          alert(data.MessageText)
+        }else{
+          savePost_handle(quizId, '3');
+        }
         setLoading(false);
       }
     } catch (e) {

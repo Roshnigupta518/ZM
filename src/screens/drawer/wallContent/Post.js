@@ -274,7 +274,7 @@ export default function Post({navigation}) {
     const url = API.NEWMEDIAPOST;
     const formdata = new FormData();
     formdata.append('file', attachment);
-    console.log('----------------form data------------', formdata);
+    console.log('----------------form data------------', formdata, url);
     setLoading(true);
     try {
       const result = await uploadApi(url, formdata, login_data.accessToken);
