@@ -70,7 +70,7 @@ const RegisterScreen = ({props, navigation}) => {
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
-  const [fcmToken, setFcmToken] = useState('')
+  const [fcmToken, setFcmToken] = useState('');
 
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const fnameInputRef = createRef();
@@ -159,9 +159,10 @@ const RegisterScreen = ({props, navigation}) => {
     if (validAge) {
       handleError('*Required', 'age');
       isValid = false;
-    } else if (inputs?.age < 16) {
+    } else if (inputs?.age < 18) {
+      isValid = false;
       console.log('Valid user age', inputs?.age);
-      handleError('user should be 16+', 'age');
+      handleError('user should be 18+', 'age');
     } else {
       handleError('', 'age');
     }
@@ -199,9 +200,9 @@ const RegisterScreen = ({props, navigation}) => {
     console.log('age', Math.floor(age));
     const IntAge = Math.floor(age).toString();
     if (IntAge) {
-      if (IntAge < 16) {
+      if (IntAge < 18) {
         console.log('Valid user age', IntAge);
-        handleError('user should be 16+', 'age');
+        handleError('user should be 18+', 'age');
       } else {
         handleError('', 'age');
       }
@@ -232,21 +233,21 @@ const RegisterScreen = ({props, navigation}) => {
   const getfcmToken = async () => {
     let fcmtoken = await AsyncStorage.getItem('token');
     console.log(fcmtoken, 'The old token');
-   
+
     if (!fcmtoken) {
       try {
         const fcmtoken = await messaging().getToken();
         if (fcmtoken) {
           console.log('new genrated token', fcmtoken);
-          setFcmToken(fcmtoken)
+          setFcmToken(fcmtoken);
           await AsyncStorage.setItem('token', fcmtoken);
         }
       } catch (e) {
         console.log(e);
         alert(e);
       }
-    }else{
-      setFcmToken(fcmtoken)
+    } else {
+      setFcmToken(fcmtoken);
     }
   };
 
@@ -485,7 +486,16 @@ const RegisterScreen = ({props, navigation}) => {
                 tintColors={{color: icon_color(darktheme)}}
               />
               <Text style={[st.tx14(darktheme), {marginTop: 5}]}>
-                Terms & Conditions
+                By clicking signup, you agree to our{' '}
+                <Text onPress={()=> navigation.navigate('Terms')}
+                style={[st.txDecor, st.txbold, {color: colors.blue}]}>
+                  Terms of service
+                </Text>{' '}
+                and that you have read our{' '}
+                <Text onPress={()=> navigation.navigate('PrivacyPolicy')}
+                style={[st.txDecor,  st.txbold, {color: colors.blue}]}>
+                  Privacy Policy.
+                </Text>
               </Text>
             </View>
             {TermsConditons && (

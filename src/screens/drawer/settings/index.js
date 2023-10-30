@@ -18,6 +18,7 @@ import {clearLogin} from '../../../redux/reducers/Login';
 import {icon_color} from '../../../utils/helperfunctions';
 import {API} from '../../../utils/endpoints';
 import {postApi} from '../../../utils/apicalls';
+import {setTheme} from '../../../redux/reducers/Darktheme';
 
 const SettingsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,7 @@ const SettingsScreen = ({navigation}) => {
           onPress: () => {
             // dispatch(clearLogin());
             postLogOut_handle();
+            dispatch(setTheme('dark'));
           },
         },
       ],
@@ -119,7 +121,11 @@ const list = [
   {name: 'Help', iconName: 'help-circle-outline', screenName: 'About'},
   {name: 'About', iconName: 'information-circle-outline', screenName: 'About'},
   {name: 'Terms & Conditions', iconName: 'document-text', screenName: 'Terms'},
-  {name: 'Privacy Policy', iconName: 'lock-closed-outline', screenName: 'PrivacyPolicy'},
+  {
+    name: 'Privacy Policy',
+    iconName: 'lock-closed-outline',
+    screenName: 'PrivacyPolicy',
+  },
   {name: 'Theme', iconName: 'color-palette-outline', screenName: 'Theme'},
   {name: 'Log-out', iconName: 'log-out-outline', screenName: 'logout'},
 ];

@@ -317,23 +317,8 @@ import {
     };
   
     return (
-      <View style={st.flex}>
-        {/* <Header
-          title={''}
-          onPress={() => navigation.goBack()}
-          darktheme={darktheme}
-          interestType={true}
-          onPressInterestAll={() => {
-            setData([]);
-            setType('ALL');
-            getInterestHandle(0, 5, 'ALL', false);
-          }}
-          onPressContent={() => {
-            setData([]);
-            setType('');
-            getInterestHandle(0, 5, '', false);
-          }}
-        /> */}
+      <View style={st.container(darktheme)}>
+        
         <FlatList
           contentContainerStyle={[st.pd20]}
           keyboardShouldPersistTaps={'handled'}

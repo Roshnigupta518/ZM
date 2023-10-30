@@ -50,7 +50,7 @@ const Notes = ({navigation}) => {
         const result = await postApi(url, reqData, login_data.accessToken);
         // console.log({getNotes: result.data});
         if (result.status == 200) {
-          let newData = result?.data?.Response;
+          let newData = result?.data?.Response?.reverse();
           // console.log({newData: newData[0]});
           if (newData?.length > 0) {
             setOffset(offset + 10);
@@ -199,7 +199,7 @@ const Notes = ({navigation}) => {
   const EmptyListMessage = () => {
     return (
       <View style={st.emptyliststy}>
-        <Text style={st.tx14_s(darktheme)}>No Data Found</Text>
+         {!loading &&<Text style={st.tx14_s(darktheme)}>No Data Found</Text>}
       </View>
     );
   };

@@ -318,7 +318,7 @@ import {
     };
   
     return (
-      <View style={st.flex}>
+      <View style={st.container(darktheme)}>
         {/* <Header
           title={''}
           onPress={() => navigation.goBack()}

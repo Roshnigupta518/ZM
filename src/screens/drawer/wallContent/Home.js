@@ -448,7 +448,7 @@ export default function Dashboard({navigation}) {
         onStart={(item, index) => {}}
         onStorySeen={updateSeenStories}
         onClose={handleSeenStories}
-        customSwipeUpComponent={<View></View>}
+        // customSwipeUpComponent={<View></View>}
         style={{marginTop: 10}}
       />
     );

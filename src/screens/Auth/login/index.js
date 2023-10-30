@@ -77,6 +77,7 @@ const LoginScreen = ({navigation}) => {
 
   useEffect(() => {
     getfcmToken();
+    console.log({darktheme})
   }, []);
 
   const validate = async () => {

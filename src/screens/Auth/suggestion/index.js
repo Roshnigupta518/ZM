@@ -197,7 +197,7 @@ const SuggestionScreen = ({navigation, route}) => {
   const EmptyListMessage = () => {
     return (
       <View style={st.emptyliststy}>
-        <Text style={st.tx14_s(darktheme)}>No Data Found</Text>
+       {!loading && <Text style={st.tx14_s(darktheme)}>No Data Found</Text>}
       </View>
     );
   };

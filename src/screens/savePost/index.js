@@ -147,7 +147,7 @@ const Saved = ({navigation, route}) => {
   const EmptyListMessage = ({item}) => {
     return (
       <View style={st.emptyliststy}>
-        <Text style={st.tx14_s(darktheme)}>No Data Found</Text>
+        {!loading && <Text style={st.tx14_s(darktheme)}>No Data Found</Text>}
       </View>
     );
   };
