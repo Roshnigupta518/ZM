@@ -487,13 +487,15 @@ const RegisterScreen = ({props, navigation}) => {
               />
               <Text style={[st.tx14(darktheme), {marginTop: 5}]}>
                 By clicking signup, you agree to our{' '}
-                <Text onPress={()=> navigation.navigate('Terms')}
-                style={[st.txDecor, st.txbold, {color: colors.blue}]}>
+                <Text
+                  onPress={() => navigation.navigate('Terms')}
+                  style={[st.txDecor, st.txbold, {color: colors.blue}]}>
                   Terms of service
                 </Text>{' '}
                 and that you have read our{' '}
-                <Text onPress={()=> navigation.navigate('PrivacyPolicy')}
-                style={[st.txDecor,  st.txbold, {color: colors.blue}]}>
+                <Text
+                  onPress={() => navigation.navigate('PrivacyPolicy')}
+                  style={[st.txDecor, st.txbold, {color: colors.blue}]}>
                   Privacy Policy.
                 </Text>
               </Text>

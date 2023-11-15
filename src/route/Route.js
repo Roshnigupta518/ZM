@@ -36,11 +36,7 @@ const Route = () => {
       fallback={<ActivityIndicator />}
       // theme={scheme === darktheme ? DarkTheme : DefaultTheme}
     >
-      {/* {login_data ? (
-        <HomeStack InitialRoute={login_data?.response?.ZRMV} />
-      ) : (
-        <AuthStack />
-      )} */}
+      
 
       {isLoading ? (
         <Init />
@@ -50,7 +46,7 @@ const Route = () => {
         <AuthStack introSlides={introSlideData} />
       )}
 
-      {/* <Interest /> */}
+      
     </NavigationContainer>
   );
 };

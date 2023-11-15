@@ -191,17 +191,6 @@ export default function InterestScreen({navigation}) {
       />
       {ListHeaderComponent()}
 
-      {/* <ScrollView keyboardShouldPersistTaps={'handled'}>
-        <SelectMultiple
-          style={st.pd_H20}
-          items={filteredDataSource}
-          renderLabel={renderLabel}
-          selectedItems={selectedFruits}
-          onSelectionsChange={onSelectionsChange}
-        />
-        {filteredDataSource?.length == 0 && EmptyListMessage()}
-      </ScrollView> */}
-
       <FlatList
         data={filteredDataSource}
         contentContainerStyle={st.pd_H20}
@@ -209,39 +198,41 @@ export default function InterestScreen({navigation}) {
           // console.log({item});
           return (
             <View>
-            <View style={st.mt_B}>
-              <Text style={[st.tx16(darktheme), st.txCap, st.mt_t10]}>{item.title}</Text>
-              <View style={[st.row, st.pd_H20]}>
-                <TouchableOpacity
-                  onPress={() => {
-                    const mydata = [...filteredDataSource];
-                    mydata[index].check = !item.check;
-                    setData(mydata);
-
-                    const dataFilter = mydata.filter(i => i.check == true);
-                    console.log({dataFilter});
-
-                    const selectedIds = [];
-                    for (let i = 0; dataFilter.length > i; i++) {
-                      let id = dataFilter[i].value;
-                      selectedIds.push(id);
-                    }
-                    console.log({selectedIds: selectedIds?.toString()});
-                    setSelectedIntId(selectedIds?.toString());
-                  }}>
-                  {/* <Text>{item.check ? 'checked' : 'unchecked'}</Text> */}
-                  {item.check ? (
-                    <Icon name={'check-box'} size={25} />
-                  ) : (
-                    <Icon name={'check-box-outline-blank'} size={25} />
-                  )}
-                </TouchableOpacity>
-                <Text style={[st.tx14(darktheme), st.txCap, st.ml_15]}>
-                  {item.label}
+              <View style={st.mt_B}>
+                <Text style={[st.tx16(darktheme), st.txCap, st.mt_t10]}>
+                  {item.title}
                 </Text>
+                <View style={[st.row, st.pd_H20]}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      const mydata = [...filteredDataSource];
+                      mydata[index].check = !item.check;
+                      setData(mydata);
+
+                      const dataFilter = mydata.filter(i => i.check == true);
+                      console.log({dataFilter});
+
+                      const selectedIds = [];
+                      for (let i = 0; dataFilter.length > i; i++) {
+                        let id = dataFilter[i].value;
+                        selectedIds.push(id);
+                      }
+                      console.log({selectedIds: selectedIds?.toString()});
+                      setSelectedIntId(selectedIds?.toString());
+                    }}>
+                    {/* <Text>{item.check ? 'checked' : 'unchecked'}</Text> */}
+                    {item.check ? (
+                      <Icon name={'check-box'} size={25} />
+                    ) : (
+                      <Icon name={'check-box-outline-blank'} size={25} />
+                    )}
+                  </TouchableOpacity>
+                  <Text style={[st.tx14(darktheme), st.txCap, st.ml_15]}>
+                    {item.label}
+                  </Text>
+                </View>
               </View>
-            </View>
-            <View style={{borderWidth:0.7, borderColor:'#ccc'}} />
+              <View style={{borderWidth: 0.7, borderColor: '#ccc'}} />
             </View>
           );
         }}
@@ -300,13 +291,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const fruits = [
-  {label: 'Apples', value: 'appls'},
-  {label: 'Oranges', value: 'orngs'},
-  {label: 'Pears', value: 'pears'},
-];
-const getInterests = [
-  {CATG_TITLE: 'SPORT', INTEREST: 'Football', INT_ID: 1, check: false},
-  {CATG_TITLE: 'movie', INTEREST: 'KGF', INT_ID: 28, check: false},
-  {CATG_TITLE: 'Education', INTEREST: 'English', INT_ID: 29, check: false},
-];
+

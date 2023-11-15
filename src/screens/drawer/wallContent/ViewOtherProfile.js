@@ -190,55 +190,7 @@ const ViewOtherProfile = ({navigation, route}) => {
           </View>
         </View>
 
-        {/* <View>
-          <Text style={[st.tx18(darktheme), st.txAlignC]} numberOfLines={1}>
-            Interests List
-          </Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/pexels-1.jpg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/pexels-2..jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-          </ScrollView>
-        </View> */}
+        
 
         <View style={st.pd_H20}>
           <View style={[st.editboxsty(darktheme), st.mt_t10]}>
@@ -423,8 +375,8 @@ const ViewOtherProfile = ({navigation, route}) => {
   const gotoSavePost = PID => {
     navigation.navigate('SavePost', {postId: PID});
   };
-  const gotoReport = () => {
-    navigation.navigate('Report');
+  const gotoReport = (postId, userId) => {
+    navigation.navigate('Report', {postId: postId, userId: userId});
   };
   const gotoEditPost = PID => {
     navigation.navigate('EditPost', {postId: PID});
@@ -452,7 +404,7 @@ const ViewOtherProfile = ({navigation, route}) => {
         gotoDetails={gotoDetails}
         gotoSavePost={gotoSavePost}
         gotoEditPost={gotoEditPost}
-        gotoReport={gotoReport}
+        gotoReport={() => gotoReport(item?.PID, item.ZRUSERID)}
         gotoSharePost={() => gotoSharePost(item?.PID)}
         login_data={login_data}
         quizVote_handle={quizVote_handle}
