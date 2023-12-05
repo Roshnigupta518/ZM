@@ -9,8 +9,8 @@ import React from 'react';
 import st from '../../../global/styles/styles';
 import {icon_color} from '../../../utils/helperfunctions';
 import Material from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/Ionicons';
-import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Share from 'react-native-share';
 
 const Footer = ({
@@ -19,7 +19,7 @@ const Footer = ({
   darktheme,
   footerSty,
   gotoCommnetScreen,
-  gotoSharePost
+  gotoSharePost,
 }) => {
   const shareHandle = () => {
     const url = 'https://awesome.contents.com/';
@@ -75,8 +75,8 @@ const Footer = ({
         </View> */}
         <View style={[st.row, st.align_C]}>
           <TouchableOpacity activeOpacity={0.5} onPress={() => gotoSharePost()}>
-            <Icon
-              name="navigate-outline"
+            <Entypo
+              name="direction"
               size={25}
               color={icon_color(darktheme)}
             />

@@ -63,9 +63,18 @@ class Endpoints {
   GET_Tag = this.baseUrl + 'Posting/GetTaggMetaData';
   GET_HASHTAG = this.baseUrl + 'Posting/GetHagTagMetaData';
   GET_NOTIF_COUNT = this.baseUrl + 'Header/GetUserNotifCountV2';
-  NOTIF_READ = this.baseUrl + 'Header/SetNotifReadUnreadV2'
+  NOTIF_READ = this.baseUrl + 'Header/SetNotifReadUnreadV2';
+  nugget_activity = this.baseUrl + 'BrainBit/UpdateBrainBitNuggetDailyActivityV2';
+  update_brainbitSession = this.baseUrl + 'BrainBit/UpdateBrainBitSessionActivityV2'
 }
 
 export const API = new Endpoints();
 //https://zeros.co.in/apicore/Header/GetUserNotifCountV2
 //https://zeros.co.in/apicore/Header/GetUserNotification
+
+
+//-------------------------------Brain Bit -------------------------
+// https://zeros.co.in/apicore/BrainBit/UpdateBrainBitSessionActivityV2
+// UpdateBrainBitNuggetActivityV2
+// UpdateBrainBitSessionActivityV2
+// GetBrainBitSocialActivityPointsV2

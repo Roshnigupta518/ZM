@@ -14,6 +14,7 @@ const About = ({navigation}) => {
         darktheme={darktheme}
       />
       <Text>About</Text>
+      
     </View>
   );
 };

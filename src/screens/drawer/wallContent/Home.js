@@ -41,6 +41,7 @@ export default function Dashboard({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [createPost, setCreatePost] = useState(false);
   const [nuggets, setNuggets] = useState(instaStory);
+  const [seenStories, setSeenStories] = useState(new Set());
   const [appState, setAppState] = useState(AppState.currentState);
   const [startTime, setStartTime] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -56,8 +57,12 @@ export default function Dashboard({navigation}) {
         var b = moment(currentTime);
         console.log({a, b, startTime});
         console.log(a.diff(b, 'minutes')); // 44700
+        brainBitSession_handle()
       }
-    }, 2 * 60 * 1000);
+      return () => {
+        clearTimeout();
+      };
+    }, 5 * 60 * 1000);
 
     // return () => {
     //   AppState.removeEventListener('change', handleAppStateChange);
@@ -387,6 +392,43 @@ export default function Dashboard({navigation}) {
     }
   };
 
+  const nuggetActivity_handle = async (storyIds) => {
+    const url = API.nugget_activity;
+    const param = {
+      // _USER_ID: login_data.response.ZRTC,
+      UserId: login_data?.response?.ZRTC,
+      NuggetId: storyIds,// [1,2,3]
+    };
+    console.log({param});
+    try {
+      const result = await postApi(url, param, login_data.accessToken);
+      console.log({postLike: result.data});
+      if (result.status == 200) {
+        //-----goto 
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const brainBitSession_handle = async () => {
+    const url = API.update_brainbitSession;
+    const param = {
+      _USER_ID: login_data.response.ZRID,
+      // _USER_ID: 123456,
+    };
+    console.log({param});
+    try {
+      const result = await postApi(url, param, login_data.accessToken);
+      console.log({brainBitSession_handle: result.data});
+      if (result.status == 200) {
+        //-----goto 
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const ItemView_posts = ({item, index}) => {
     return (
       <PostItems
@@ -434,10 +476,25 @@ export default function Dashboard({navigation}) {
   };
 
   const handleSeenStories = async item => {
-    console.log({item});
+    console.log({onClose: item});
+    const storyIds = [];
+    seenStories.forEach(storyId => {
+      if (storyId) storyIds.push(storyId);
+    });
+    console.log({storyIds});
+
+    // if (storyIds.length > 0) {
+    //   nuggetActivity_handle(storyIds)
+    // }
   };
-  const updateSeenStories = item => {
-    console.log({item});
+  
+  const updateSeenStories = ({story: {story_id}}) => {
+    console.log({seen: story_id});
+    // setSeenStories(prevSet => {
+    //   prevSet.add(story_id);
+    //   return prevSet;
+    // });
+    nuggetActivity_handle(story_id)
   };
 
   const ListHeaderComponent = () => {

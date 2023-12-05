@@ -29,7 +29,7 @@ const Route = () => {
     }, 2000);
   }, []);
 
-  HandleBackPress();
+  // HandleBackPress();
   
   return (
     <NavigationContainer

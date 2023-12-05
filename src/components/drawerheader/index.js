@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Image, TouchableOpacity, StatusBar, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {colors, images} from '../../global/theme/Theme';
 import {icon_color} from '../../utils/helperfunctions';
@@ -76,7 +76,7 @@ const NavigationDrawerHeader = props => {
             <Icon
               name="search"
               color={icon_color(props.darktheme)}
-              size={22}
+              size={25}
               onPress={() => props.navigationProps.navigate('Search')}
             />
             <TouchableOpacity
