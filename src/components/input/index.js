@@ -31,7 +31,6 @@ const Input = ({
           secureTextEntry={hidePassword}
           style={[st.tx14(darktheme), st.flex]}
           {...props}
-          
         />
 
         {password && (

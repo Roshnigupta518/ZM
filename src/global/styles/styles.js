@@ -169,6 +169,9 @@ export default StyleSheet.create({
   bgCardColor: darktheme => ({
     backgroundColor: darktheme === 'dark' ? colors.white : '#1a1a1a',
   }),
+  radius:{
+    borderRadius:10
+  },
   footerbgColor: darktheme => ({
     backgroundColor: darktheme === 'dark' ? '#fff' : '#404040',
     marginHorizontal: 10,
