@@ -70,6 +70,7 @@ class Endpoints {
   SOCIAL_POINT = this.baseUrl + 'BrainBit/GetBrainBitSocialActivityPointsV2?userId=';
   PROMOTIONAL_POINT = this.baseUrl + 'BrainBit/GetBrainBitSignUpReedemPointsV2?userId='
   GET_BACKACC= this.baseUrl + 'BrainBit/GetBrainBitUserPaymentDetailsV2?userId='
+  UPDATE_EMAIL = this.baseUrl + 'Signner/EmailUpdateNew'
  }
 
 export const API = new Endpoints();

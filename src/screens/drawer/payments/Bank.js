@@ -233,21 +233,18 @@ const UPI = ({navigation, route}) => {
     const url = API.UPI_PAY;
     const param = {
       UserId: login_data.response.ZRID,
-      UserName: login_data.response.ZRTC, //ZRTC
+      UserName: login_data.response.ZRTC,
       MobileNumber: inputs?.number,
-      UPIId: '',
-      AC_Holder_Name: inputs?.name,
-      Account_Number: inputs?.account,
-      IFSC_Code: inputs?.ifsc,
+      AccountHolderName: inputs?.name,
+      AccountNumber: inputs?.account,
+      IFSCCode: inputs?.ifsc,
       State: details?.State,
       Address: details?.District,
       City: details?.District,
       ZipCode: inputs?.code,
-      Self_Other: selectedOption?.value,
-      Amount: '',
-      RedimPoint: 200,
-      relation: inputs?.relation,
+      SelfOther: selectedOption?.value,
       bankName: inputs?.bank,
+      relation: inputs?.relation,
     };
 
     console.log({param});
@@ -317,7 +314,7 @@ const UPI = ({navigation, route}) => {
             onEndEditing={() => setShowBank(true)}
           />
 
-          {showBank && (
+          {showBank && inputs?.bank && (
             <Input
               label={'Bank Name'}
               onChangeText={text => handleOnchange(text, 'bank')}

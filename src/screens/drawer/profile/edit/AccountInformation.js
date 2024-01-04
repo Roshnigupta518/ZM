@@ -26,24 +26,23 @@ import {
 import PopUpMessage from '../../../../components/popup';
 import Toast from 'react-native-simple-toast';
 
-const INITIAL_INPUT = {
-  number: '',
-  email: '',
-};
-
 export default function AccountInformation({navigation}) {
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
 
-  const [inputs, setInputs] = useState(INITIAL_INPUT);
-  const [errors, setErrors] = useState(INITIAL_INPUT);
   const [loading, setLoading] = useState(false);
-  const [number, setNumber] = useState(login_data?.user?.ZRMN);
+  const [number, setNumber] = useState(login_data?.response?.ZRMN);
   const [numberErr, setNumberErr] = useState('');
   const [numberStatus, setNumberStatus] = useState(false);
+
+  const [email, setEmail] = useState(login_data?.response?.ZRED);
+  const [emailErr, setEmailErr] = useState('');
+  const [emailStatus, setEmailStatus] = useState(false);
+
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
+  const [label, setLabel] = useState('');
 
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({...prevState, [input]: text}));
@@ -53,12 +52,35 @@ export default function AccountInformation({navigation}) {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
 
+  const validate_email = async () => {
+    Keyboard.dismiss();
+
+    const emptyEmail = ValueEmpty(email);
+    const validEmail = ValidateMail(email);
+
+    let isValid = true;
+
+    if (emptyEmail) {
+      setEmailErr('*Required');
+      isValid = false;
+    } else if (validEmail != 'success') {
+      setEmailErr(validEmail);
+      isValid = false;
+    } else {
+      setEmailErr('');
+    }
+    if (isValid) {
+      setLabel('email');
+      setTitle('Change Email?');
+      setSubtitle('Are you sure you want to change your email address!');
+      setPopupMessageVisibility(!popupMessageVisibility);
+    }
+  };
+
   const validate = async () => {
     Keyboard.dismiss();
     const emptyNumber = ValueEmpty(number);
     const validNumber = ValidateMobile(number);
-    // const emptyEmail = ValueEmpty(inputs?.email);
-    // const validEmail = ValidateMail(inputs?.email);
 
     let isValid = true;
     if (emptyNumber) {
@@ -70,22 +92,12 @@ export default function AccountInformation({navigation}) {
     } else {
       setNumberErr('');
     }
-    // if (emptyEmail) {
-    //   handleError('*Required', 'email');
-    //   isValid = false;
-    // } else if (validEmail != 'success') {
-    //   handleError(validEmail, 'email');
-    //   isValid = false;
-    // } else {
-    //   handleError('', 'email');
-    // }
+
     if (isValid) {
-      // mobileUpdate();
+      setLabel('phone');
       setTitle('Change Phone?');
       setSubtitle('Are you sure you want to change your phone number!');
       setPopupMessageVisibility(!popupMessageVisibility);
-    } else {
-      console.log({validNumber});
     }
   };
 
@@ -111,6 +123,28 @@ export default function AccountInformation({navigation}) {
     }
   };
 
+  const emailUpdateHandle = async () => {
+    const url = API.UPDATE_EMAIL;
+    const param = {
+      iuseremail: email,
+      imIdType: 'phone',
+    };
+    try {
+      const result = await postApi(url, param, login_data.accessToken);
+      console.log({result: result.data});
+      if (result.status == 200) {
+        const data = result.data;
+        // if (data.ResponseId == -1) {
+        //   setNumberErr(data.MessageText);
+        // } else {
+        //   Toast.show(data.MessageText);
+        // }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const onPopupMessageModalClick = value => {
     setPopupMessageVisibility(value);
   };
@@ -126,7 +160,13 @@ export default function AccountInformation({navigation}) {
         }}
         darktheme={darktheme}
         twoButton={true}
-        onPress_api={mobileUpdate}
+        onPress_api={() => {
+          if (label == 'phone') {
+            mobileUpdate();
+          } else {
+            emailUpdateHandle();
+          }
+        }}
       />
     );
   };
@@ -136,12 +176,9 @@ export default function AccountInformation({navigation}) {
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={st.pd20}>
           <View>
-            {/* <Text style={[st.tx18(darktheme), st.txAlignC, st.pd20]}>Account Information</Text> */}
             <View style={st.mt_t10}>
               <Input
                 label={'Your Mobile'}
-                // onChangeText={text => handleOnchange(text, 'number')}
-                // onFocus={() => handleError(null, 'number')}
                 onChangeText={text => {
                   setNumber(text);
                   if (text) {
@@ -178,49 +215,52 @@ export default function AccountInformation({navigation}) {
                 </View>
               )}
             </View>
+
             <View style={st.mt_t10}>
               <Input
                 label={'Your Email'}
-                onChangeText={text => handleOnchange(text, 'email')}
-                onFocus={() => handleError(null, 'email')}
+                // onChangeText={text => handleOnchange(text, 'email')}
+                // onFocus={() => handleError(null, 'email')}
+                onChangeText={text => {
+                  setEmail(text);
+                  if (text) {
+                    setEmailStatus(true);
+                  } else {
+                    setEmailStatus(false);
+                  }
+                }}
                 placeholder="Edit Email"
                 placeholderTextColor="#808080"
                 autoCapitalize="none"
                 keyboardType="numeric"
                 returnKeyType="next"
-                value={inputs.email}
+                value={email}
                 underlineColorAndroid="#f000"
                 blurOnSubmit={false}
-                error={errors?.email}
+                error={emailErr}
                 darktheme={darktheme}
               />
-              <View style={[st.row, st.justify_S, st.mt_v]}>
-                <Authbtn
-                  title={'Update'}
-                  onPress={() => {
-                    validate();
-                  }}
-                />
-                <Authbtn
-                  title={'Cancel'}
-                  onPress={() => {
-                    validate();
-                  }}
-                />
-              </View>
+              {emailStatus && (
+                <View style={[st.row, st.justify_S, st.mt_v]}>
+                  <Authbtn
+                    title={'Update'}
+                    onPress={() => {
+                      validate_email();
+                    }}
+                  />
+                  <Authbtn
+                    title={'Cancel'}
+                    onPress={() => {
+                      setEmailStatus(false);
+                    }}
+                  />
+                </View>
+              )}
             </View>
           </View>
         </View>
         {show_alert_msg()}
       </ScrollView>
-      {/* <View style={st.pd20}>
-        <Authbtn
-          title={'Save'}
-          onPress={() => {
-            validate();
-          }}
-        />
-      </View> */}
     </View>
   );
 }

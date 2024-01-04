@@ -21,7 +21,7 @@ const Redeem = ({navigation, route}) => {
   const [details, setDetails] = useState([]);
   const [inputs, setInputs] = useState(INITIALINPUT);
   const [errors, setErrors] = useState(INITIALINPUT);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const login_data = useSelector(state => state.login?.data);
   const data = route?.params?.data;
@@ -78,23 +78,35 @@ const Redeem = ({navigation, route}) => {
     const url = API.GET_BACKACC + login_data.response.ZRID;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const result = await getApi(url, login_data.accessToken);
       console.log({addBank: result.data});
       if (result.status == 200) {
         const data = result.data;
-        setIsLoading(false)
+        setIsLoading(false);
         setDetails(data);
+      } else {
+        setIsLoading(false);
       }
     } catch (e) {
       console.log(e);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getData();
+    });
+
+    return () => {
+      unsubscribe;
+    };
+  }, [navigation]);
 
   return (
     <View style={st.container(darktheme)}>
@@ -109,7 +121,7 @@ const Redeem = ({navigation, route}) => {
             return (
               <Pressable
                 onPress={() => handleCardPress(index)}
-                style={[st.row, st.align_C]}>
+                style={[st.row, st.align_C, st.mt_B, ]}>
                 <View style={st.wdh10}>
                   <View style={[styles.circle]}>
                     {selectedCard === index && (
@@ -119,7 +131,7 @@ const Redeem = ({navigation, route}) => {
                 </View>
 
                 <View style={st.wdh90}>
-                  <View style={[st.pd20, st.radius, st.bgCardColor(darktheme)]}>
+                  <View style={[st.pd20, st.radius, st.bgCardColor(darktheme), st.shadowsty]}>
                     <Text style={st.tx14_s(darktheme)}>
                       Account holder name :-{' '}
                       <Text style={st.tx13(darktheme)}>
@@ -170,7 +182,7 @@ const Redeem = ({navigation, route}) => {
           </View>
         </View>
       </ScrollView>
-      {isLoading&&<Loader/>}
+      {isLoading && <Loader />}
     </View>
   );
 };
