@@ -27,7 +27,7 @@ class Endpoints {
   UserBio = this.baseUrl + 'Surge/UserBioSaverV2';
   GetInterest = this.baseUrl + 'Surge/GetSignupInterestsV2';
   SaveInterest = this.baseUrl + 'Surge/UserIntrstSaverV2';
-  Forgot = this.baseUrl + 'Signner/ForgotV2'; 
+  Forgot = this.baseUrl + 'Signner/ForgotV2';
   Logout = this.baseUrl + 'Signner/LogoutV2';
   ResetConfirm = this.baseUrl + 'Signner/ResetConfirmV2';
   PasswordConfirm = this.baseUrl + 'Signner/PasswordConfirmV2';
@@ -64,18 +64,24 @@ class Endpoints {
   GET_HASHTAG = this.baseUrl + 'Posting/GetHagTagMetaData';
   GET_NOTIF_COUNT = this.baseUrl + 'Header/GetUserNotifCountV2';
   NOTIF_READ = this.baseUrl + 'Header/SetNotifReadUnreadV2';
-  nugget_activity = this.baseUrl + 'BrainBit/UpdateBrainBitNuggetDailyActivityV2';
-  update_brainbitSession = this.baseUrl + 'BrainBit/UpdateBrainBitSessionActivityV2';
+  nugget_activity =
+    this.baseUrl + 'BrainBit/UpdateBrainBitNuggetDailyActivityV2';
+  update_brainbitSession =
+    this.baseUrl + 'BrainBit/UpdateBrainBitSessionActivityV2';
   UPI_PAY = this.baseUrl + 'BrainBit/AddUserBankPaymentAndBrainBitDetailsV2';
-  SOCIAL_POINT = this.baseUrl + 'BrainBit/GetBrainBitSocialActivityPointsV2?userId=';
-  PROMOTIONAL_POINT = this.baseUrl + 'BrainBit/GetBrainBitSignUpReedemPointsV2?userId='
-  GET_BACKACC= this.baseUrl + 'BrainBit/GetBrainBitUserPaymentDetailsV2?userId='
-  UPDATE_EMAIL = this.baseUrl + 'Signner/EmailUpdateNew'
- }
+  SOCIAL_POINT =
+    this.baseUrl + 'BrainBit/GetBrainBitSocialActivityPointsV2?userId=';
+  PROMOTIONAL_POINT =
+    this.baseUrl + 'BrainBit/GetBrainBitSignUpReedemPointsV2?userId=';
+  GET_BACKACC =
+    this.baseUrl + 'BrainBit/GetBrainBitUserPaymentDetailsV2?userId=';
+  UPDATE_EMAIL = this.baseUrl + 'Signner/EmailUpdateNew';
+  ADD_PROMOTIONAL = this.baseUrl + 'BrainBit/AddPromotionalPaymentDetailsV2';
+}
 
 export const API = new Endpoints();
 
-
+// 'https://zeros.co.in/apicore/BrainBit/AddPromotionalPaymentDetailsV2
 //-------------------------------Brain Bit -------------------------
 // https://zeros.co.in/apicore/BrainBit/UpdateBrainBitSessionActivityV2
 // UpdateBrainBitNuggetActivityV2

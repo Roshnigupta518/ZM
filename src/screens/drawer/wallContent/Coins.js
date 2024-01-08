@@ -167,7 +167,7 @@ export default function Coins({navigation}) {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              navigation.navigate('UPI');
+              navigation.navigate('UPI', {edit: false});
             }}
             style={styles.coinsBox}>
             <View style={st.align_C}>
@@ -177,88 +177,80 @@ export default function Coins({navigation}) {
                 </Text>
               </View>
             </View>
-
-            <View style={[st.row]}>
-              <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                Status :-{' '}
-              </Text>
-              <Text style={[st.tx14(darktheme), {color: colors.green}]}>
-                Completed
-              </Text>
-            </View>
           </TouchableOpacity>
 
-          {/* {promotionalData?.SIGNUPREDIMSTATUS != 1 && ( */}
-          <Animated.View>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPressIn={onPressIn}
-              onPressOut={onPressOut}
-              onPress={() => {
-                setShowPromotional(!showPromotional);
-              }}
-              style={styles.coinsBox}>
-              <View style={st.align_C}>
-                <View style={[st.row, st.align_C]}>
-                  <Icon name={'rotate-orbit'} size={35} />
-                  <Text style={[st.tx16(darktheme)]}>
-                    {'  Promotional Brainbits  '}
-                  </Text>
-                  <Icon name={'rotate-orbit'} size={35} />
-                </View>
-
-                {showPromotional && (
-                  <View>
-                    <Text
-                      style={[st.tx20(darktheme)]}
-                      numberOfLines={1}
-                      adjustsFontSizeToFit>
-                      {promotionalData?.SIGNUPAMOUNT}
-                      <Text style={st.tx14_s(darktheme)}>{' Points'}</Text>
+          {promotionalData?.SIGNUPREDIMSTATUS != 1 && (
+            <Animated.View>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPressIn={onPressIn}
+                onPressOut={onPressOut}
+                onPress={() => {
+                  setShowPromotional(!showPromotional);
+                }}
+                style={styles.coinsBox}>
+                <View style={st.align_C}>
+                  <View style={[st.row, st.align_C]}>
+                    <Icon name={'rotate-orbit'} size={35} />
+                    <Text style={[st.tx16(darktheme)]}>
+                      {'  Promotional Brainbits  '}
                     </Text>
+                    <Icon name={'rotate-orbit'} size={35} />
+                  </View>
+
+                  {showPromotional && (
+                    <View>
+                      <Text
+                        style={[st.tx20(darktheme)]}
+                        numberOfLines={1}
+                        adjustsFontSizeToFit>
+                        {promotionalData?.SIGNUPAMOUNT}
+                        <Text style={st.tx14_s(darktheme)}>{' Points'}</Text>
+                      </Text>
+                    </View>
+                  )}
+                </View>
+                {showPromotional && (
+                  <View style={[st.row, st.justify_S]}>
+                    <TouchableOpacity
+                      onPressIn={onPressIn}
+                      onPressOut={onPressOut}
+                      onPress={() => {
+                        if (details?.length > 0) {
+                          onPopupMessageModalClick(!popupMessageVisibility);
+                          setData(promotionalData);
+                          setPayment_Type(0);
+                        } else {
+                          navigation.navigate('UPI', {edit: false});
+                        }
+                      }}
+                      style={styles.redeemBtn}>
+                      <Text
+                        style={[st.tx14_s(darktheme), {color: colors.white}]}>
+                        Redeem
+                      </Text>
+                    </TouchableOpacity>
+
+                    <View style={st.mt_t10}>
+                      <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                        Status
+                      </Text>
+                      <Pressable onPress={() => navigation.navigate('MyCoins')}>
+                        <Text
+                          style={[
+                            st.tx14(darktheme),
+                            st.txDecor,
+                            {color: colors.green},
+                          ]}>
+                          Completed
+                        </Text>
+                      </Pressable>
+                    </View>
                   </View>
                 )}
-              </View>
-              {showPromotional && (
-                <View style={[st.row, st.justify_S]}>
-                  <TouchableOpacity
-                    onPressIn={onPressIn}
-                    onPressOut={onPressOut}
-                    onPress={() => {
-                      if (details?.length > 0) {
-                        onPopupMessageModalClick(!popupMessageVisibility);
-                        setData(promotionalData);
-                        setPayment_Type(0);
-                      } else {
-                        navigation.navigate('UPI');
-                      }
-                    }}
-                    style={styles.redeemBtn}>
-                    <Text style={[st.tx14_s(darktheme), {color: colors.white}]}>
-                      Redeem
-                    </Text>
-                  </TouchableOpacity>
-
-                  <View style={st.mt_t10}>
-                    <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                      Status
-                    </Text>
-                    <Pressable onPress={() => navigation.navigate('MyCoins')}>
-                      <Text
-                        style={[
-                          st.tx14(darktheme),
-                          st.txDecor,
-                          {color: colors.green},
-                        ]}>
-                        Completed
-                      </Text>
-                    </Pressable>
-                  </View>
-                </View>
-              )}
-            </TouchableOpacity>
-          </Animated.View>
-          {/* )} */}
+              </TouchableOpacity>
+            </Animated.View>
+          )}
 
           <Animated.View>
             <TouchableOpacity
@@ -293,40 +285,39 @@ export default function Coins({navigation}) {
 
               {showSocial && (
                 <View style={[st.row, st.justify_S]}>
-                  {dataSource?.TOTAL_POINTS >
-                    dataSource?.THRESHOLD && (
-                  <TouchableOpacity
-                    onPressIn={onPressInSocial}
-                    onPressOut={onPressOutSocial}
-                    onPress={() => {
-                      if (details?.length > 0) {
-                        onPopupMessageModalClick(!popupMessageVisibility);
-                        setData(dataSource);
-                        setPayment_Type(1);
-                      } else {
-                        navigation.navigate('UPI');
-                      }
-                    }}
-                    style={styles.redeemBtn}>
-                    <Text style={[st.tx14_s(darktheme), {color: colors.white}]}>
-                      Redeem
-                    </Text>
-                  </TouchableOpacity>
-                  )} 
-                  {dataSource?.TOTAL_POINTS >
-                    dataSource?.THRESHOLD && (
-                  <View style={st.mt_t10}>
-                    <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                      Status
-                    </Text>
-                    <Pressable onPress={() => navigation.navigate('MyCoins')}>
+                  {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
+                    <TouchableOpacity
+                      onPressIn={onPressInSocial}
+                      onPressOut={onPressOutSocial}
+                      onPress={() => {
+                        if (details?.length > 0) {
+                          onPopupMessageModalClick(!popupMessageVisibility);
+                          setData(dataSource);
+                          setPayment_Type(1);
+                        } else {
+                          navigation.navigate('UPI', {edit: false});
+                        }
+                      }}
+                      style={styles.redeemBtn}>
                       <Text
-                        style={[st.tx14(darktheme), {color: colors.danger}]}>
-                        In-progress
+                        style={[st.tx14_s(darktheme), {color: colors.white}]}>
+                        Redeem
                       </Text>
-                    </Pressable>
-                  </View>
-                   )} 
+                    </TouchableOpacity>
+                  )}
+                  {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
+                    <View style={st.mt_t10}>
+                      <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                        Status
+                      </Text>
+                      <Pressable onPress={() => navigation.navigate('MyCoins')}>
+                        <Text
+                          style={[st.tx14(darktheme), {color: colors.danger}]}>
+                          In-progress
+                        </Text>
+                      </Pressable>
+                    </View>
+                  )}
                 </View>
               )}
             </TouchableOpacity>

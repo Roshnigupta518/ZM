@@ -17,32 +17,30 @@ import RadioButton from '../report/RadioButton';
 const INITIALINPUT = {
   name: '',
   account: '',
-  amt: '',
   number: '',
   ifsc: '',
   code: '',
   type: '',
   relation: '',
   bank: '',
+  bankId: 0,
 };
 
 const UPI = ({navigation, route}) => {
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
-  const data = route?.params?.data;
-  const Payment_Type = route?.params?.Payment_Type;
+  const bank_details = route?.params?.details;
+  const edit = route?.params?.edit;
 
   const [inputs, setInputs] = useState(INITIALINPUT);
   const [errors, setErrors] = useState(INITIALINPUT);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(1);
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
   const [title, setTitle] = useState();
   const [subtitle, setSubtitle] = useState();
   const [options, setOptions] = useState(custom_op);
   const [details, setDetails] = useState();
   const [showBank, setShowBank] = useState();
-
-  // console.log({Payment_Type});
 
   const onSelect = item => {
     if (selectedOption && selectedOption.id === item.id) {
@@ -82,7 +80,7 @@ const UPI = ({navigation, route}) => {
 
   const validation = () => {
     const emptyName = ValueEmpty(inputs?.name);
-    const emptyAmt = ValueEmpty(inputs?.amt);
+
     const emptyNumber = ValueEmpty(inputs?.number);
     const validNumber = ValidateMobile(inputs?.number);
     const emptyAccountNum = ValueEmpty(inputs?.account);
@@ -166,26 +164,6 @@ const UPI = ({navigation, route}) => {
       handleError('', 'ifsc');
     }
 
-    const myPoint = data?.TOTAL_POINTS - data?.THRESHOLD;
-
-    if (Payment_Type == 1) {
-      if (emptyAmt) {
-        handleError('*Required', 'amt');
-        isValid = false;
-      } else if (!amountRegex.test(inputs?.amt)) {
-        isValid = false;
-        handleError('Please enter a valid numeric amount', 'amt');
-      } else if (myPoint > 0) {
-        if (parseInt(inputs?.amt) <= myPoint) {
-          handleError('', 'amt');
-        } else {
-          handleError('Invalid', 'amt');
-          isValid = false;
-        }
-      } else {
-        handleError('', 'amt');
-      }
-    }
     console.log({errors});
     if (isValid) {
       handleSubmitPress();
@@ -232,8 +210,8 @@ const UPI = ({navigation, route}) => {
   const handleSubmitPress = async () => {
     const url = API.UPI_PAY;
     const param = {
+      Id: inputs?.bankId,
       UserId: login_data.response.ZRID,
-      UserName: login_data.response.ZRTC,
       MobileNumber: inputs?.number,
       AccountHolderName: inputs?.name,
       AccountNumber: inputs?.account,
@@ -263,6 +241,33 @@ const UPI = ({navigation, route}) => {
       console.log(e);
     }
   };
+
+  const getBankDetails = () => {
+    const data = bank_details;
+    console.log({bank_details: data});
+    const mydata = {
+      name: data.ACCOUNT_HOLDER_NAME,
+      account: data.ACCOUNT_NUMBER,
+      number: data.MOBILENUMBER,
+      ifsc: data.IFSC_CODE,
+      code: data.ZIP_CODE,
+      type: data.SELF_OTHER == 'Self' ? 0 : 1,
+      relation: data.RELATION,
+      bank: data.BANKNAME,
+      bankId: data.ID,
+    };
+    const relation =
+      data.SELF_OTHER == 'Self'
+        ? {id: 0, value: 'Self'}
+        : {id: 1, value: 'Other'};
+    setSelectedOption(relation);
+    setShowBank(true)
+    setInputs(mydata);
+  };
+
+  useEffect(() => {
+    getBankDetails();
+  }, []);
 
   return (
     <View style={st.container(darktheme)}>
@@ -358,7 +363,7 @@ const UPI = ({navigation, route}) => {
             value={inputs?.code}
           />
 
-          <Text style={st.tx16(darktheme)}>Relationship</Text>
+          <Text style={st.tx16(darktheme)}>Relation</Text>
           <RadioButton
             selectedOption={selectedOption}
             onSelect={item => {

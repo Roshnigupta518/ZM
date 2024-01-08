@@ -4,8 +4,9 @@ import st from '../../../global/styles/styles';
 import Header from '../../../components/header/Header';
 import {useSelector} from 'react-redux';
 
-const MyCoins = ({navigation}) => {
+const MyCoins = ({navigation, route}) => {
   const darktheme = useSelector(state => state.darktheme?.data);
+  const message = route?.params?.message;
 
   return (
     <View style={st.container(darktheme)}>
@@ -16,7 +17,7 @@ const MyCoins = ({navigation}) => {
       />
       <ScrollView>
         <View style={st.pd20}>
-          <Text>MyCoins</Text>
+          <Text style={st.tx14(darktheme)}>{message ? message : ''}</Text>
         </View>
       </ScrollView>
     </View>

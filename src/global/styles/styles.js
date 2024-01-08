@@ -54,6 +54,7 @@ export default StyleSheet.create({
   center: {justifyContent: 'center', alignItems: 'center', flex: 1},
   align_C: {alignItems: 'center'},
   align_E: {alignItems: 'flex-end'},
+  align_S: {alignItems: 'flex-start'},
   justify_C: {justifyContent: 'center'},
   justify: {justifyContent: 'flex-end'},
   justify_S: {justifyContent: 'space-between'},
@@ -236,4 +237,13 @@ export default StyleSheet.create({
     height: 30,
     borderRadius: 15,
   },
+  bankBtn :{
+    paddingVertical:5,
+    paddingHorizontal:10,
+    borderRadius:10,
+    backgroundColor:colors.green,
+    flexDirection:'row',
+    alignItems:'center',
+    marginBottom:15
+  }
 });

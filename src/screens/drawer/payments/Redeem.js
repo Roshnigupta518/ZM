@@ -7,9 +7,12 @@ import {colors} from '../../../global/theme/Theme';
 import Input from '../../../components/input';
 import Authbtn from '../../../components/Authbtn';
 import {ValueEmpty} from '../../../utils/helperfunctions/validations';
-import {getApi} from '../../../utils/apicalls';
+import {getApi, postApi} from '../../../utils/apicalls';
 import {API} from '../../../utils/endpoints';
 import Loader from '../../../components/Loader';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {icon_color} from '../../../utils/helperfunctions';
+import PopUpMessage from '../../../components/popup';
 
 const INITIALINPUT = {
   amt: '',
@@ -22,6 +25,10 @@ const Redeem = ({navigation, route}) => {
   const [inputs, setInputs] = useState(INITIALINPUT);
   const [errors, setErrors] = useState(INITIALINPUT);
   const [isLoading, setIsLoading] = useState(false);
+  const [enabled, setEnabled] = useState();
+  const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
+  const [title, setTitle] = useState();
+  const [subtitle, setSubtitle] = useState();
 
   const login_data = useSelector(state => state.login?.data);
   const data = route?.params?.data;
@@ -71,19 +78,43 @@ const Redeem = ({navigation, route}) => {
   };
 
   const handleSubmitPress = async () => {
-    alert('hi');
+    const url = API.ADD_PROMOTIONAL;
+    const params = {
+      userId: login_data.response.ZRID,
+      bankId: selectedCard,
+    };
+    try {
+      setIsLoading(true);
+      const result = await postApi(url, params, login_data.accessToken);
+      console.log({addBank: result.data});
+      if (result.status == 200) {
+        setIsLoading(false);
+        const data = result.data;
+        setSubtitle(data[1]);
+        setPopupMessageVisibility(true);
+        setTitle('Congratulations');
+      } else {
+        setIsLoading(false);
+      }
+    } catch (e) {
+      setIsLoading(false);
+    }
   };
 
   const getData = async () => {
     const url = API.GET_BACKACC + login_data.response.ZRID;
-
     try {
       setIsLoading(true);
       const result = await getApi(url, login_data.accessToken);
       console.log({addBank: result.data});
       if (result.status == 200) {
-        const data = result.data;
+        const data = result.data.reverse();
+        const enable = data.some(i =>
+          i.IS_BENEFICIARY_VERFIED == 0 ? true : false,
+        );
+        console.log({enable});
         setIsLoading(false);
+        setEnabled(enable);
         setDetails(data);
       } else {
         setIsLoading(false);
@@ -108,6 +139,26 @@ const Redeem = ({navigation, route}) => {
     };
   }, [navigation]);
 
+  const onPopupMessageModalClick = value => {
+    setPopupMessageVisibility(value);
+    navigation.goBack();
+  };
+
+  const show_alert_msg = value => {
+    return (
+      <PopUpMessage
+        display={popupMessageVisibility}
+        titleMsg={title}
+        subTitle={subtitle}
+        onModalClick={value => {
+          onPopupMessageModalClick(value);
+        }}
+        darktheme={darktheme}
+        twoButton={false}
+      />
+    );
+  };
+
   return (
     <View style={st.container(darktheme)}>
       <Header
@@ -117,11 +168,22 @@ const Redeem = ({navigation, route}) => {
       />
       <ScrollView>
         <View style={st.pd20}>
+          <View style={st.align_S}>
+            <Pressable
+              onPress={() => navigation.navigate('UPI')}
+              style={[st.bankBtn]}>
+              <Icon name={'bank-plus'} size={20} color={colors.white} />
+              <Text style={[st.tx14_s(darktheme), {color: colors.white}]}>
+                {' Click to add new bank account'}
+              </Text>
+            </Pressable>
+          </View>
           {details?.map((item, index) => {
             return (
               <Pressable
+                disabled={item.IS_BENEFICIARY_VERFIED == 0 ? true : false}
                 onPress={() => handleCardPress(index)}
-                style={[st.row, st.align_C, st.mt_B, ]}>
+                style={[st.row, st.align_C, st.mt_B]}>
                 <View style={st.wdh10}>
                   <View style={[styles.circle]}>
                     {selectedCard === index && (
@@ -131,7 +193,13 @@ const Redeem = ({navigation, route}) => {
                 </View>
 
                 <View style={st.wdh90}>
-                  <View style={[st.pd20, st.radius, st.bgCardColor(darktheme), st.shadowsty]}>
+                  <View
+                    style={[
+                      st.pd20,
+                      st.radius,
+                      st.bgCardColor(darktheme),
+                      st.shadowsty,
+                    ]}>
                     <Text style={st.tx14_s(darktheme)}>
                       Account holder name :-{' '}
                       <Text style={st.tx13(darktheme)}>
@@ -148,18 +216,52 @@ const Redeem = ({navigation, route}) => {
                       IFSC :-{' '}
                       <Text style={st.tx13(darktheme)}>{item.IFSC_CODE}</Text>
                     </Text>
+
+                    <View style={[st.row, st.justify_S]}>
+                      <Text style={st.tx14_s(darktheme)}>
+                        Status :-{' '}
+                        <Text
+                          onPress={() =>
+                            navigation.navigate('MyCoins', {
+                              message:
+                                'Your back account varification is in-progress, Please wait 24 hours to complete it',
+                            })
+                          }
+                          style={[
+                            st.tx13(darktheme),
+                            {
+                              color:
+                                item.IS_BENEFICIARY_VERFIED == 0
+                                  ? colors.danger
+                                  : colors.green,
+                              textDecorationLine:
+                                item.IS_BENEFICIARY_VERFIED == 0
+                                  ? 'underline'
+                                  : 'none',
+                            },
+                          ]}>
+                          {item.IS_BENEFICIARY_VERFIED == 0
+                            ? 'In-Progress'
+                            : 'Verified'}
+                        </Text>
+                      </Text>
+                      <Pressable
+                        onPress={() =>
+                          navigation.navigate('UPI', {
+                            edit: true,
+                            details: item,
+                          })
+                        }>
+                        <Text style={[st.tx14_s(darktheme), st.txDecor]}>
+                          Edit
+                        </Text>
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
               </Pressable>
             );
           })}
-
-          <View style={[st.mt_t10]}>
-            <Authbtn
-              title={'Add New Bank Account'}
-              onPress={() => navigation.navigate('UPI')}
-            />
-          </View>
 
           <View style={st.mt_t15}></View>
           {Payment_Type == 1 && (
@@ -178,11 +280,16 @@ const Redeem = ({navigation, route}) => {
           )}
 
           <View style={[st.mt_t10, st.align_C]}>
-            <Authbtn title={'Submit'} onPress={() => validation()} />
+            <Authbtn
+              title={'Submit'}
+              onPress={() => validation()}
+              disabled={enabled}
+            />
           </View>
         </View>
       </ScrollView>
       {isLoading && <Loader />}
+      {show_alert_msg()}
     </View>
   );
 };
