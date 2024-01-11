@@ -285,7 +285,7 @@ export default function Coins({navigation}) {
 
               {showSocial && (
                 <View style={[st.row, st.justify_S]}>
-                  {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
+                  {/* {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && ( */}
                     <TouchableOpacity
                       onPressIn={onPressInSocial}
                       onPressOut={onPressOutSocial}
@@ -304,7 +304,7 @@ export default function Coins({navigation}) {
                         Redeem
                       </Text>
                     </TouchableOpacity>
-                  )}
+                  {/* )} */}
                   {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
                     <View style={st.mt_t10}>
                       <Text style={[st.tx14_s(darktheme), st.txAlignC]}>

@@ -77,6 +77,7 @@ class Endpoints {
     this.baseUrl + 'BrainBit/GetBrainBitUserPaymentDetailsV2?userId=';
   UPDATE_EMAIL = this.baseUrl + 'Signner/EmailUpdateNew';
   ADD_PROMOTIONAL = this.baseUrl + 'BrainBit/AddPromotionalPaymentDetailsV2';
+  ADD_SOCIAL = this.baseUrl + 'BrainBit/AddSocialPaymentDetailsV2';
 }
 
 export const API = new Endpoints();

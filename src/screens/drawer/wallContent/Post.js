@@ -12,7 +12,7 @@ import {
   Keyboard,
   Modal,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Feather';
 import st from '../../../global/styles/styles';
 import Authbtn from '../../../components/Authbtn';
 import ProfileImg from '../../../components/profileImg';
@@ -718,7 +718,7 @@ export default function Post({navigation}) {
               }}
               style={styles.closeIconCont}>
               <Icon
-                name="arrow-back"
+                name="arrow-left"
                 color={colors.skyblue}
                 size={25}
                 style={styles.closeIcon}

@@ -34,6 +34,8 @@ const Redeem = ({navigation, route}) => {
   const data = route?.params?.data;
   const Payment_Type = route?.params?.Payment_Type;
 
+  console.log({Payment_Type, data});
+
   const handleCardPress = cardId => {
     // Update the state to reflect the selected card
     setSelectedCard(cardId);
@@ -53,27 +55,37 @@ const Redeem = ({navigation, route}) => {
     let isValid = true;
 
     const myPoint = data?.TOTAL_POINTS - data?.THRESHOLD;
+
     if (Payment_Type == 1) {
       if (emptyAmt) {
         handleError('*Required', 'amt');
         isValid = false;
-      } else if (!amountRegex.test(inputs?.amt)) {
-        isValid = false;
-        handleError('Please enter a valid numeric amount', 'amt');
-      } else if (myPoint > 0) {
-        if (parseInt(inputs?.amt) <= myPoint) {
-          handleError('', 'amt');
-        } else {
-          handleError('Invalid', 'amt');
-          isValid = false;
-        }
       } else {
-        handleError('', 'amt');
+        if (!amountRegex.test(inputs?.amt)) {
+          isValid = false;
+          handleError('Please enter a valid numeric amount', 'amt');
+        } else {
+          if (myPoint > 0) {
+            if (parseInt(inputs?.amt) <= myPoint) {
+              handleError('', 'amt');
+            } else {
+              handleError('Invalid', 'amt');
+              isValid = false;
+            }
+          } else {
+            handleError('Invalid', 'amt');
+            isValid = false;
+          }
+        }
       }
     }
 
     if (isValid) {
-      handleSubmitPress();
+      if (Payment_Type == 1) {
+        handleSocialPress();
+      } else {
+        handleSubmitPress();
+      }
     }
   };
 
@@ -98,6 +110,32 @@ const Redeem = ({navigation, route}) => {
       }
     } catch (e) {
       setIsLoading(false);
+    }
+  };
+
+  const handleSocialPress = async () => {
+    const url = API.ADD_SOCIAL;
+    const params = {
+      userId: login_data.response.ZRID,
+      bankId: selectedCard,
+      ReedemPoint: inputs?.amt,
+    };
+    try {
+      setIsLoading(true);
+      const result = await postApi(url, params, login_data.accessToken);
+      console.log({addBank: result.data});
+      if (result.status == 200) {
+        setIsLoading(false);
+        const data = result.data;
+        setSubtitle(data[1]);
+        setPopupMessageVisibility(true);
+        setTitle('Congratulations');
+      } else {
+        setIsLoading(false);
+      }
+    } catch (e) {
+      setIsLoading(false);
+      console.log({e});
     }
   };
 
