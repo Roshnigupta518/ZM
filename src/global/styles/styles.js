@@ -82,6 +82,9 @@ export default StyleSheet.create({
     color: colors.danger,
     fontFamily: family.light,
   },
+  calender_txt : darktheme => ({
+    color: darktheme === 'dark' ? colors.black : colors.white,
+  }),
   tx12: darktheme => ({
     fontSize: size.label,
     color: darktheme === 'dark' ? colors.black : colors.white,

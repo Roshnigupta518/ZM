@@ -89,7 +89,6 @@ const UPI = ({navigation, route}) => {
 
     let isValid = true;
     const nameRegex = /^[a-zA-Z\s]+$/;
-    const amountRegex = /^\d+(\.\d{1,2})?$/;
     const accountNumberRegex = /^\d+$/;
     const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
     const zipCodeRegex = /^[1-9][0-9]{5}$/;
@@ -261,12 +260,14 @@ const UPI = ({navigation, route}) => {
         ? {id: 0, value: 'Self'}
         : {id: 1, value: 'Other'};
     setSelectedOption(relation);
-    setShowBank(true)
+    setShowBank(true);
     setInputs(mydata);
   };
 
   useEffect(() => {
-    getBankDetails();
+    if (edit) {
+      getBankDetails();
+    }
   }, []);
 
   return (
@@ -349,7 +350,7 @@ const UPI = ({navigation, route}) => {
           />
 
           <Input
-            label={'Zip Code'}
+            label={'Pincode'}
             onChangeText={text => {
               handleOnchange(text, 'code');
               getZipCode(text);
@@ -361,6 +362,7 @@ const UPI = ({navigation, route}) => {
             error={errors?.code}
             darktheme={darktheme}
             value={inputs?.code}
+            keyboardType="numeric"
           />
 
           <Text style={st.tx16(darktheme)}>Relation</Text>

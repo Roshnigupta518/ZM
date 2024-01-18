@@ -78,6 +78,8 @@ class Endpoints {
   UPDATE_EMAIL = this.baseUrl + 'Signner/EmailUpdateNew';
   ADD_PROMOTIONAL = this.baseUrl + 'BrainBit/AddPromotionalPaymentDetailsV2';
   ADD_SOCIAL = this.baseUrl + 'BrainBit/AddSocialPaymentDetailsV2';
+  SOCIAL_STATUS = this.baseUrl + 'BrainBit/GetSocialPaymentStatusV2?userId=';
+  PROMOTIONAL_STATUS = this.baseUrl + 'BrainBit/GetPromotionalPaymentStatusV2?userId=';
 }
 
 export const API = new Endpoints();

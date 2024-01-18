@@ -1,1 +1,1 @@
-export const  BASE_URL = 'http://zeros.co.in/apicore/Signner/SigninV2';
+export const  BASE_URL = 'https://zeros.co.in/apicore/Signner/SigninV2';

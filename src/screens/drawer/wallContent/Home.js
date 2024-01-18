@@ -57,7 +57,7 @@ export default function Dashboard({navigation}) {
         var b = moment(currentTime);
         console.log({a, b, startTime});
         console.log(a.diff(b, 'minutes')); // 44700
-        brainBitSession_handle()
+        brainBitSession_handle();
       }
       return () => {
         clearTimeout();
@@ -90,7 +90,6 @@ export default function Dashboard({navigation}) {
         iPageSize: pageSize,
       };
       const url = API.GETFEEDS;
-      console.log({reqData, loading, isListEnd});
       if (!loading && !isListEnd) {
         setLoading(true);
         const result = await postApi(url, reqData, login_data.accessToken);
@@ -113,6 +112,8 @@ export default function Dashboard({navigation}) {
             setRefreshing(false);
           }
         }
+      } else {
+        console.log({reqData, loading, isListEnd, url});
       }
     } catch (e) {
       console.log('error', e);
@@ -330,6 +331,7 @@ export default function Dashboard({navigation}) {
     setPageSize(5);
     getFeeds();
     setRefreshing(false);
+    setIsListEnd(false)
   };
 
   useFocusEffect(
@@ -392,19 +394,19 @@ export default function Dashboard({navigation}) {
     }
   };
 
-  const nuggetActivity_handle = async (storyIds) => {
+  const nuggetActivity_handle = async storyIds => {
     const url = API.nugget_activity;
     const param = {
       // _USER_ID: login_data.response.ZRTC,
       UserId: login_data?.response?.ZRTC,
-      NuggetId: storyIds,// [1,2,3]
+      NuggetId: storyIds, // [1,2,3]
     };
     console.log({param});
     try {
       const result = await postApi(url, param, login_data.accessToken);
       console.log({postLike: result.data});
       if (result.status == 200) {
-        //-----goto 
+        //-----goto
       }
     } catch (e) {
       console.log(e);
@@ -422,7 +424,7 @@ export default function Dashboard({navigation}) {
       const result = await postApi(url, param, login_data.accessToken);
       console.log({brainBitSession_handle: result.data});
       if (result.status == 200) {
-        //-----goto 
+        //-----goto
       }
     } catch (e) {
       console.log(e);
@@ -487,14 +489,14 @@ export default function Dashboard({navigation}) {
     //   nuggetActivity_handle(storyIds)
     // }
   };
-  
+
   const updateSeenStories = ({story: {story_id}}) => {
     console.log({seen: story_id});
     // setSeenStories(prevSet => {
     //   prevSet.add(story_id);
     //   return prevSet;
     // });
-    nuggetActivity_handle(story_id)
+    nuggetActivity_handle(story_id);
   };
 
   const ListHeaderComponent = () => {

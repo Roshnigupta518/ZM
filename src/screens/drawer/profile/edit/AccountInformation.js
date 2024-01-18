@@ -232,7 +232,6 @@ export default function AccountInformation({navigation}) {
                 placeholder="Edit Email"
                 placeholderTextColor="#808080"
                 autoCapitalize="none"
-                keyboardType="numeric"
                 returnKeyType="next"
                 value={email}
                 underlineColorAndroid="#f000"

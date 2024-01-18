@@ -403,13 +403,11 @@ const RegisterScreen = ({props, navigation}) => {
               <View style={[st.wdh48, st.ml_15]}>
                 <View style={styles.inputdobStyle}>
                   <Text
-                    // style={[{color: '#8b9cb5'}]}
                     style={{
                       color: inputs?.dob ? '#000' : '#808080',
                     }}
                     onPress={() => setOpen(true)}>
                     {inputs?.dob ? inputs?.dob : 'Enter DOB'}
-                    {/* {date} */}
                   </Text>
 
                   <DatePicker
@@ -426,7 +424,9 @@ const RegisterScreen = ({props, navigation}) => {
                       setOpen(false);
                     }}
                     maximumDate={moment()}
-                    textColor={colors.black}
+                    textColor={
+                      darktheme === 'dark' ? colors.black : colors.white
+                    }
                     // maximumDate={moment()?.subtract(5, 'years')}
                   />
                 </View>

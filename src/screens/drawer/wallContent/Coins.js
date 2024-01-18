@@ -31,6 +31,8 @@ export default function Coins({navigation}) {
   const [promotionalData, setPromotionalData] = useState();
   const [Payment_Type, setPayment_Type] = useState();
   const [details, setDetails] = useState([]);
+  const [socialStatus, setSocialStatus] = useState();
+  const [promoStatus, setPromoStatus] = useState();
 
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
@@ -135,6 +137,36 @@ export default function Coins({navigation}) {
     }
   };
 
+  const getSocialStatusHandle = async () => {
+    const url = API.SOCIAL_STATUS + login_data?.response.ZRID; //12345
+    try {
+      const result = await getApi(url, login_data.accessToken);
+      console.log({getSocialStatusHandle: result.data});
+      if (result.status == 200) {
+        //-----goto
+        const data = result.data;
+        setSocialStatus(data[1]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getPromotionalStatusHandle = async () => {
+    const url = API.PROMOTIONAL_STATUS + login_data?.response.ZRID; //12345
+    try {
+      const result = await getApi(url, login_data.accessToken);
+      console.log({getPromotionalStatusHandle: result.data});
+      if (result.status == 200) {
+        //-----goto
+        const data = result.data;
+        setPromoStatus(data[1]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const getData = async () => {
     const url = API.GET_BACKACC + login_data.response.ZRID;
 
@@ -154,6 +186,8 @@ export default function Coins({navigation}) {
     handleSubmitPress();
     getPromotionalPoint();
     getData();
+    getSocialStatusHandle();
+    getPromotionalStatusHandle();
   }, []);
 
   return (
@@ -191,11 +225,11 @@ export default function Coins({navigation}) {
                 style={styles.coinsBox}>
                 <View style={st.align_C}>
                   <View style={[st.row, st.align_C]}>
-                    <Icon name={'rotate-orbit'} size={35} />
+                    <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
                     <Text style={[st.tx16(darktheme)]}>
                       {'  Promotional Brainbits  '}
                     </Text>
-                    <Icon name={'rotate-orbit'} size={35} />
+                    <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
                   </View>
 
                   {showPromotional && (
@@ -213,6 +247,7 @@ export default function Coins({navigation}) {
                 {showPromotional && (
                   <View style={[st.row, st.justify_S]}>
                     <TouchableOpacity
+                      disabled={promoStatus != 'Pending' ? false : true}
                       onPressIn={onPressIn}
                       onPressOut={onPressOut}
                       onPress={() => {
@@ -224,7 +259,15 @@ export default function Coins({navigation}) {
                           navigation.navigate('UPI', {edit: false});
                         }
                       }}
-                      style={styles.redeemBtn}>
+                      style={[
+                        styles.redeemBtn,
+                        {
+                          backgroundColor:
+                            promoStatus != 'Pending'
+                              ? colors.green
+                              : colors.grey,
+                        },
+                      ]}>
                       <Text
                         style={[st.tx14_s(darktheme), {color: colors.white}]}>
                         Redeem
@@ -235,14 +278,25 @@ export default function Coins({navigation}) {
                       <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
                         Status
                       </Text>
-                      <Pressable onPress={() => navigation.navigate('MyCoins')}>
+                      <Pressable
+                        onPress={() => {
+                          if (promoStatus != 'Pending') {
+                            navigation.navigate('MyCoins');
+                          }
+                        }}>
                         <Text
                           style={[
                             st.tx14(darktheme),
-                            st.txDecor,
-                            {color: colors.green},
+                            {
+                              color:
+                                promoStatus != 'Pending'
+                                  ? colors.green
+                                  : colors.danger,
+                              textDecorationLine:
+                                promoStatus != 'Pending' ? 'underline' : 'none',
+                            },
                           ]}>
-                          Completed
+                          {promoStatus}
                         </Text>
                       </Pressable>
                     </View>
@@ -263,11 +317,11 @@ export default function Coins({navigation}) {
               style={styles.coinsBox}>
               <View style={st.align_C}>
                 <View style={[st.row, st.align_C]}>
-                  <Icon name={'rotate-orbit'} size={35} />
+                  <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
                   <Text style={[st.tx16(darktheme), st.txAlignC, ,]}>
                     Social Media Activity {'\n'} Brainbits
                   </Text>
-                  <Icon name={'rotate-orbit'} size={35} />
+                  <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
                 </View>
 
                 {showSocial && (
@@ -285,8 +339,9 @@ export default function Coins({navigation}) {
 
               {showSocial && (
                 <View style={[st.row, st.justify_S]}>
-                  {/* {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && ( */}
+                  {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
                     <TouchableOpacity
+                      disabled={socialStatus != 'Pending' ? false : true}
                       onPressIn={onPressInSocial}
                       onPressOut={onPressOutSocial}
                       onPress={() => {
@@ -298,22 +353,47 @@ export default function Coins({navigation}) {
                           navigation.navigate('UPI', {edit: false});
                         }
                       }}
-                      style={styles.redeemBtn}>
+                      style={[
+                        styles.redeemBtn,
+                        {
+                          backgroundColor:
+                            promoStatus != 'Pending'
+                              ? colors.green
+                              : colors.grey,
+                        },
+                      ]}>
                       <Text
                         style={[st.tx14_s(darktheme), {color: colors.white}]}>
                         Redeem
                       </Text>
                     </TouchableOpacity>
-                  {/* )} */}
+                  )}
                   {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
                     <View style={st.mt_t10}>
                       <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
                         Status
                       </Text>
-                      <Pressable onPress={() => navigation.navigate('MyCoins')}>
+                      <Pressable
+                        onPress={() => {
+                          if (socialStatus != 'Pending') {
+                            navigation.navigate('MyCoins');
+                          }
+                        }}>
                         <Text
-                          style={[st.tx14(darktheme), {color: colors.danger}]}>
-                          In-progress
+                          style={[
+                            st.tx14(darktheme),
+                            {
+                              color:
+                                socialStatus != 'Pending'
+                                  ? colors.green
+                                  : colors.danger,
+                              textDecorationLine:
+                                socialStatus != 'Pending'
+                                  ? 'underline'
+                                  : 'none',
+                            },
+                          ]}>
+                          {socialStatus}
                         </Text>
                       </Pressable>
                     </View>

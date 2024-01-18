@@ -322,10 +322,10 @@ const EditPost = ({navigation, route}) => {
       const result = await postApi(url, params, login_data.accessToken);
       console.log({quizEdit: result.data});
       if (result.status == 200) {
-        const data  = result.data
-        if(data.ResponseId == -2){
-          alert(data.MessageText)
-        }else{
+        const data = result.data;
+        if (data.ResponseId == -2) {
+          alert(data.MessageText);
+        } else {
           savePost_handle(quizId, '3');
         }
         setLoading(false);
@@ -458,7 +458,7 @@ const EditPost = ({navigation, route}) => {
           modal
           open={open}
           date={date}
-          textColor={colors.black}
+          textColor={darktheme === 'dark' ? colors.black : colors.white}
           onConfirm={dateResp => {
             setOpen(false);
             setDate(dateResp);

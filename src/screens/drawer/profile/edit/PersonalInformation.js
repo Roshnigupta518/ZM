@@ -88,7 +88,7 @@ export default function PersonalInformation({navigation}) {
     };
     try {
       const result = await postApi(url, param, login_data.accessToken);
-      console.log({url, param,});
+      console.log({url, param});
       if (result.status == 200) {
         const tempdata = JSON.parse(result.data.Response);
         let data = null;
@@ -208,7 +208,7 @@ export default function PersonalInformation({navigation}) {
   };
 
   const setDateFormet = date => {
-    const dob = moment(date).format('DD.MMMM.YYYY'); 
+    const dob = moment(date).format('DD.MMMM.YYYY');
     handleOnchange(dob, 'dob');
     console.log({monthname: dob});
 
@@ -371,7 +371,7 @@ export default function PersonalInformation({navigation}) {
                 open={open}
                 date={date}
                 mode={'date'}
-                textColor={colors.black}
+                textColor={darktheme === 'dark' ? colors.black : colors.white}
                 onConfirm={dateResp => {
                   setOpen(false);
                   setDate(dateResp);
@@ -478,6 +478,7 @@ export default function PersonalInformation({navigation}) {
                 darktheme={darktheme}
                 value={inputs.pincode}
                 error={errors?.pincode}
+                keyboardType="numeric"
               />
             </View>
           </View>
