@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "984339765771",
-    "project_id": "zmeros-c279a",
-    "storage_bucket": "zmeros-c279a.appspot.com"
+    "project_number": "8476769465",
+    "project_id": "zeros-f8194",
+    "storage_bucket": "zeros-f8194.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:984339765771:android:64750ac788a58aecd3850e",
+        "mobilesdk_app_id": "1:8476769465:android:6fb356b67ff69a199d6f68",
         "android_client_info": {
           "package_name": "com.zm"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "984339765771-4puvgoel0in70rh4us7ts4i4ohddlk9f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCI5fSp8DNsjUKM2QgATPp9zpUN8jgXgb0"
+          "current_key": "AIzaSyAtlKg09WSVxGLUW4XfqNoIdc3sA3tHn8o"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "984339765771-4puvgoel0in70rh4us7ts4i4ohddlk9f.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

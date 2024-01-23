@@ -424,7 +424,7 @@ const RegisterScreen = ({props, navigation}) => {
                     onCancel={() => {
                       setOpen(false);
                     }}
-                    maximumDate={moment()}
+                    // maximumDate={moment()}
                     textColor={colors.black}
                     // maximumDate={moment()?.subtract(5, 'years')}
                   />
