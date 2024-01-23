@@ -179,6 +179,7 @@ const RegisterScreen = ({props, navigation}) => {
 
     if (isValid) {
       handleSubmitButton();
+      // navigation.navigate('OtpScreen');
     } else {
       console.log('valid');
     }
@@ -244,7 +245,7 @@ const RegisterScreen = ({props, navigation}) => {
         }
       } catch (e) {
         console.log(e);
-        alert(e);
+        // alert(e);
       }
     } else {
       setFcmToken(fcmtoken);
@@ -258,7 +259,7 @@ const RegisterScreen = ({props, navigation}) => {
   const handleSubmitButton = async () => {
     setLoading(true);
 
-    const reqData = {
+    const register_data = {
       imRegFName: inputs.firstName,
       imRegLName: inputs.lastName,
       imRegIdentityId: inputs.number,
@@ -268,25 +269,29 @@ const RegisterScreen = ({props, navigation}) => {
       imRegDob: inputs.dob,
       deviceTokenId: fcmToken,
     };
-    const url = API.SIGNUP;
+
+    const reqData = {
+      mobile: inputs.number,
+      fullName: inputs.firstName + inputs.lastName,
+    };
+    // const url = API.SIGNUP;
+    const url = API.OTP_SEND;
     try {
       const result = await postApi(url, reqData);
       console.log({result: result.data});
       if (result.status == 200) {
-        // setIsRegistraionSuccess(true);
         const data = result.data;
         setLoading(false);
-        if (data?.IsSuccessed) {
-          // navigation.navigate('OtpScreen');
-          dispatch(setLogin(data));
-          setInputs(INITIAL_INPUT);
+        if ((data[1] = 'Success')) {
+          navigation.navigate('OtpScreen', register_data);
+          // dispatch(setLogin(data));
+          // setInputs(INITIAL_INPUT);
         } else {
           setTitle('Sorry');
-          setSubtitle(data.message);
+          setSubtitle(data[1]);
           setPopupMessageVisibility(true);
         }
       } else {
-        console.log('sign up fail');
         setLoading(false);
       }
     } catch (e) {

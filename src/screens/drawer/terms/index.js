@@ -41,7 +41,7 @@ const Terms = ({navigation}) => {
               '\n\nApplication shall mean and include the software and mobile application of Zeros accessed through or downloaded from the app store viz., Android or iOS, and accessible from any compatible device.'
             }
             {
-              '\n\nContent means and includes, without limitation, any information, data, text, pictures, audio, video, GIFs, polls, user profiles, software, tags, graphics, and interactive features generated, provided, or otherwise made accessible either by you or other users or by us or our partners or sponsors on or through the Service/s. \n\nZeros shall mean any post by a registered user on the Application.'
+              '\n\nContent means and includes, without limitation, any information, data, text, pictures, audio, video, GIFs, polls, user profiles, software, tags, graphics, and interactive features generated, provided, or otherwise made accessible either by you or other users or by us or our partners or sponsors on or through the Services. \n\nZeros shall mean any post by a registered user on the Application.'
             }
             {
               '\n\nYou or User shall mean any registered user of the Application. If you are accepting these Terms and using the Services on behalf of any juristic entity or any other person, you represent and warrant that you are authorized to do so and have the authority to bind such entity or person to these Terms, in which case the words “you” and “your” as used in these Terms shall refer to such entity or person irrevocably.'
@@ -64,8 +64,8 @@ const Terms = ({navigation}) => {
             The Services provided to you are for your personal and
             non-commercial purposes only and should not be shared with
             individuals in violation of these Terms and allied policies. We
-            specifically prohibit sale or purchase of a Zeros account or handle
-            {'\n'}.You are responsible for safeguarding your account and you
+            specifically prohibit sale or purchase of a Zeros account or handle.
+            {'\n'}You are responsible for safeguarding your account and you
             agree not to disclose your password to any third party. You agree
             that you will be solely responsible for any activities or actions
             taken under your account or handle name or password, irrespective of
@@ -76,7 +76,7 @@ const Terms = ({navigation}) => {
             circulation of any content if the said content violates the
             Community Guidelines of the App. The Company may also suspend or
             terminate your account for such a violation. Please refer to our
-            other policies on how we moderate the Content{'\n'}.The Company is
+            other policies on how we moderate the Content.{'\n'}The Company is
             committed to safeguarding the efficiency of the Application. For
             that reason, we reserve the right to make changes to the Application
             for maintenance at any time. If such situations cause an
@@ -94,7 +94,7 @@ const Terms = ({navigation}) => {
             of our Service. We may terminate or restrict your use of our Service
             if you violate these Terms or are engaged in any illegal or
             fraudulent or unethical or unwarranted or otherwise malicious use of
-            our Service{'\n'}.You agree not to use the accounts of other Users,
+            our Service.{'\n'}You agree not to use the accounts of other Users,
             disparage other accounts, or indulge in any activity which violates
             the Community Guidelines. We do not claim ownership of your content
             that you post on or through the Service. By submitting, posting,
@@ -109,7 +109,7 @@ const Terms = ({navigation}) => {
             or communicate through our Services and such Content is not subject
             to copyright or other proprietary rights of third parties unless you
             are legally entitled to post such Content through necessary
-            permission or otherwise{'\n'}.We do not undertake any obligation to
+            permission or otherwise.{'\n'}We do not undertake any obligation to
             monitor user generated content, except to the extent required by
             law. We are an intermediary that primarily enables online
             interaction between two or more users and allows them to create,
@@ -138,12 +138,12 @@ const Terms = ({navigation}) => {
             may lead to termination of your user account and/or other legal
             consequences. Please do not hesitate to seek your own legal advice
             before filing or contesting any report for intellectual property
-            violation{'\n'}.We reserve the right to update, modify, alter,
-            amend, these Terms at any time, at our sole discretion{'\n'}.We do
+            violation.{'\n'}We reserve the right to update, modify, alter,
+            amend, these Terms at any time, at our sole discretion.{'\n'}We do
             not endorse, support, represent, authorize the circulation of all
             Content published on our Application, and we do not further attest
             to the accuracy, originality, reliability, legitimacy, completeness,
-            of such Content, as available on our Services{'\n'}.All the Content
+            of such Content, as available on our Services.{'\n'}All the Content
             that is available on the Application is the sole responsibility of
             the originator of the Content. Your use or reliance on any Content
             while availing the Services is solely at your own risk. As a User,
@@ -165,7 +165,7 @@ const Terms = ({navigation}) => {
             directions or in other compelling circumstances, it may not always
             be possible to immediately notify you of an action taken on our
             part. You may appeal against any action taken to the Grievance
-            Officer whose details are provided below{'\n'}. We give you a
+            Officer whose details are provided below.{'\n'} We give you a
             personal, worldwide, royalty-free, non-assignable and non-exclusive
             license to use the software provided to you as part of the Services.
             The Services made available to you are protected by copyright,
@@ -453,8 +453,8 @@ const Terms = ({navigation}) => {
             taken up with the designated Grievance Officer as mentioned below.
             You have the right to appeal against any action on your complaint or
             Content to the Grievance Officer. The Grievance Officer shall
-            endeavor to resolve the same in an expeditious manner. Mr. Yogesh,
-            Grievance Officer
+            endeavor to resolve the same in an expeditious manner. Mrs. Vaishali Yogesh Patil,
+            Grievance Officer.
             {'\n'}Reach out to us on info@zeros.co.in or whatsup on 8904703490
             or Telegram group "Zeros users" in case of any queries.
             {'\n'}
@@ -466,7 +466,7 @@ const Terms = ({navigation}) => {
             <Text style={st.txbold}>14. REFERENCE</Text>
             {'\n'}
             If you have any questions regarding the Service, please contact
-            Zeros at support@zeros.co.in Please note that for the purpose of
+            Zeros at admin@zeros.co.in Please note that for the purpose of
             validation, you shall be required to provide information (including,
             but not limited to your email address, contact number, or,
             registered mobile number, etc.) for the purpose of sufficient

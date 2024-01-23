@@ -4,6 +4,7 @@ class Endpoints {
   baseUrl = environment.baseUrl;
   LOGIN = this.baseUrl + 'Signner/SigninV2';
   SIGNUP = this.baseUrl + 'Signner/Signupv2';
+  OTP_SEND = this.baseUrl + 'Signner/SendMobileOtpV2';
   OtpVarify = this.baseUrl + 'Signner/PhoneActconfirmV2';
   OTPActResend = this.baseUrl + 'Signner/PhoneActResendV2';
   NEWPOST = this.baseUrl + 'Posting/PostingNewPostV2';
@@ -80,6 +81,7 @@ class Endpoints {
   ADD_SOCIAL = this.baseUrl + 'BrainBit/AddSocialPaymentDetailsV2';
   SOCIAL_STATUS = this.baseUrl + 'BrainBit/GetSocialPaymentStatusV2?userId=';
   PROMOTIONAL_STATUS = this.baseUrl + 'BrainBit/GetPromotionalPaymentStatusV2?userId=';
+  ACTIVITY_STATUS = this.baseUrl + 'BrainBit/GetBrainBitSocialActivityStatusV2?userid='
 }
 
 export const API = new Endpoints();

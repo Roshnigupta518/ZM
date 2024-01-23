@@ -220,11 +220,11 @@ const Redeem = ({navigation, route}) => {
             return (
               <Pressable
                 disabled={item.IS_BENEFICIARY_VERFIED == 0 ? true : false}
-                onPress={() => handleCardPress(index)}
+                onPress={() => handleCardPress(item.ID)}
                 style={[st.row, st.align_C, st.mt_B]}>
                 <View style={st.wdh10}>
                   <View style={[styles.circle]}>
-                    {selectedCard === index && (
+                    {selectedCard === item.ID && (
                       <View style={styles.checkedCircle} />
                     )}
                   </View>

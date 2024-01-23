@@ -46,13 +46,13 @@ const HomeStack = ({InitialRoute}) => {
   return (
     <Stack.Navigator
       initialRouteName={
-        InitialRoute == false ? 'OtpScreen' : 'DrawerNavigationRoutes'
+        InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
       }>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="OtpScreen"
         component={Otp}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="ProfilePictureScreen"
         component={ProfilePicture}

@@ -117,7 +117,7 @@ const PrivacyPolicy = ({navigation}) => {
             }
 
             {
-              '\n\n15. Grievance Redressal Mechanism\n\nAny discrepancies or grievances with regard to content and or comment or breach of this Agreement shall be taken up with the designated Grievance Officer as mentioned below.\n\nMrs. Savita Chandekar, Grievance Officer\n\nReach out to us on support@zeros.co.in, info@zeros.co.in or whatsup on 8904703490 in case of any queries. \n\nFor queries regarding processing of personal data, users can write to us at info@zeros.co.in or raise a request using this form. '
+              '\n\n15. Grievance Redressal Mechanism\n\nAny discrepancies or grievances with regard to content and or comment or breach of this Agreement shall be taken up with the designated Grievance Officer as mentioned below.\n\nMrs. Savita Chandekar, Grievance Officer\n\nReach out to us on admin@zeros.co.in, info@zeros.co.in or whatsup on 8904703490 in case of any queries. \n\nFor queries regarding processing of personal data, users can write to us at info@zeros.co.in or raise a request using this form. '
             }
           </Text>
         </View>

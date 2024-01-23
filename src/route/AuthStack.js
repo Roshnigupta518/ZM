@@ -38,6 +38,11 @@ const AuthStack = ({introSlides}) => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="OtpScreen"
+        component={Otp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="forgotPassword"
         component={ForgotPassword}
         options={{headerShown: false}}

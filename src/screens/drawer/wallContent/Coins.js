@@ -25,14 +25,16 @@ export default function Coins({navigation}) {
   const [showPromotional, setShowPromotional] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
-  const [title, setTitle] = useState('Are you sure?');
-  const [subtitle, setSubtitle] = useState('Do you want to redeem it?');
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
   const [data, setData] = useState('');
   const [promotionalData, setPromotionalData] = useState();
   const [Payment_Type, setPayment_Type] = useState();
   const [details, setDetails] = useState([]);
   const [socialStatus, setSocialStatus] = useState();
   const [promoStatus, setPromoStatus] = useState();
+  const [actStatus, setActStatus] = useState([]);
+  const [infoStatus, setInfoStatus] = useState(false);
 
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
@@ -96,7 +98,7 @@ export default function Coins({navigation}) {
           onPopupMessageModalClick(value);
         }}
         darktheme={darktheme}
-        twoButton={true}
+        twoButton={!infoStatus ? true : false}
         onPress_api={() =>
           navigation.navigate('Redeem', {
             data: data,
@@ -182,12 +184,28 @@ export default function Coins({navigation}) {
     }
   };
 
+  const getActivityStatusHandle = async () => {
+    const url = API.ACTIVITY_STATUS + login_data.response.ZRID;
+
+    try {
+      const result = await getApi(url, login_data.accessToken);
+      console.log({getActivityStatusHandle: result.data});
+      if (result.status == 200) {
+        const data = result.data;
+        setActStatus(data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     handleSubmitPress();
     getPromotionalPoint();
     getData();
     getSocialStatusHandle();
     getPromotionalStatusHandle();
+    getActivityStatusHandle();
   }, []);
 
   return (
@@ -225,11 +243,19 @@ export default function Coins({navigation}) {
                 style={styles.coinsBox}>
                 <View style={st.align_C}>
                   <View style={[st.row, st.align_C]}>
-                    <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
+                    <Icon
+                      name={'rotate-orbit'}
+                      size={35}
+                      color={icon_color(darktheme)}
+                    />
                     <Text style={[st.tx16(darktheme)]}>
                       {'  Promotional Brainbits  '}
                     </Text>
-                    <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
+                    <Icon
+                      name={'rotate-orbit'}
+                      size={35}
+                      color={icon_color(darktheme)}
+                    />
                   </View>
 
                   {showPromotional && (
@@ -247,12 +273,14 @@ export default function Coins({navigation}) {
                 {showPromotional && (
                   <View style={[st.row, st.justify_S]}>
                     <TouchableOpacity
-                      disabled={promoStatus != 'Pending' ? false : true}
+                      // disabled={promoStatus != 'Pending' ? false : true}
                       onPressIn={onPressIn}
                       onPressOut={onPressOut}
                       onPress={() => {
                         if (details?.length > 0) {
                           onPopupMessageModalClick(!popupMessageVisibility);
+                          setTitle('Are you sure ?');
+                          setSubtitle('Do you want to redeem it?');
                           setData(promotionalData);
                           setPayment_Type(0);
                         } else {
@@ -261,12 +289,12 @@ export default function Coins({navigation}) {
                       }}
                       style={[
                         styles.redeemBtn,
-                        {
-                          backgroundColor:
-                            promoStatus != 'Pending'
-                              ? colors.green
-                              : colors.grey,
-                        },
+                        // {
+                        //   backgroundColor:
+                        //     promoStatus != 'Pending'
+                        //       ? colors.green
+                        //       : colors.grey,
+                        // },
                       ]}>
                       <Text
                         style={[st.tx14_s(darktheme), {color: colors.white}]}>
@@ -317,11 +345,19 @@ export default function Coins({navigation}) {
               style={styles.coinsBox}>
               <View style={st.align_C}>
                 <View style={[st.row, st.align_C]}>
-                  <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
+                  <Icon
+                    name={'rotate-orbit'}
+                    size={35}
+                    color={icon_color(darktheme)}
+                  />
                   <Text style={[st.tx16(darktheme), st.txAlignC, ,]}>
                     Social Media Activity {'\n'} Brainbits
                   </Text>
-                  <Icon name={'rotate-orbit'} size={35} color={icon_color(darktheme)} />
+                  <Icon
+                    name={'rotate-orbit'}
+                    size={35}
+                    color={icon_color(darktheme)}
+                  />
                 </View>
 
                 {showSocial && (
@@ -417,11 +453,26 @@ export default function Coins({navigation}) {
               </View>
 
               <View style={{borderBottomWidth: 1, borderColor: colors.grey}} />
-
+              {/* {actStatus.map((i,n)=>{ */}
               <View style={[st.row, st.justify_S, st.mt_t10]}>
-                <Text style={[st.tx16(darktheme)]}>{'Nugget'}</Text>
+                <View style={st.row}>
+                  <Text style={[st.tx16(darktheme)]}>{'Nuggets'}</Text>
+                  <Icon
+                    name="information-outline"
+                    size={25}
+                    color={colors.black}
+                    style={st.ml_15}
+                    onPress={() => {
+                      setInfoStatus(true);
+                      setTitle('Information');
+                      setSubtitle('Nuggets details showing here');
+                      setPopupMessageVisibility(!popupMessageVisibility);
+                    }}
+                  />
+                </View>
                 <Icon name="check" size={25} color={colors.green} />
               </View>
+              {/* })} */}
 
               <View style={[st.row, st.justify_S, st.mt_t10]}>
                 <Text style={[st.tx16(darktheme)]}>{'Session'}</Text>

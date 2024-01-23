@@ -398,13 +398,13 @@ export default function Dashboard({navigation}) {
     const url = API.nugget_activity;
     const param = {
       // _USER_ID: login_data.response.ZRTC,
-      UserId: login_data?.response?.ZRTC,
+      UserId: login_data?.response?.ZRID,
       NuggetId: storyIds, // [1,2,3]
     };
-    console.log({param});
+    console.log({param, url});
     try {
       const result = await postApi(url, param, login_data.accessToken);
-      console.log({postLike: result.data});
+      console.log({nuggetActivity_handle: result.data});
       if (result.status == 200) {
         //-----goto
       }

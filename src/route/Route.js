@@ -29,15 +29,8 @@ const Route = () => {
     }, 2000);
   }, []);
 
-  // HandleBackPress();
-  
   return (
-    <NavigationContainer
-      fallback={<ActivityIndicator />}
-      // theme={scheme === darktheme ? DarkTheme : DefaultTheme}
-    >
-      
-
+    <NavigationContainer fallback={<ActivityIndicator />}>
       {isLoading ? (
         <Init />
       ) : login_data ? (
@@ -45,8 +38,6 @@ const Route = () => {
       ) : (
         <AuthStack introSlides={introSlideData} />
       )}
-
-      
     </NavigationContainer>
   );
 };
