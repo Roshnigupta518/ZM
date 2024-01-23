@@ -458,6 +458,7 @@ const Terms = ({navigation}) => {
             {'\n'}Reach out to us on info@zeros.co.in or whatsup on 8904703490
             or Telegram group "Zeros users" in case of any queries.
             {'\n'}
+            
             {'\n'}A Grievance Redressal Process in accordance with applicable
             law has been created and is available on the Compliance page on our
             website.
