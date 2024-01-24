@@ -53,14 +53,13 @@ export default function OtpScreen({navigation, route}) {
     const url = API.SIGNUP;
     try {
       setLoading(true);
-      const result = await postApi(url, reqData);
+      const result = await postApi(url, register_data);
       console.log({result: result.data});
       if (result.status == 200) {
         const data = result.data;
         setLoading(false);
         if (data?.IsSuccessed) {
           dispatch(setLogin(data));
-          // setInputs(INITIAL_INPUT);
         } else {
           setTitle('Sorry');
           setSubtitle(data.message);
@@ -106,10 +105,13 @@ export default function OtpScreen({navigation, route}) {
     if (code) {
       const reqData = {
         // iDentity: 'string', // number
+        // iPhoneOTP: code,
+        // iOTPMode: 'Phone',
+
+        iMobile: register_data?.imRegIdentityId,
         iPhoneOTP: code,
-        iOTPMode: 'Phone',
       };
-      const url = API.OtpVarify;
+      const url = API.PhoneActVarifi;
       try {
         setLoading(true);
         const result = await postApi(url, reqData);

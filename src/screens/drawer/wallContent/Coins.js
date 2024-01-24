@@ -273,7 +273,11 @@ export default function Coins({navigation}) {
                 {showPromotional && (
                   <View style={[st.row, st.justify_S]}>
                     <TouchableOpacity
-                      // disabled={promoStatus != 'Pending' ? false : true}
+                      disabled={
+                        promoStatus != 'Pending' && promoStatus == ''
+                          ? false
+                          : true
+                      }
                       onPressIn={onPressIn}
                       onPressOut={onPressOut}
                       onPress={() => {
@@ -289,12 +293,12 @@ export default function Coins({navigation}) {
                       }}
                       style={[
                         styles.redeemBtn,
-                        // {
-                        //   backgroundColor:
-                        //     promoStatus != 'Pending'
-                        //       ? colors.green
-                        //       : colors.grey,
-                        // },
+                        {
+                          backgroundColor:
+                            promoStatus != 'Pending' && promoStatus == ''
+                              ? colors.green
+                              : colors.grey,
+                        },
                       ]}>
                       <Text
                         style={[st.tx14_s(darktheme), {color: colors.white}]}>
@@ -303,12 +307,14 @@ export default function Coins({navigation}) {
                     </TouchableOpacity>
 
                     <View style={st.mt_t10}>
-                      <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                        Status
-                      </Text>
+                      {promoStatus != '' && (
+                        <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                          Status
+                        </Text>
+                      )}
                       <Pressable
                         onPress={() => {
-                          if (promoStatus != 'Pending') {
+                          if (promoStatus != 'Pending' && promoStatus == '') {
                             navigation.navigate('MyCoins');
                           }
                         }}>
@@ -317,11 +323,13 @@ export default function Coins({navigation}) {
                             st.tx14(darktheme),
                             {
                               color:
-                                promoStatus != 'Pending'
+                                promoStatus != 'Pending' && promoStatus == ''
                                   ? colors.green
                                   : colors.danger,
                               textDecorationLine:
-                                promoStatus != 'Pending' ? 'underline' : 'none',
+                                promoStatus != 'Pending' && promoStatus == ''
+                                  ? 'underline'
+                                  : 'none',
                             },
                           ]}>
                           {promoStatus}
@@ -377,7 +385,11 @@ export default function Coins({navigation}) {
                 <View style={[st.row, st.justify_S]}>
                   {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
                     <TouchableOpacity
-                      disabled={socialStatus != 'Pending' ? false : true}
+                      disabled={
+                        socialStatus != 'Pending' && socialStatus == ''
+                          ? false
+                          : true
+                      }
                       onPressIn={onPressInSocial}
                       onPressOut={onPressOutSocial}
                       onPress={() => {
@@ -393,7 +405,7 @@ export default function Coins({navigation}) {
                         styles.redeemBtn,
                         {
                           backgroundColor:
-                            promoStatus != 'Pending'
+                            (socialStatus != 'Pending'&&socialStatus == '')
                               ? colors.green
                               : colors.grey,
                         },
@@ -406,12 +418,14 @@ export default function Coins({navigation}) {
                   )}
                   {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
                     <View style={st.mt_t10}>
-                      <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                        Status
-                      </Text>
+                      {socialStatus != '' && (
+                        <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                          Status
+                        </Text>
+                      )}
                       <Pressable
                         onPress={() => {
-                          if (socialStatus != 'Pending') {
+                          if (socialStatus != 'Pending' && socialStatus == '') {
                             navigation.navigate('MyCoins');
                           }
                         }}>
@@ -420,11 +434,11 @@ export default function Coins({navigation}) {
                             st.tx14(darktheme),
                             {
                               color:
-                                socialStatus != 'Pending'
+                                (socialStatus != 'Pending'&&socialStatus == '')
                                   ? colors.green
                                   : colors.danger,
                               textDecorationLine:
-                                socialStatus != 'Pending'
+                                (socialStatus != 'Pending'&&socialStatus == '')
                                   ? 'underline'
                                   : 'none',
                             },
@@ -457,7 +471,7 @@ export default function Coins({navigation}) {
               <View style={[st.row, st.justify_S, st.mt_t10]}>
                 <View style={st.row}>
                   <Text style={[st.tx16(darktheme)]}>{'Nuggets'}</Text>
-                  <Icon
+                  {/* <Icon
                     name="information-outline"
                     size={25}
                     color={colors.black}
@@ -468,7 +482,7 @@ export default function Coins({navigation}) {
                       setSubtitle('Nuggets details showing here');
                       setPopupMessageVisibility(!popupMessageVisibility);
                     }}
-                  />
+                  /> */}
                 </View>
                 <Icon name="check" size={25} color={colors.green} />
               </View>

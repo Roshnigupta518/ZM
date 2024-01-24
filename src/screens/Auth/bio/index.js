@@ -22,11 +22,15 @@ const INITIAL_INPUT = {
   userBio: '',
 };
 
-export default function BioScreen({navigation}) {
+export default function BioScreen({navigation, route}) {
   const [inputs, setInputs] = useState(INITIAL_INPUT);
   const [inputsErr, setInputsErr] = useState(INITIAL_INPUT);
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
+
+  const initVal = route?.params?.data;
+
+  console.log({initVal});
 
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({...prevState, [input]: text}));
@@ -35,7 +39,7 @@ export default function BioScreen({navigation}) {
   const handleError = (error, input) => {
     setInputsErr(prevState => ({...prevState, [input]: error}));
   };
-
+  console.log({token: login_data.accessToken});
   const bioHandle = async () => {
     const url = API.UserBio;
     const reqData = {
@@ -71,13 +75,15 @@ export default function BioScreen({navigation}) {
 
   return (
     <View style={[st.container(darktheme)]}>
-      <Header
-        title={'Add Bio'}
-        onPress={() => navigation.goBack()}
-        darktheme={darktheme}
-        onEditHandle={ validate}
-        edit={true}
-      />
+      {!initVal == true && (
+        <Header
+          title={'Add Bio'}
+          onPress={() => navigation.goBack()}
+          darktheme={darktheme}
+          onEditHandle={validate}
+          edit={true}
+        />
+      )}
 
       <View style={[st.pd20]}>
         <Text style={[st.tx18(darktheme), st.txAlignC]}>Describe yourself</Text>
@@ -85,21 +91,22 @@ export default function BioScreen({navigation}) {
         <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
           What's special about you? Describe yourSelf.
         </Text>
-        <View style={{marginTop:40}}>
-        <Input
-          onChangeText={text => handleOnchange(text, 'userBio')}
-          onFocus={() => handleError(null, 'userBio')}
-          placeholder={'Write something about you'}
-          placeholderTextColor="#808080"
-          error={inputsErr?.userBio}
-          darktheme={darktheme}
-          multiline
-        />
+        <View style={{marginTop: 40}}>
+          <Input
+            onChangeText={text => handleOnchange(text, 'userBio')}
+            onFocus={() => handleError(null, 'userBio')}
+            placeholder={'Write something about you'}
+            placeholderTextColor="#808080"
+            error={inputsErr?.userBio}
+            darktheme={darktheme}
+            multiline
+          />
         </View>
       </View>
-      {/* <View style={st.align_C}>
+      {initVal==true&&
+      <View style={st.align_C}>
         <Authbtn title={'Add Bio'} onPress={() => validate()} />
-      </View> */}
+      </View>}
     </View>
   );
 }

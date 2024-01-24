@@ -118,7 +118,7 @@ export default function Dashboard({navigation}) {
     } catch (e) {
       console.log('error', e);
       setLoading(false);
-      setIsListEnd(false);
+      setIsListEnd(true);
     }
   };
 

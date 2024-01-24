@@ -45,14 +45,15 @@ const HomeStack = ({InitialRoute}) => {
   console.log({InitialRoute});
   return (
     <Stack.Navigator
-      initialRouteName={
-        InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
-      }>
-      {/* <Stack.Screen
-        name="OtpScreen"
-        component={Otp}
+    // initialRouteName={
+    //   InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
+    // }
+    >
+      <Stack.Screen
+        name="DrawerNavigationRoutes"
+        component={DrawerNavigatorRoutes}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="ProfilePictureScreen"
         component={ProfilePicture}
@@ -73,12 +74,6 @@ const HomeStack = ({InitialRoute}) => {
       <Stack.Screen
         name="InterestScreen"
         component={Interest}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name="DrawerNavigationRoutes"
-        component={DrawerNavigatorRoutes}
         options={{headerShown: false}}
       />
 
@@ -212,7 +207,7 @@ const HomeStack = ({InitialRoute}) => {
         component={MyCoins}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Redeem"
         component={Redeem}
         options={{headerShown: false}}

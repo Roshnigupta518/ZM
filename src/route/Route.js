@@ -28,13 +28,13 @@ const Route = () => {
       setIsLoading(false);
     }, 2000);
   }, []);
-
+  // InitialRoute={login_data?.response?.ZRMV}
   return (
     <NavigationContainer fallback={<ActivityIndicator />}>
       {isLoading ? (
         <Init />
       ) : login_data ? (
-        <HomeStack InitialRoute={login_data?.response?.ZRMV} />
+        <HomeStack />
       ) : (
         <AuthStack introSlides={introSlideData} />
       )}

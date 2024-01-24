@@ -19,6 +19,7 @@ import DarkthemeReducer from '../reducers/Darktheme';
 import SchedulePost from '../reducers/SchedulePost';
 import UserMeta from '../reducers/UserMeta';
 import IntroSlide from '../reducers/IntroSlide';
+import Onboarding from '../reducers/Onboarding';
 const persistConfig = {
   key: 'observeNow',
   version: 1,
@@ -42,13 +43,17 @@ const IntroSlidePersistConfig = {
   storage: AsyncStorage,
   whitelist: ['IntroSlide'],
 };
-
-// 
+const OnboardingPersistConfig = {
+  key: 'Onboarding',
+  storage: AsyncStorage,
+  whitelist: ['Onboarding'],
+};
 
 const rootReducer = combineReducers({
   login: persistReducer(authPersistConfig, LoginReducer),
   darktheme: persistReducer(darkthemePersistConfig, DarkthemeReducer),
   IntroSlide : persistReducer(IntroSlidePersistConfig, IntroSlide),
+  Onboarding : persistReducer(OnboardingPersistConfig, Onboarding),
   newPost: NewPostReducer,
   NewMediaPost: NewMediaPost,
   SchedulePost: SchedulePost,

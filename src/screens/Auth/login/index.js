@@ -131,7 +131,7 @@ const LoginScreen = ({navigation}) => {
         const data = result?.data;
         setLoading(false);
         dispatch(setLogin(data));
-        dispatch(updateLogin(true));
+        // dispatch(updateLogin(true));
         setInputs(INITIALINPUT);
         navigation.navigate('DrawerNavigationRoutes');
       } else {

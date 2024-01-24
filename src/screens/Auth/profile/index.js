@@ -60,7 +60,7 @@ export default function ProfilePictureScreen({navigation}) {
     <View style={st.container(darktheme)}>
       <Header
         title={'Pick a Profile Photo'}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate('DrawerNavigationRoutes')}
         darktheme={darktheme}
       />
       

@@ -6,6 +6,7 @@ class Endpoints {
   SIGNUP = this.baseUrl + 'Signner/Signupv2';
   OTP_SEND = this.baseUrl + 'Signner/SendMobileOtpV2';
   OtpVarify = this.baseUrl + 'Signner/PhoneActconfirmV2';
+  PhoneActVarifi = this.baseUrl + 'Signner/PhoneActConfirmationV2'
   OTPActResend = this.baseUrl + 'Signner/PhoneActResendV2';
   NEWPOST = this.baseUrl + 'Posting/PostingNewPostV2';
   NEWMEDIAPOST = this.baseUrl + 'Posting/UserMediaPostingV2';
