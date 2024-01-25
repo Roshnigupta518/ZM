@@ -12,7 +12,7 @@ import PopUpMessage from '../../../components/popup';
 import Loader from '../../../components/Loader';
 import {updateLogin, setLogin} from '../../../redux/reducers/Login';
 import BackgroundTimer from 'react-native-background-timer';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function OtpScreen({navigation, route}) {
   const [code, setOtp] = useState('');
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
@@ -60,6 +60,9 @@ export default function OtpScreen({navigation, route}) {
         setLoading(false);
         if (data?.IsSuccessed) {
           dispatch(setLogin(data));
+          const token = data?.accessToken;
+          console.log({token});
+          await AsyncStorage.setItem('token', token);
         } else {
           setTitle('Sorry');
           setSubtitle(data.message);

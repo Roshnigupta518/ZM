@@ -34,7 +34,7 @@ const Route = () => {
       {isLoading ? (
         <Init />
       ) : login_data ? (
-        <HomeStack />
+        <HomeStack InitialRoute={login_data?.response?.ZRMV} />
       ) : (
         <AuthStack introSlides={introSlideData} />
       )}

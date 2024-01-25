@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Image,
   Platform,
-  TouchableOpacity, SafeAreaView
+  TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import {FAB, Portal, Provider} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -17,10 +18,13 @@ import {API} from '../../../utils/endpoints';
 import {getPickerImageResp} from '../../../utils/helperfunctions';
 import {uploadApi} from '../../../utils/apicalls';
 import Loader from '../../../components/Loader';
+import {updateLogin} from '../../../redux/reducers/Login';
 
 export default function ProfilePictureScreen({navigation}) {
   const [state, setState] = React.useState({open: false});
   const [loading, setLoading] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const onStateChange = ({open}) => setState({open});
 
@@ -49,6 +53,7 @@ export default function ProfilePictureScreen({navigation}) {
         const data = JSON.parse(result.data);
         console.log('mediapost=>', data);
         navigation.navigate('BioScreen');
+        dispatch(updateLogin(true));
       }
     } catch (e) {
       console.log(e);
@@ -63,7 +68,7 @@ export default function ProfilePictureScreen({navigation}) {
         onPress={() => navigation.navigate('DrawerNavigationRoutes')}
         darktheme={darktheme}
       />
-      
+
       {response?.assets &&
         response?.assets.map(({uri}) => (
           <View key={uri} style={styles.image}>

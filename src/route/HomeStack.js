@@ -45,9 +45,9 @@ const HomeStack = ({InitialRoute}) => {
   console.log({InitialRoute});
   return (
     <Stack.Navigator
-    // initialRouteName={
-    //   InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
-    // }
+    initialRouteName={
+      InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
+    }
     >
       <Stack.Screen
         name="DrawerNavigationRoutes"

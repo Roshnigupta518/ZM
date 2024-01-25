@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getApi = async (api, token) => {
   const config = {
@@ -79,5 +80,5 @@ export const putApi = async (api, data, token) => {
 
 const handleAuthorization = status => {
   if (status !== 401) return;
-  // AsyncStorage.clear();
+  AsyncStorage.clear();
 };
