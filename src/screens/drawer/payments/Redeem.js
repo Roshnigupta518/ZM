@@ -82,7 +82,11 @@ const Redeem = ({navigation, route}) => {
 
     if (isValid) {
       if (Payment_Type == 1) {
-        handleSocialPress();
+        if (selectedCard) {
+          handleSocialPress();
+        } else {
+          alert('Please select your bank account');
+        }
       } else {
         handleSubmitPress();
       }
@@ -99,7 +103,7 @@ const Redeem = ({navigation, route}) => {
       setIsLoading(true);
       const result = await postApi(url, params, login_data.accessToken);
       console.log({addBank: result.data});
-      if (result.status == 200) {
+      if (result?.status == 200) {
         setIsLoading(false);
         const data = result.data;
         setSubtitle(data[1]);
@@ -114,11 +118,14 @@ const Redeem = ({navigation, route}) => {
   };
 
   const handleSocialPress = async () => {
+    const remaining = data?.TOTAL_POINTS - inputs?.amt;
+    console.log({remaining});
     const url = API.ADD_SOCIAL;
     const params = {
       userId: login_data.response.ZRID,
       bankId: selectedCard,
       ReedemPoint: inputs?.amt,
+      Remaining_Points: remaining,
     };
     try {
       setIsLoading(true);
@@ -301,21 +308,26 @@ const Redeem = ({navigation, route}) => {
             );
           })}
 
-          <View style={st.mt_t15}></View>
-          {Payment_Type == 1 && (
-            <Input
-              label={'Brainbit'}
-              onChangeText={text => handleOnchange(text, 'amt')}
-              onFocus={() => handleError(null, 'amt')}
-              placeholder="Enter here"
-              placeholderTextColor="#808080"
-              underlineColorAndroid="#f000"
-              error={errors?.amt}
-              darktheme={darktheme}
-              value={inputs?.amt}
-              keyboardType="numeric"
-            />
-          )}
+          <View style={st.mt_t15}>
+            {Payment_Type == 1 && (
+              <Input
+                label={'Brainbit'}
+                onChangeText={text => handleOnchange(text, 'amt')}
+                onFocus={() => handleError(null, 'amt')}
+                placeholder="Enter here"
+                placeholderTextColor="#808080"
+                underlineColorAndroid="#f000"
+                error={errors?.amt}
+                darktheme={darktheme}
+                value={inputs?.amt}
+                keyboardType="numeric"
+              />
+            )}
+            <Text style={st.tx12}>
+              Note: {data?.THRESHOLD} is the retention point you can claim any
+              remaining points.
+            </Text>
+          </View>
 
           <View style={[st.mt_t10, st.align_C]}>
             <Authbtn

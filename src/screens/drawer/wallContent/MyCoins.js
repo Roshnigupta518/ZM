@@ -17,7 +17,9 @@ const MyCoins = ({navigation, route}) => {
       />
       <ScrollView>
         <View style={st.pd20}>
-          <Text style={st.tx14(darktheme)}>{message ? message : ''}</Text>
+          <Text style={st.tx14(darktheme)}>
+            {message ? message : 'The payment has been successfully completed.'}
+          </Text>
         </View>
       </ScrollView>
     </View>

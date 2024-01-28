@@ -129,6 +129,8 @@ const LoginScreen = ({navigation}) => {
       console.log('result', result.data, 'check result');
       if (result?.data?.IsSuccessed) {
         const data = result?.data;
+        await AsyncStorage.setItem('accessToken', data?.accessToken);
+        await AsyncStorage.setItem('ZRID', data?.response?.ZRID);
         setLoading(false);
         dispatch(setLogin(data));
         // dispatch(updateLogin(true));
