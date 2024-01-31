@@ -83,6 +83,7 @@ class Endpoints {
   SOCIAL_STATUS = this.baseUrl + 'BrainBit/GetSocialPaymentStatusV2?userId=';
   PROMOTIONAL_STATUS = this.baseUrl + 'BrainBit/GetPromotionalPaymentStatusV2?userId=';
   ACTIVITY_STATUS = this.baseUrl + 'BrainBit/GetBrainBitSocialActivityStatusV2?userid='
+  GET_BIO = this.baseUrl +'Surge/GetUserBio?userid='
 }
 
 export const API = new Endpoints();

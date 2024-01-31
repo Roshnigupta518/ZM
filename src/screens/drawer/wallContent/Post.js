@@ -13,6 +13,7 @@ import {
   Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import st from '../../../global/styles/styles';
 import Authbtn from '../../../components/Authbtn';
 import ProfileImg from '../../../components/profileImg';
@@ -656,7 +657,7 @@ export default function Post({navigation}) {
                   source={{uri: attachment ? attachment?.uri : null}}
                   style={styles.imgsty}
                 />
-                <Icon
+                <FontAwesome
                   name={'close'}
                   size={20}
                   color={colors.skyblue}

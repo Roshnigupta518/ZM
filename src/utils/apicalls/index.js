@@ -1,12 +1,9 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid';
-
-const GUID = uuid.v4();
 
 export const getApi = async (api, token) => {
   const ZRID = await AsyncStorage.getItem('ZRID');
-  console.log({ZRID})
+  const GUID = await AsyncStorage.getItem('GUID');
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -28,7 +25,8 @@ export const getApi = async (api, token) => {
 
 export const postApi = async (api, data, token) => {
   const ZRID = await AsyncStorage.getItem('ZRID');
-  //  console.log(api, data, token);
+  const GUID = await AsyncStorage.getItem('GUID');
+   console.log(api, data, token);
   const config = {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -50,6 +48,7 @@ export const postApi = async (api, data, token) => {
 
 export const uploadApi = async (api, data, token) => {
   const ZRID = await AsyncStorage.getItem('ZRID');
+  const GUID = await AsyncStorage.getItem('GUID');
   const config = {
     headers: {
       Accept: 'application/json',
@@ -73,6 +72,7 @@ export const uploadApi = async (api, data, token) => {
 
 export const putApi = async (api, data, token) => {
   const ZRID = await AsyncStorage.getItem('ZRID');
+  const GUID = await AsyncStorage.getItem('GUID');
   const config = {
     headers: {
       Accept: 'application/json',

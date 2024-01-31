@@ -14,9 +14,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../../../global/theme/Theme';
 import {icon_color} from '../../../utils/helperfunctions';
 import {API} from '../../../utils/endpoints';
-import {postApi} from '../../../utils/apicalls';
+import {getApi, postApi} from '../../../utils/apicalls';
 import Input from '../../../components/input';
 import {ValueEmpty} from '../../../utils/helperfunctions/validations';
+import Toast from 'react-native-simple-toast';
 
 const INITIAL_INPUT = {
   userBio: '',
@@ -40,6 +41,7 @@ export default function BioScreen({navigation, route}) {
     setInputsErr(prevState => ({...prevState, [input]: error}));
   };
   console.log({token: login_data.accessToken});
+
   const bioHandle = async () => {
     const url = API.UserBio;
     const reqData = {
@@ -49,7 +51,13 @@ export default function BioScreen({navigation, route}) {
       const result = await postApi(url, reqData, login_data.accessToken);
       console.log({result: result.data});
       if (result.status == 200) {
-        navigation.navigate('SuggestionScreen');
+        const data = result.data;
+        if (initVal == true) {
+          Toast.show(data?.message[1], Toast.LONG);
+          navigation.goBack();
+        } else {
+          navigation.navigate('SuggestionScreen');
+        }
       } else {
       }
     } catch (e) {
@@ -72,6 +80,27 @@ export default function BioScreen({navigation, route}) {
       bioHandle();
     }
   };
+
+  const getBiohandle = async () => {
+    const url = API.GET_BIO + login_data?.response.ZRID;
+
+    try {
+      const result = await getApi(url, login_data.accessToken);
+      console.log({result: result.data});
+      if (result.status == 200) {
+        const data = result.data;
+        console.log({getBiohandle: data});
+        const biodata = {userBio: data?.BIO}
+        setInputs(biodata);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getBiohandle();
+  }, []);
 
   return (
     <View style={[st.container(darktheme)]}>
@@ -100,13 +129,15 @@ export default function BioScreen({navigation, route}) {
             error={inputsErr?.userBio}
             darktheme={darktheme}
             multiline
+            value={inputs?.userBio}
           />
         </View>
       </View>
-      {initVal==true&&
-      <View style={st.align_C}>
-        <Authbtn title={'Add Bio'} onPress={() => validate()} />
-      </View>}
+      {initVal == true && (
+        <View style={st.align_C}>
+          <Authbtn title={'Add Bio'} onPress={() => validate()} />
+        </View>
+      )}
     </View>
   );
 }
