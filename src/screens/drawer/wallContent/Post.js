@@ -453,7 +453,7 @@ export default function Post({navigation}) {
           onConfirm={dateResp => {
             setOpen(false);
             setDate(dateResp);
-            setScheduleDate(dateResp);
+            // setScheduleDate(dateResp);
           }}
           onCancel={() => {
             setOpen(false);

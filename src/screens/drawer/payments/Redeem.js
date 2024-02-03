@@ -126,6 +126,7 @@ const Redeem = ({navigation, route}) => {
       bankId: selectedCard,
       ReedemPoint: inputs?.amt,
       Remaining_Points: remaining,
+      FOLLOWERS_MULTIFICATION_FACTOR: data?.FOLLOWERS_MULTIFICATION_FACTOR
     };
     try {
       setIsLoading(true);

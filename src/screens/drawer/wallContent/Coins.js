@@ -365,7 +365,7 @@ export default function Coins({navigation}) {
           <Animated.View>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPressIn={onPressInSocial}
+              onPressIn={onPressInSocial} 
               onPressOut={onPressOutSocial}
               onPress={() => {
                 setShowSocial(!showSocial);
