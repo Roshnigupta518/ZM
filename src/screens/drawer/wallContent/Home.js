@@ -331,7 +331,7 @@ export default function Dashboard({navigation}) {
     setPageSize(5);
     getFeeds();
     setRefreshing(false);
-    setIsListEnd(false)
+    setIsListEnd(false);
   };
 
   useFocusEffect(
@@ -509,6 +509,7 @@ export default function Dashboard({navigation}) {
         onClose={handleSeenStories}
         // customSwipeUpComponent={<View></View>}
         style={{marginTop: 10}}
+        // storyImageStyle={{flex: 1}}
       />
     );
   };

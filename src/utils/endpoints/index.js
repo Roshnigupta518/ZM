@@ -14,7 +14,7 @@ class Endpoints {
   GET_SAVED = this.baseUrl + 'posting/GetSavedPostsDataV2';
   GetSaveLabel = this.baseUrl + 'posting/GetSaveLabelListV2';
   GetComments = this.baseUrl + 'posting/GetPostCommentsDataV2';
-  DeletePost = this.baseUrl + 'posting/DeletePostItemV2';
+  DeletePost = this.baseUrl + 'posting/hidePostItemV2'; //DeletePostItemV2
   HidePost = this.baseUrl + 'posting/hidePostItemV2';
   ON_COMMENT = this.baseUrl + 'posting/WritePostCommentCallV2';
   COMMENT_REPLY = this.baseUrl + 'posting/WriteCommentReplyCallV2';

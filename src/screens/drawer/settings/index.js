@@ -118,7 +118,7 @@ export default SettingsScreen;
 const styles = StyleSheet.create({});
 
 const list = [
-  {name: 'Help', iconName: 'help', screenName: 'About'},
+  {name: 'Help', iconName: 'help', screenName: 'Help'},
   {name: 'About', iconName: 'info-circle', screenName: 'About'},
   {name: 'Terms & Conditions', iconName: 'file-text-o', screenName: 'Terms'},
   {

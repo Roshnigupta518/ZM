@@ -38,6 +38,7 @@ import PrivacyPolicy from '../screens/drawer/privacy';
 import UPI from '../screens/drawer/payments/Bank';
 import MyCoins from '../screens/drawer/wallContent/MyCoins';
 import Redeem from '../screens/drawer/payments/Redeem';
+import Help from '../screens/drawer/help';
 
 const Stack = createNativeStackNavigator();
 
@@ -135,11 +136,11 @@ const HomeStack = ({InitialRoute}) => {
         options={{headerShown: false}}
       />
 
-      {/* <Stack.Screen
-        name="Notes"
-        component={Notes}
+      <Stack.Screen
+        name="Help"
+        component={Help}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="NoteDetails"
         component={NoteDetails}
