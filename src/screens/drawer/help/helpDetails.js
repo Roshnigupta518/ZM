@@ -10,13 +10,13 @@ import Header from '../../../components/header/Header';
 import st from '../../../global/styles/styles';
 import {useSelector} from 'react-redux';
 import Video from 'react-native-video';
+import { environment } from '../../../utils/constant';
 
 const helpDetails = ({navigation, route}) => {
   const darktheme = useSelector(state => state.darktheme?.data);
   const url = route?.params?.image;
   const video = route?.params?.video;
 
-  console.log({url: url?.length});
   return (
     <View style={st.container(darktheme)}>
       <Header
@@ -26,8 +26,8 @@ const helpDetails = ({navigation, route}) => {
       />
       {video && (
         <Video
-          source={video}
-          style={{width: '100%', height: '100%'}}
+          source={{uri:environment.postImgPath+video}}
+          style={{width: '100%', height: 300}}
           controls={true}
         />
       )}

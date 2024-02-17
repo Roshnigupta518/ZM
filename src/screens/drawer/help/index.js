@@ -101,7 +101,7 @@ const helpImages = [
 ];
 
 const question = [
-  {id: 1, title: 'What is Zeros?', video: images.zeros},
+  {id: 1, title: 'What is Zeros?', video: '/uploads/Zeros_introduction.mp4'},
   {id: 2, title: 'How to create post on Zeros?', imgurl: [images.image1]},
   {id: 3, title: 'How to save post?', imgurl: [images.image2]},
   {id: 4, title: 'Why save post feature?', imgurl: [images.image3]},
