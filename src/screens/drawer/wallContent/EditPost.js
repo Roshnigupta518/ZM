@@ -12,6 +12,7 @@ import {
 import React, {useState, useEffect} from 'react';
 import {colors} from '../../../global/theme/Theme';
 import {useSelector} from 'react-redux';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Header from '../../../components/header/Header';
 import st from '../../../global/styles/styles';
 import ProfileImg from '../../../components/profileImg';
@@ -20,7 +21,7 @@ import {API} from '../../../utils/endpoints';
 import {postApi, uploadApi} from '../../../utils/apicalls';
 import Toast from 'react-native-simple-toast';
 import {Menu, MenuItem} from 'react-native-material-menu';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Feather';
 import Loader from '../../../components/Loader';
 import {environment} from '../../../utils/constant';
 import {images} from '../../../global/theme/Theme';
@@ -704,8 +705,8 @@ const EditPost = ({navigation, route}) => {
                                 setData(tempdata);
                               }
                             }}>
-                            <Icon
-                              name="close-circle"
+                           <FontAwesome
+                  name={'close'}
                               size={25}
                               color={colors.skyblue}
                             />
@@ -1020,8 +1021,8 @@ const EditPost = ({navigation, route}) => {
             return (
               <View key={n}>
                 {(i?.POST_PICS || attachment) && (
-                  <Icon
-                    name="close-circle"
+                  <FontAwesome
+                  name={'close'}
                     size={25}
                     color={colors.skyblue}
                     style={{marginLeft: 20}}

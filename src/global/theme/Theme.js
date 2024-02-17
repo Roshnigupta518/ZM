@@ -30,6 +30,7 @@ const images = {
   image8 : require('../../assets/help/h.jpeg'),
   image9 : require('../../assets/help/i.jpeg'),
   image10 : require('../../assets/help/j.jpeg'),
+  zeros: require('../../assets/help/zeros.mp4')
  
 }
 

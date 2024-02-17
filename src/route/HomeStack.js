@@ -39,7 +39,7 @@ import UPI from '../screens/drawer/payments/Bank';
 import MyCoins from '../screens/drawer/wallContent/MyCoins';
 import Redeem from '../screens/drawer/payments/Redeem';
 import Help from '../screens/drawer/help';
-
+import helpDetails from '../screens/drawer/help/helpDetails';
 const Stack = createNativeStackNavigator();
 
 const HomeStack = ({InitialRoute}) => {
@@ -139,6 +139,11 @@ const HomeStack = ({InitialRoute}) => {
       <Stack.Screen
         name="Help"
         component={Help}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="helpDetails"
+        component={helpDetails}
         options={{headerShown: false}}
       />
       <Stack.Screen
