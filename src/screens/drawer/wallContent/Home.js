@@ -26,10 +26,10 @@ import {icon_color} from '../../../utils/helperfunctions';
 import Toast from 'react-native-simple-toast';
 import {environment} from '../../../utils/constant';
 import {calculatedPoll} from '../../../utils/helperfunctions';
-import {
-  requestUserPermission,
-  notificationListner,
-} from '../../../pushNoti/NotificationService';
+// import {
+//   requestUserPermission,
+//   notificationListner,
+// } from '../../../pushNoti/NotificationService';
 import moment from 'moment';
 
 export default function Dashboard({navigation}) {
@@ -320,8 +320,8 @@ export default function Dashboard({navigation}) {
 
   useEffect(() => {
     getNuggests();
-    requestUserPermission();
-    notificationListner();
+    // requestUserPermission();
+    // notificationListner();
   }, []);
 
   const onRefresh = () => {
