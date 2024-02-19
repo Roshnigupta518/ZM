@@ -40,7 +40,7 @@ const LoginScreen = ({navigation}) => {
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
-  const [fcmToken, setFcmToken] = useState('')
+  const [fcmToken, setFcmToken] = useState('');
 
   const passwordInputRef = createRef();
 
@@ -63,20 +63,21 @@ const LoginScreen = ({navigation}) => {
         const fcmtoken = await messaging().getToken();
         if (fcmtoken) {
           console.log('new genrated token', fcmtoken);
-          setFcmToken(fcmtoken)
+          setFcmToken(fcmtoken);
           await AsyncStorage.setItem('token', fcmtoken);
         }
       } catch (e) {
         console.log(e);
         alert(e);
       }
-    }else{
-      setFcmToken(fcmtoken)
+    } else {
+      setFcmToken(fcmtoken);
     }
   };
 
   useEffect(() => {
     getfcmToken();
+    console.log({darktheme});
   }, []);
 
   const validate = async () => {
@@ -117,7 +118,7 @@ const LoginScreen = ({navigation}) => {
       iIdType: userIdType,
       iPassKey: inputs.userPassword,
       iRememberMe: true,
-      deviceToken:fcmToken
+      deviceToken: fcmToken,
     };
 
     setLoading(true);
@@ -128,7 +129,6 @@ const LoginScreen = ({navigation}) => {
       console.log('result', result.data, 'check result');
       if (result?.data?.IsSuccessed) {
         const data = result?.data;
-        // console.log({data}, 'data aaya');
         setLoading(false);
         dispatch(setLogin(data));
         dispatch(updateLogin(true));

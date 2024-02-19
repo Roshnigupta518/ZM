@@ -12,7 +12,7 @@ import {
   Keyboard,
   Modal,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Feather';
 import st from '../../../global/styles/styles';
 import Authbtn from '../../../components/Authbtn';
 import ProfileImg from '../../../components/profileImg';
@@ -274,7 +274,7 @@ export default function Post({navigation}) {
     const url = API.NEWMEDIAPOST;
     const formdata = new FormData();
     formdata.append('file', attachment);
-    console.log('----------------form data------------', formdata);
+    console.log('----------------form data------------', formdata, url);
     setLoading(true);
     try {
       const result = await uploadApi(url, formdata, login_data.accessToken);
@@ -447,7 +447,7 @@ export default function Post({navigation}) {
         <DatePicker
           modal
           open={open}
-          textColor={colors.black}
+          textColor={darktheme === 'dark' ? colors.black : colors.white}
           date={date}
           onConfirm={dateResp => {
             setOpen(false);
@@ -545,7 +545,7 @@ export default function Post({navigation}) {
                   <TouchableOpacity
                     style={[st.row, st.align_C, styles.statusCon]}
                     onPress={showMenu}>
-                    <Text style={st.tx14}>{status}</Text>
+                    <Text style={st.tx14(darktheme)}>{status}</Text>
                     <Icon name={'chevron-down'} size={20} style={st.pd_H20} />
                   </TouchableOpacity>
                 }
@@ -553,7 +553,7 @@ export default function Post({navigation}) {
                 <MenuItem
                   onPress={() => hideMenu('Public')}
                   textStyle={[
-                    st.tx14_s,
+                    st.tx14_s(darktheme),
                     {color: status == 'Public' && colors.skyblue},
                   ]}>
                   {'Public'}
@@ -561,7 +561,7 @@ export default function Post({navigation}) {
                 <MenuItem
                   onPress={() => hideMenu('Only me')}
                   textStyle={[
-                    st.tx14_s,
+                    st.tx14_s(darktheme),
                     {color: status == 'Only me' && colors.skyblue},
                   ]}>
                   {'Only me'}
@@ -613,7 +613,7 @@ export default function Post({navigation}) {
                 value={mentionUser}
                 onChange={text => {
                   setMentionUser(text);
-                  console.log({text})
+                  console.log({text});
                 }}
                 partTypes={[
                   {
@@ -718,7 +718,7 @@ export default function Post({navigation}) {
               }}
               style={styles.closeIconCont}>
               <Icon
-                name="arrow-back"
+                name="arrow-left"
                 color={colors.skyblue}
                 size={25}
                 style={styles.closeIcon}
@@ -729,7 +729,6 @@ export default function Post({navigation}) {
               <View style={[st.pd20]}>
                 {ShowScheduleDate()}
                 <View>
-                 
                   <MentionInput
                     value={quizQus?.question}
                     onChange={text => {
@@ -1021,7 +1020,8 @@ const styles = StyleSheet.create({
   statusCon: {
     backgroundColor: colors.grey,
     borderRadius: 5,
-    paddingLeft: 10,
+    padding: 5,
+    width: 100,
   },
   imgsty: {
     width: 140,

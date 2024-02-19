@@ -43,17 +43,21 @@ function TabStack({route, navigation}) {
           },
         }}>
         <Tab.Screen
-          name="Content Creater"
-          component={() => <ContentFeed interestId={interestId} navigation={navigation} />}
+          name="All Feed"
+          component={() => (
+            <AllFeed interestId={interestId} navigation={navigation} />
+          )}
           options={{
-            tabBarLabel: 'Content Creater',
+            tabBarLabel: 'All Feed',
           }}
         />
         <Tab.Screen
-          name="All Feed"
-          component={() => <AllFeed interestId={interestId} navigation={navigation} />}
+          name="Content Creater"
+          component={() => (
+            <ContentFeed interestId={interestId} navigation={navigation} />
+          )}
           options={{
-            tabBarLabel: 'All Feed',
+            tabBarLabel: 'Content Creater',
           }}
         />
       </Tab.Navigator>

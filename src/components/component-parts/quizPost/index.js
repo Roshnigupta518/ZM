@@ -33,13 +33,12 @@ const QuixPost = ({
 
   const data = item?.QUIZ_DATA;
 
-  // console.log('quiz data real=>', data);
+ 
   const quiz = data?.split('|');
   const quizAns = quiz && quiz[4];
   const quizData = quiz?.slice(5);
   const pollAnsData = quiz && quiz[2];
-  // console.log({quizDataSlice: quizAns});
-  // useEffect(() => {
+  
   const tempdata = [];
   for (let i = 0; quizData?.length > i; i++) {
     if (quizData[i]) {
@@ -51,9 +50,6 @@ const QuixPost = ({
     }
   }
 
-  // setTempdata(data);
-  // console.log({Tempdata: tempdata});
-  // }, []);
 
   const onPollHandle = pollAnsData => {
     setChecked(pollAnsData - 1);
@@ -100,9 +96,11 @@ const QuixPost = ({
                 break;
               default:
                 console.log('Link pressed!');
-              // gotoInterest();
+             
             }
           }}
+          linkStyle={{ color: 'blue' }} 
+          style={st.tx14(darktheme)}
         />
 
         {item?.YouTubeId && (

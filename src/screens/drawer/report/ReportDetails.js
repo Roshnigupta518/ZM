@@ -64,7 +64,7 @@ const ReportDetails = ({navigation, route}) => {
       catgId: id,
       catgSubId: selectedOption.id,
       postId: postId,
-      reporterId: userId,
+      reporterId: login_data.response.ZRID,
       // reporterId: '1047456',
     };
     console.log({reportsubmitPara: params});

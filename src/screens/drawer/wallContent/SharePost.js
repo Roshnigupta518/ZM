@@ -395,7 +395,7 @@ const SharePost = ({navigation, route}) => {
                       onPress={(url, match) => {
                         switch (match.getType()) {
                           case 'mention':
-                            console.log('Mention pressed!', item?.TaggUser);
+                            console.log('Mention pressed!', i?.TaggUser);
                             // gotoProfileTab(item?.TaggUser);
                             break;
                           case 'hashtag':

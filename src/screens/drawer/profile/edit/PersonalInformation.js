@@ -88,7 +88,7 @@ export default function PersonalInformation({navigation}) {
     };
     try {
       const result = await postApi(url, param, login_data.accessToken);
-      // console.log({getUserProfile_handle: result.data});
+      console.log({url, param});
       if (result.status == 200) {
         const tempdata = JSON.parse(result.data.Response);
         let data = null;
@@ -149,9 +149,10 @@ export default function PersonalInformation({navigation}) {
     if (emptyDob) {
       handleError('*Required', 'dob');
       isValid = false;
-    } else if (inputs?.age < 14) {
+    } else if (inputs?.age < 18) {
       console.log('Valid user age', inputs?.age);
-      handleError('user should be 14+', 'age');
+      isValid = false;
+      handleError('user should be 18+', 'age');
     } else {
       handleError('', 'dob');
     }
@@ -207,9 +208,8 @@ export default function PersonalInformation({navigation}) {
   };
 
   const setDateFormet = date => {
-    const dob = moment(date).format('DD.MMMM.YYYY'); // date.toDateString();
+    const dob = moment(date).format('DD.MMMM.YYYY');
     handleOnchange(dob, 'dob');
-    // const m = moment().format('DD.MMMM.YYYY');
     console.log({monthname: dob});
 
     const currentDate = new Date();
@@ -224,9 +224,9 @@ export default function PersonalInformation({navigation}) {
     console.log('age', Math.floor(age));
     const IntAge = Math.floor(age).toString();
     if (IntAge) {
-      if (IntAge < 14) {
+      if (IntAge < 18) {
         console.log('InValid user age', IntAge);
-        handleError('user should be 14+', 'age');
+        handleError('user should be 18+', 'age');
       } else {
         handleError('', 'age');
       }
@@ -371,7 +371,7 @@ export default function PersonalInformation({navigation}) {
                 open={open}
                 date={date}
                 mode={'date'}
-                textColor={colors.black}
+                textColor={darktheme === 'dark' ? colors.black : colors.white}
                 onConfirm={dateResp => {
                   setOpen(false);
                   setDate(dateResp);
@@ -478,6 +478,7 @@ export default function PersonalInformation({navigation}) {
                 darktheme={darktheme}
                 value={inputs.pincode}
                 error={errors?.pincode}
+                keyboardType="numeric"
               />
             </View>
           </View>

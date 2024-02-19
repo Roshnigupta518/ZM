@@ -54,6 +54,7 @@ export default StyleSheet.create({
   center: {justifyContent: 'center', alignItems: 'center', flex: 1},
   align_C: {alignItems: 'center'},
   align_E: {alignItems: 'flex-end'},
+  align_S: {alignItems: 'flex-start'},
   justify_C: {justifyContent: 'center'},
   justify: {justifyContent: 'flex-end'},
   justify_S: {justifyContent: 'space-between'},
@@ -68,11 +69,21 @@ export default StyleSheet.create({
 
   txDecor: {textDecorationLine: 'underline'},
 
+  txbold: {fontFamily: family.semibold},
+
   tx10: darktheme => ({
     fontSize: size.subtitle,
     color: darktheme === 'dark' ? colors.black : colors.white,
     fontFamily: family.regular,
     textAlign: 'center',
+  }),
+  error:{
+    fontSize: size.label,
+    color: colors.danger,
+    fontFamily: family.light,
+  },
+  calender_txt : darktheme => ({
+    color: darktheme === 'dark' ? colors.black : colors.white,
   }),
   tx12: darktheme => ({
     fontSize: size.label,
@@ -162,6 +173,9 @@ export default StyleSheet.create({
   bgCardColor: darktheme => ({
     backgroundColor: darktheme === 'dark' ? colors.white : '#1a1a1a',
   }),
+  radius:{
+    borderRadius:10
+  },
   footerbgColor: darktheme => ({
     backgroundColor: darktheme === 'dark' ? '#fff' : '#404040',
     marginHorizontal: 10,
@@ -226,4 +240,13 @@ export default StyleSheet.create({
     height: 30,
     borderRadius: 15,
   },
+  bankBtn :{
+    paddingVertical:5,
+    paddingHorizontal:10,
+    borderRadius:10,
+    backgroundColor:colors.green,
+    flexDirection:'row',
+    alignItems:'center',
+    marginBottom:15
+  }
 });

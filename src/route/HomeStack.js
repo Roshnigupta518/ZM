@@ -33,6 +33,11 @@ import Report from '../screens/drawer/report';
 import ReportDetails from '../screens/drawer/report/ReportDetails';
 import ScheduleList from '../screens/drawer/scheduleList';
 import ViewOtherProfile from '../screens/drawer/wallContent/ViewOtherProfile';
+import Terms from '../screens/drawer/terms';
+import PrivacyPolicy from '../screens/drawer/privacy';
+import UPI from '../screens/drawer/payments/Bank';
+import MyCoins from '../screens/drawer/wallContent/MyCoins';
+import Redeem from '../screens/drawer/payments/Redeem';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,13 +46,13 @@ const HomeStack = ({InitialRoute}) => {
   return (
     <Stack.Navigator
       initialRouteName={
-        InitialRoute == false ? 'OtpScreen' : 'DrawerNavigationRoutes'
+        InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
       }>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="OtpScreen"
         component={Otp}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="ProfilePictureScreen"
         component={ProfilePicture}
@@ -189,6 +194,27 @@ const HomeStack = ({InitialRoute}) => {
       <Stack.Screen
         name="ViewOtherProfile"
         component={ViewOtherProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={Terms}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="UPI" component={UPI} options={{headerShown: false}} />
+      <Stack.Screen
+        name="MyCoins"
+        component={MyCoins}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="Redeem"
+        component={Redeem}
         options={{headerShown: false}}
       />
       {/*  */}

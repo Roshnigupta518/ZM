@@ -11,6 +11,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {ActivityIndicator} from 'react-native';
 import Init from '../screens/Auth/init';
 import Interest from '../screens/Auth/interest';
+import HandleBackPress from '../components/Backhandle';
 
 const Route = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,16 +30,7 @@ const Route = () => {
   }, []);
 
   return (
-    <NavigationContainer
-      fallback={<ActivityIndicator />}
-      // theme={scheme === darktheme ? DarkTheme : DefaultTheme}
-    >
-      {/* {login_data ? (
-        <HomeStack InitialRoute={login_data?.response?.ZRMV} />
-      ) : (
-        <AuthStack />
-      )} */}
-
+    <NavigationContainer fallback={<ActivityIndicator />}>
       {isLoading ? (
         <Init />
       ) : login_data ? (
@@ -46,8 +38,6 @@ const Route = () => {
       ) : (
         <AuthStack introSlides={introSlideData} />
       )}
-
-      {/* <Interest /> */}
     </NavigationContainer>
   );
 };

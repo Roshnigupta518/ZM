@@ -61,6 +61,7 @@ const ScheduleList = ({navigation}) => {
     } catch (e) {
       console.log('error', e);
       setLoading(false);
+      setIsListEnd(true);
     }
   };
 
@@ -139,7 +140,7 @@ const ScheduleList = ({navigation}) => {
       />
       <FlatList contentContainerStyle={st.pd20}
         keyboardShouldPersistTaps={'handled'}
-        data={data}
+        data={data?.reverse()}
         renderItem={ItemView_posts}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={EmptyListMessage}

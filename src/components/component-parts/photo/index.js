@@ -111,22 +111,14 @@ const Photo = ({
 
       {item.POST_TYPE != '3' && item.P_CONTENT && (
         <View style={[st.pd10, st.pdT0]}>
-          {/* <Text style={[st.tx14_s(darktheme),{}]}>
-            {item.POSTED_BY}
-           
-          </Text> */}
-          {/* <Hyperlink linkStyle={{color: '#2980b9', fontSize: 14}}>
-            <Text style={st.tx14(darktheme)}>
-            {' '}
-              {item?.P_CONTENT?.replace(regex, '')}
-            </Text>
-            </Hyperlink> */}
+        
           <Autolink
             text={
               item?.P_CONTENT?.replace(regex, '') +
               ' ' +
               (item?.TaggUser ? item?.TaggUser : '')
             }
+         
             email
             hashtag="instagram"
             mention="twitter"
@@ -139,7 +131,7 @@ const Photo = ({
                   gotoProfileTab(item?.TaggUser);
                   break;
                 case 'hashtag':
-                  console.log('hashtag pressed!');
+                  console.log('hashtag presseddd!');
                   gotoInterest();
                   break;
                 default:
@@ -147,6 +139,8 @@ const Photo = ({
                   // gotoInterest();
               }
             }}
+            linkStyle={{ color: 'blue' }} 
+            style={st.tx14(darktheme)}
           />
           {item?.YouTubeId && (
             <View style={st.mt_t10}>
@@ -199,14 +193,6 @@ const Photo = ({
 
               {i.P_CONTENT && (
                 <View style={[st.pd10, st.pdT0]}>
-                  {/* <Text style={st.tx14_s(darktheme)}>
-                    {i.POSTED_BY}
-                    <Text style={st.tx14(darktheme)}>
-                      {' '}
-                      {i.P_CONTENT.replace(regex, '')}
-                    </Text>
-                  </Text> */}
-
                   <Autolink
                     text={i?.P_CONTENT?.replace(regex, '')}
                     email
@@ -214,6 +200,8 @@ const Photo = ({
                     mention="twitter"
                     phone="sms"
                     url
+                    linkStyle={{ color: 'blue' }} 
+            style={st.tx14(darktheme)}
                   />
                   {i?.YouTubeId && (
                     <View style={st.mt_t10}>

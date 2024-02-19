@@ -70,7 +70,7 @@ const RegisterScreen = ({props, navigation}) => {
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
-  const [fcmToken, setFcmToken] = useState('')
+  const [fcmToken, setFcmToken] = useState('');
 
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
   const fnameInputRef = createRef();
@@ -159,9 +159,10 @@ const RegisterScreen = ({props, navigation}) => {
     if (validAge) {
       handleError('*Required', 'age');
       isValid = false;
-    } else if (inputs?.age < 16) {
+    } else if (inputs?.age < 18) {
+      isValid = false;
       console.log('Valid user age', inputs?.age);
-      handleError('user should be 16+', 'age');
+      handleError('user should be 18+', 'age');
     } else {
       handleError('', 'age');
     }
@@ -178,6 +179,7 @@ const RegisterScreen = ({props, navigation}) => {
 
     if (isValid) {
       handleSubmitButton();
+      // navigation.navigate('OtpScreen');
     } else {
       console.log('valid');
     }
@@ -199,9 +201,9 @@ const RegisterScreen = ({props, navigation}) => {
     console.log('age', Math.floor(age));
     const IntAge = Math.floor(age).toString();
     if (IntAge) {
-      if (IntAge < 16) {
+      if (IntAge < 18) {
         console.log('Valid user age', IntAge);
-        handleError('user should be 16+', 'age');
+        handleError('user should be 18+', 'age');
       } else {
         handleError('', 'age');
       }
@@ -232,21 +234,21 @@ const RegisterScreen = ({props, navigation}) => {
   const getfcmToken = async () => {
     let fcmtoken = await AsyncStorage.getItem('token');
     console.log(fcmtoken, 'The old token');
-   
+
     if (!fcmtoken) {
       try {
         const fcmtoken = await messaging().getToken();
         if (fcmtoken) {
           console.log('new genrated token', fcmtoken);
-          setFcmToken(fcmtoken)
+          setFcmToken(fcmtoken);
           await AsyncStorage.setItem('token', fcmtoken);
         }
       } catch (e) {
         console.log(e);
-        alert(e);
+        // alert(e);
       }
-    }else{
-      setFcmToken(fcmtoken)
+    } else {
+      setFcmToken(fcmtoken);
     }
   };
 
@@ -257,7 +259,7 @@ const RegisterScreen = ({props, navigation}) => {
   const handleSubmitButton = async () => {
     setLoading(true);
 
-    const reqData = {
+    const register_data = {
       imRegFName: inputs.firstName,
       imRegLName: inputs.lastName,
       imRegIdentityId: inputs.number,
@@ -267,25 +269,29 @@ const RegisterScreen = ({props, navigation}) => {
       imRegDob: inputs.dob,
       deviceTokenId: fcmToken,
     };
-    const url = API.SIGNUP;
+
+    const reqData = {
+      mobile: inputs.number,
+      fullName: inputs.firstName + inputs.lastName,
+    };
+    // const url = API.SIGNUP;
+    const url = API.OTP_SEND;
     try {
       const result = await postApi(url, reqData);
       console.log({result: result.data});
       if (result.status == 200) {
-        // setIsRegistraionSuccess(true);
         const data = result.data;
         setLoading(false);
-        if (data?.IsSuccessed) {
-          // navigation.navigate('OtpScreen');
-          dispatch(setLogin(data));
-          setInputs(INITIAL_INPUT);
+        if ((data[1] = 'Success')) {
+          navigation.navigate('OtpScreen', register_data);
+          // dispatch(setLogin(data));
+          // setInputs(INITIAL_INPUT);
         } else {
           setTitle('Sorry');
-          setSubtitle(data.message);
+          setSubtitle(data[1]);
           setPopupMessageVisibility(true);
         }
       } else {
-        console.log('sign up fail');
         setLoading(false);
       }
     } catch (e) {
@@ -402,13 +408,11 @@ const RegisterScreen = ({props, navigation}) => {
               <View style={[st.wdh48, st.ml_15]}>
                 <View style={styles.inputdobStyle}>
                   <Text
-                    // style={[{color: '#8b9cb5'}]}
                     style={{
                       color: inputs?.dob ? '#000' : '#808080',
                     }}
                     onPress={() => setOpen(true)}>
                     {inputs?.dob ? inputs?.dob : 'Enter DOB'}
-                    {/* {date} */}
                   </Text>
 
                   <DatePicker
@@ -424,8 +428,10 @@ const RegisterScreen = ({props, navigation}) => {
                     onCancel={() => {
                       setOpen(false);
                     }}
-                    // maximumDate={moment()}
-                    textColor={colors.black}
+                    maximumDate={moment()}
+                    textColor={
+                      darktheme === 'dark' ? colors.black : colors.white
+                    }
                     // maximumDate={moment()?.subtract(5, 'years')}
                   />
                 </View>
@@ -485,7 +491,18 @@ const RegisterScreen = ({props, navigation}) => {
                 tintColors={{color: icon_color(darktheme)}}
               />
               <Text style={[st.tx14(darktheme), {marginTop: 5}]}>
-                Terms & Conditions
+                By clicking signup, you agree to our{' '}
+                <Text
+                  onPress={() => navigation.navigate('Terms')}
+                  style={[st.txDecor, st.txbold, {color: colors.blue}]}>
+                  Terms of service
+                </Text>{' '}
+                and that you have read our{' '}
+                <Text
+                  onPress={() => navigation.navigate('PrivacyPolicy')}
+                  style={[st.txDecor, st.txbold, {color: colors.blue}]}>
+                  Privacy Policy.
+                </Text>
               </Text>
             </View>
             {TermsConditons && (

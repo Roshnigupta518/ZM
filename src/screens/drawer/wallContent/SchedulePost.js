@@ -54,7 +54,7 @@ const SchedulePost = ({navigation}) => {
             modal
             open={open}
             mode={'date'}
-            textColor={colors.black}
+            textColor={darktheme === 'dark' ? colors.black : colors.white}
             date={date}
             onConfirm={dateResp => {
               setOpen(false);
@@ -86,7 +86,7 @@ const SchedulePost = ({navigation}) => {
             modal
             open={opentime}
             mode={'time'}
-            textColor={colors.black}
+            textColor={darktheme === 'dark' ? colors.black : colors.white}
             date={time}
             onConfirm={dateResp => {
               setOpenTime(false);

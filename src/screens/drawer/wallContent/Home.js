@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   AppState,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import st from '../../../global/styles/styles';
 import {instaStory} from '../../../utils/array';
 import InstaStory from 'react-native-insta-story';
@@ -41,6 +41,7 @@ export default function Dashboard({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [createPost, setCreatePost] = useState(false);
   const [nuggets, setNuggets] = useState(instaStory);
+  const [seenStories, setSeenStories] = useState(new Set());
   const [appState, setAppState] = useState(AppState.currentState);
   const [startTime, setStartTime] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -56,8 +57,12 @@ export default function Dashboard({navigation}) {
         var b = moment(currentTime);
         console.log({a, b, startTime});
         console.log(a.diff(b, 'minutes')); // 44700
+        brainBitSession_handle();
       }
-    }, 2 * 60 * 1000);
+      return () => {
+        clearTimeout();
+      };
+    }, 5 * 60 * 1000);
 
     // return () => {
     //   AppState.removeEventListener('change', handleAppStateChange);
@@ -85,7 +90,6 @@ export default function Dashboard({navigation}) {
         iPageSize: pageSize,
       };
       const url = API.GETFEEDS;
-      console.log({reqData, loading, isListEnd});
       if (!loading && !isListEnd) {
         setLoading(true);
         const result = await postApi(url, reqData, login_data.accessToken);
@@ -108,6 +112,8 @@ export default function Dashboard({navigation}) {
             setRefreshing(false);
           }
         }
+      } else {
+        console.log({reqData, loading, isListEnd, url});
       }
     } catch (e) {
       console.log('error', e);
@@ -256,7 +262,7 @@ export default function Dashboard({navigation}) {
   };
 
   const gotoProfileTab = fromWall => {
-    console.log({fromWall})
+    console.log({fromWall});
     if (login_data?.response?.ZRTC == fromWall) {
       navigation.navigate('Profile');
     } else {
@@ -284,9 +290,9 @@ export default function Dashboard({navigation}) {
   };
 
   const gotoInterest = () => {
-    navigation.navigate('Interest')
-  }
-  
+    navigation.navigate('Interest');
+  };
+
   const gotoNotes = () => {
     navigation.navigate('Notes');
   };
@@ -325,6 +331,7 @@ export default function Dashboard({navigation}) {
     setPageSize(5);
     getFeeds();
     setRefreshing(false);
+    setIsListEnd(false)
   };
 
   useFocusEffect(
@@ -373,12 +380,51 @@ export default function Dashboard({navigation}) {
         // console.log('Before update: ', tempdata[objIndex]);
         if (like == 'true') {
           tempdata[objIndex].ULIKED = 'false';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES - 1;
         } else {
           tempdata[objIndex].ULIKED = 'true';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES + 1;
         }
         setData(tempdata);
 
         console.log('After update: ', tempdata[objIndex]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const nuggetActivity_handle = async storyIds => {
+    const url = API.nugget_activity;
+    const param = {
+      // _USER_ID: login_data.response.ZRTC,
+      UserId: login_data?.response?.ZRID,
+      NuggetId: storyIds, // [1,2,3]
+    };
+    console.log({param, url});
+    try {
+      const result = await postApi(url, param, login_data.accessToken);
+      console.log({nuggetActivity_handle: result.data});
+      if (result.status == 200) {
+        //-----goto
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const brainBitSession_handle = async () => {
+    const url = API.update_brainbitSession;
+    const param = {
+      _USER_ID: login_data.response.ZRID,
+      // _USER_ID: 123456,
+    };
+    console.log({param});
+    try {
+      const result = await postApi(url, param, login_data.accessToken);
+      console.log({brainBitSession_handle: result.data});
+      if (result.status == 200) {
+        //-----goto
       }
     } catch (e) {
       console.log(e);
@@ -432,10 +478,25 @@ export default function Dashboard({navigation}) {
   };
 
   const handleSeenStories = async item => {
-    console.log({item});
+    console.log({onClose: item});
+    const storyIds = [];
+    seenStories.forEach(storyId => {
+      if (storyId) storyIds.push(storyId);
+    });
+    console.log({storyIds});
+
+    // if (storyIds.length > 0) {
+    //   nuggetActivity_handle(storyIds)
+    // }
   };
-  const updateSeenStories = item => {
-    console.log({item});
+
+  const updateSeenStories = ({story: {story_id}}) => {
+    console.log({seen: story_id});
+    // setSeenStories(prevSet => {
+    //   prevSet.add(story_id);
+    //   return prevSet;
+    // });
+    nuggetActivity_handle(story_id);
   };
 
   const ListHeaderComponent = () => {
@@ -446,7 +507,7 @@ export default function Dashboard({navigation}) {
         onStart={(item, index) => {}}
         onStorySeen={updateSeenStories}
         onClose={handleSeenStories}
-        customSwipeUpComponent={<View></View>}
+        // customSwipeUpComponent={<View></View>}
         style={{marginTop: 10}}
       />
     );
@@ -481,7 +542,6 @@ export default function Dashboard({navigation}) {
           setCreatePost(true);
         }}
       />
-      {/* <Rightsheet gotoNotes={gotoNotes} gotoSavedPost={gotoSavedPost} /> */}
     </View>
   );
 }

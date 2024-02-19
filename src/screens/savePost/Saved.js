@@ -156,8 +156,8 @@ const Saved = ({navigation, route}) => {
   const gotoEditPost = PID => {
     navigation.navigate('EditPost', {postId: PID});
   };
-  const gotoReport = () => {
-    navigation.navigate('Report');
+  const gotoReport = (postId, userId) => {
+    navigation.navigate('Report', {postId: postId, userId: userId});
   };
   const gotoSharePost = PID => {
     navigation.navigate('SharePost', {shareId: PID});
@@ -218,7 +218,7 @@ const Saved = ({navigation, route}) => {
         gotoDetails={gotoDetails}
         gotoSavePost={gotoSavePost}
         gotoEditPost={gotoEditPost}
-        gotoReport={gotoReport}
+        gotoReport={() => gotoReport(item?.PID, item.ZRUSERID)}
         gotoSharePost={() => gotoSharePost(item?.PID)}
         login_data={login_data}
         quizVote_handle={quizVote_handle}

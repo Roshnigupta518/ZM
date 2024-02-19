@@ -385,8 +385,10 @@ const Profile = ({navigation, route}) => {
         // console.log('Before update: ', tempdata[objIndex]);
         if (like == 'true') {
           tempdata[objIndex].ULIKED = 'false';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES - 1;
         } else {
           tempdata[objIndex].ULIKED = 'true';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES + 1;
         }
         setData(tempdata);
       }

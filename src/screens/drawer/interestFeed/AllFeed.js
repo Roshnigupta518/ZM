@@ -104,8 +104,10 @@ import {
           // console.log('Before update: ', tempdata[objIndex]);
           if (like == 'true') {
             tempdata[objIndex].ULIKED = 'false';
+            tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES - 1;
           } else {
             tempdata[objIndex].ULIKED = 'true';
+            tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES + 1;
           }
           setData(tempdata);
   
@@ -256,7 +258,7 @@ import {
     };
 
     const gotoInterest = () => {
-      navigation.navigate('Interest')
+      navigation.goBack()
     }
   
     useEffect(() => {
@@ -317,24 +319,8 @@ import {
     };
   
     return (
-      <View style={st.flex}>
-        {/* <Header
-          title={''}
-          onPress={() => navigation.goBack()}
-          darktheme={darktheme}
-          interestType={true}
-          onPressInterestAll={() => {
-            setData([]);
-            setType('ALL');
-            getInterestHandle(0, 5, 'ALL', false);
-          }}
-          onPressContent={() => {
-            setData([]);
-            setType('');
-            getInterestHandle(0, 5, '', false);
-          }}
-        /> */}
-  
+      <View style={st.container(darktheme)}>
+        
         <FlatList
           contentContainerStyle={[st.pd20]}
           keyboardShouldPersistTaps={'handled'}

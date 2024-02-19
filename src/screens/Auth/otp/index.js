@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View, BackHandler, Button} from 'react-native';
+import {Text, StyleSheet, View, BackHandler, Button, Alert} from 'react-native';
 import Header from '../../../components/header/Header';
 import {useDispatch, useSelector} from 'react-redux';
 import st from '../../../global/styles/styles';
@@ -10,10 +10,10 @@ import {postApi} from '../../../utils/apicalls';
 import {colors} from '../../../global/theme/Theme';
 import PopUpMessage from '../../../components/popup';
 import Loader from '../../../components/Loader';
-import {updateLogin} from '../../../redux/reducers/Login';
+import {updateLogin, setLogin} from '../../../redux/reducers/Login';
 import BackgroundTimer from 'react-native-background-timer';
 
-export default function OtpScreen({navigation}) {
+export default function OtpScreen({navigation, route}) {
   const [code, setOtp] = useState('');
   const [popupMessageVisibility, setPopupMessageVisibility] = useState(false);
   const [title, setTitle] = useState('');
@@ -25,6 +25,7 @@ export default function OtpScreen({navigation}) {
 
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
+  const register_data = route?.params?.register_data;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,9 +49,35 @@ export default function OtpScreen({navigation}) {
     }, 1000);
   };
 
+  const regiterHandle = async () => {
+    const url = API.SIGNUP;
+    try {
+      setLoading(true);
+      const result = await postApi(url, reqData);
+      console.log({result: result.data});
+      if (result.status == 200) {
+        const data = result.data;
+        setLoading(false);
+        if (data?.IsSuccessed) {
+          dispatch(setLogin(data));
+          // setInputs(INITIAL_INPUT);
+        } else {
+          setTitle('Sorry');
+          setSubtitle(data.message);
+          setPopupMessageVisibility(true);
+        }
+      } else {
+        setLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
+  };
+
   const resendOtpHandle = async () => {
     const reqData = {
-      iDentity: '', //number
+      iDentity: '',
     };
     const url = API.OTPActResend;
     try {
@@ -61,9 +88,9 @@ export default function OtpScreen({navigation}) {
         setLoading(false);
         const data = result.data;
         setMsg(data?.message[1]);
-        setTimerOn(true)
-        setSecondsLeft(5)
-        startTimer()
+        setTimerOn(true);
+        setSecondsLeft(5);
+        startTimer();
       } else {
         setLoading(false);
         setMsg('');
@@ -85,7 +112,7 @@ export default function OtpScreen({navigation}) {
       const url = API.OtpVarify;
       try {
         setLoading(true);
-        const result = await postApi(url, reqData, login_data.accessToken);
+        const result = await postApi(url, reqData);
         console.log({result: result.data});
         if (result.status == 200) {
           const data = result.data;
@@ -98,8 +125,9 @@ export default function OtpScreen({navigation}) {
             setTitle('Sorry');
             setSubtitle('This otp is expired, Please try to resend otp');
           } else {
-            navigation.navigate('ProfilePictureScreen');
-            dispatch(updateLogin(true));
+            // navigation.navigate('ProfilePictureScreen');
+            // dispatch(updateLogin(true));
+            regiterHandle();
           }
           setLoading(false);
         } else {
@@ -148,13 +176,25 @@ export default function OtpScreen({navigation}) {
     );
   };
 
+  const showAlert = () => {
+    Alert.alert(
+      'Alert',
+      'Go back if you want to edit your details',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => navigation.goBack()},
+      ],
+      {cancelable: false},
+    );
+  };
+
   return (
     <View style={st.container(darktheme)}>
-      <Header
-        title={'OTP'}
-        onPress={() => BackHandler.exitApp()}
-        darktheme={darktheme}
-      />
+      <Header title={'OTP'} onPress={() => showAlert()} darktheme={darktheme} />
       <View style={[st.pd20]}>
         <Text style={[st.tx14(darktheme), st.txAlignC]}>{msg}</Text>
         <View>
@@ -195,8 +235,8 @@ export default function OtpScreen({navigation}) {
                       clockify().displaySecs == '00'
                     ) {
                       resendOtpHandle();
-                    }else{
-                      console.log('button disable')
+                    } else {
+                      console.log('button disable');
                     }
                   }}
                   style={[

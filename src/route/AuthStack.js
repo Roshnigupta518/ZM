@@ -8,20 +8,15 @@ import Otp from '../screens/Auth/otp';
 import Intro from '../screens/Auth/intro';
 import ForgotPassword from '../screens/Auth/forgotPassword/index';
 import ForgotPasswordOtp from '../screens/Auth/forgotPasswordOtp/index';
-import Init from '../screens/Auth/init';
 import ChangePassword from '../screens/Auth/changePassword';
+import Terms from '../screens/drawer/terms';
+import PrivacyPolicy from '../screens/drawer/privacy';
 
 const Stack = createNativeStackNavigator();
 
 const AuthStack = ({introSlides}) => {
   return (
     <Stack.Navigator initialRouteName={introSlides ? 'LoginScreen' : 'Intro'}>
-      {/* <Stack.Screen
-        name="Init"
-        component={Init}
-        options={{headerShown: false}}
-      /> */}
-
       <Stack.Screen
         name="SplashScreen"
         component={Splash}
@@ -43,6 +38,11 @@ const AuthStack = ({introSlides}) => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="OtpScreen"
+        component={Otp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="forgotPassword"
         component={ForgotPassword}
         options={{headerShown: false}}
@@ -56,6 +56,18 @@ const AuthStack = ({introSlides}) => {
       <Stack.Screen
         name="RegisterScreen"
         component={Register}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="Terms"
+        component={Terms}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

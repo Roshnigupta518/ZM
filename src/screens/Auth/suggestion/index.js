@@ -130,6 +130,7 @@ const SuggestionScreen = ({navigation, route}) => {
   }, []);
 
   const renderItem = ({item, index}) => {
+    console.log({item});
     return (
       <View style={[st.mt_t15]}>
         <View style={[st.row, st.align_C]}>
@@ -140,11 +141,11 @@ const SuggestionScreen = ({navigation, route}) => {
             }>
             <ProfileImg url={item.UI} style={styles.picsty} />
           </TouchableOpacity>
-          <TouchableOpacity 
-           onPress={() =>
+          <TouchableOpacity
+            onPress={() =>
               navigation.navigate('ViewOtherProfile', {fromWall: item.PM})
             }
-          style={st.wdh50}>
+            style={st.wdh50}>
             <Text style={st.tx14_s(darktheme)}>{item.DN}</Text>
             <Text style={st.tx12(darktheme)}>{item.PM}</Text>
           </TouchableOpacity>
@@ -181,14 +182,15 @@ const SuggestionScreen = ({navigation, route}) => {
     return (
       <View>
         <TextInput
-          style={styles.textInputStyle}
+          style={styles.textInputStyle(darktheme)}
           onChangeText={text => {
             setSearch(text);
             searchFilterFunction(text);
           }}
           value={search}
           underlineColorAndroid="transparent"
-          placeholder="Search Here"
+          placeholder={'Search Here'}
+          placeholderTextColor="#808080"
         />
       </View>
     );
@@ -197,7 +199,7 @@ const SuggestionScreen = ({navigation, route}) => {
   const EmptyListMessage = () => {
     return (
       <View style={st.emptyliststy}>
-        <Text style={st.tx14_s(darktheme)}>No Data Found</Text>
+        {!loading && <Text style={st.tx14_s(darktheme)}>No Data Found</Text>}
       </View>
     );
   };
@@ -266,12 +268,14 @@ const styles = StyleSheet.create({
     width: 10,
     height: 20,
   },
-  textInputStyle: {
+  textInputStyle: darktheme => ({
     height: 40,
     paddingLeft: 20,
     borderColor: '#009688',
-    backgroundColor: '#E8E8E8',
+    // backgroundColor: '#E8E8E8',
+    backgroundColor: darktheme === 'dark' ? '#E8E8E8' : '#1a1a1a',
     borderRadius: 5,
     margin: 20,
-  },
+    color: darktheme === 'dark' ? colors.black : colors.white,
+  }),
 });

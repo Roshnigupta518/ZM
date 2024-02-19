@@ -5,7 +5,8 @@ import {
   StyleSheet,
   View,
   FlatList,
-  TextInput, TouchableOpacity
+  TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import Header from '../../components/header/Header';
 import {useSelector} from 'react-redux';
@@ -47,8 +48,11 @@ const Search = ({navigation}) => {
   const ItemView = ({item}) => {
     return (
       <View style={[st.mt_t15]}>
-        <TouchableOpacity onPress={()=>navigation.navigate('ViewOtherProfile',{fromWall:item.PM})}
-        style={[st.row, st.align_C]}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('ViewOtherProfile', {fromWall: item.PM})
+          }
+          style={[st.row, st.align_C]}>
           <View style={st.wdh20}>
             <ProfileImg url={item.UserImage} style={st.profileImgSty} />
           </View>
@@ -73,12 +77,12 @@ const Search = ({navigation}) => {
     <View style={st.container(darktheme)}>
       <Header
         onPress={() => navigation.goBack()}
-        title={'Explore'}
+        title={'Search Users'}
         darktheme={darktheme}
       />
 
       <TextInput
-        style={styles.textInputStyle}
+        style={styles.textInputStyle(darktheme)}
         onChangeText={text => {
           getSearchData_handle(text);
           setSearch(text);
@@ -86,7 +90,8 @@ const Search = ({navigation}) => {
         }}
         value={search}
         underlineColorAndroid="transparent"
-        placeholder="Search Here"
+        placeholder={"Search Here"}
+        placeholderTextColor="#808080"
       />
 
       <FlatList
@@ -108,14 +113,16 @@ const styles = StyleSheet.create({
   itemStyle: {
     padding: 10,
   },
-  textInputStyle: {
+  textInputStyle: darktheme => ({
     height: 40,
     paddingLeft: 20,
     borderColor: '#009688',
-    backgroundColor: '#E8E8E8',
+    // backgroundColor: '#E8E8E8',
+    backgroundColor: darktheme === 'dark' ? '#E8E8E8' : '#1a1a1a',
     borderRadius: 5,
     margin: 20,
-  },
+    color: darktheme === 'dark' ? colors.black : colors.white,
+  }),
   statusSty: {
     borderRadius: 5,
     backgroundColor: colors.skyblue,

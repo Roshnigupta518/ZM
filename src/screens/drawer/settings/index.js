@@ -13,11 +13,12 @@ import {
 import st from '../../../global/styles/styles';
 import {useDispatch, useSelector} from 'react-redux';
 import Header from '../../../components/header/Header';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {clearLogin} from '../../../redux/reducers/Login';
 import {icon_color} from '../../../utils/helperfunctions';
 import {API} from '../../../utils/endpoints';
 import {postApi} from '../../../utils/apicalls';
+import {setTheme} from '../../../redux/reducers/Darktheme';
 
 const SettingsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,7 @@ const SettingsScreen = ({navigation}) => {
           onPress: () => {
             // dispatch(clearLogin());
             postLogOut_handle();
+            dispatch(setTheme('dark'));
           },
         },
       ],
@@ -116,8 +118,14 @@ export default SettingsScreen;
 const styles = StyleSheet.create({});
 
 const list = [
-  {name: 'Help', iconName: 'help-circle-outline', screenName: 'About'},
-  {name: 'About', iconName: 'information-circle-outline', screenName: 'About'},
-  {name: 'Theme', iconName: 'color-palette-outline', screenName: 'Theme'},
-  {name: 'Log-out', iconName: 'log-out-outline', screenName: 'logout'},
+  {name: 'Help', iconName: 'help', screenName: 'About'},
+  {name: 'About', iconName: 'info-circle', screenName: 'About'},
+  {name: 'Terms & Conditions', iconName: 'file-text-o', screenName: 'Terms'},
+  {
+    name: 'Privacy Policy',
+    iconName: 'unlock-alt',
+    screenName: 'PrivacyPolicy',
+  },
+  {name: 'Theme', iconName: 'sun-o', screenName: 'Theme'},
+  {name: 'Log-out', iconName: 'sign-out', screenName: 'logout'},
 ];

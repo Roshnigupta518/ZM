@@ -55,7 +55,7 @@ const ViewOtherProfile = ({navigation, route}) => {
       iToOffset: offset,
       iPageSize: pageSize,
     };
-    console.log({reqData, token:login_data.accessToken})
+    console.log({reqData, token: login_data.accessToken});
     try {
       if (!loading && !isListEnd) {
         setLoading(true);
@@ -63,7 +63,7 @@ const ViewOtherProfile = ({navigation, route}) => {
         console.log({offset, pageSize});
         if (result.status == 200) {
           let newData = JSON.parse(result?.data?.Response);
-        //   console.log({getFeednewData: newData[0]});
+          //   console.log({getFeednewData: newData[0]});
           if (newData?.length > 0) {
             setOffset(offset + 5);
             setPageSize(pageSize + 5);
@@ -93,7 +93,7 @@ const ViewOtherProfile = ({navigation, route}) => {
     // setIsLoading(true);
     try {
       const result = await postApi(url, param, login_data.accessToken);
-      // console.log({getProfileMeta: result.data});
+      console.log({getProfileMeta: result.data});
       if (result.status == 200) {
         const data = JSON.parse(result?.data?.Response);
         let tempdata = null;
@@ -103,7 +103,6 @@ const ViewOtherProfile = ({navigation, route}) => {
         setIsLoading(false);
         // console.log({tempdata});
         setMetaData(tempdata);
-        dispatch(setUserMeta(tempdata));
       }
     } catch (e) {
       console.log(e);
@@ -136,6 +135,41 @@ const ViewOtherProfile = ({navigation, route}) => {
     }
   };
 
+  const SetFollowUnfollow_handle = async (PM, FOLLOW) => {
+    const url = API.SetFollowUnfollow;
+    const reqData = {
+      iPrometheus: PM,
+      iFollowType: FOLLOW  == 'YES' ? 'UNFOLLOW' : 'FOLLOW',
+    };
+
+    console.log({reqData});
+
+    try {
+      setIsLoading(true);
+      const result = await postApi(url, reqData, login_data.accessToken);
+      console.log({result: result.data});
+      if (result.status == 200) {
+        const data = result.data;
+        if(FOLLOW == "YES"){
+        setMetaData({
+          ...metaData, 
+          YFLLW: 'NO',  
+        });
+      }else{
+        setMetaData({
+          ...metaData, 
+          YFLLW: 'YES',  
+        });
+      }
+      setIsLoading(false);
+        Toast.show(data?.message[1], Toast.LONG);
+      }
+    } catch (e) {
+      console.log(e);
+      setIsLoading(false);
+    }
+  };
+
   const EmptyListMessage = ({item}) => {
     return (
       <View style={st.emptyliststy}>
@@ -163,13 +197,31 @@ const ViewOtherProfile = ({navigation, route}) => {
                   {metaData?.PM}
                 </Text>
               </View>
-             
+
+              <View style={[st.row, st.mt_t10]}>
+                <TouchableOpacity
+                  style={st.editboxsty(darktheme)}
+                  onPress={() =>
+                    // navigation.navigate('Edit', {mode: false})
+                    // alert('hi')
+                    SetFollowUnfollow_handle(metaData?.PM, metaData?.YFLLW)
+                  }>
+                  <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                    {metaData?.YFLLW == 'YES' ? 'Following' : 'Follow'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           <View style={[st.row, st.mt_t10]}>
             <TouchableOpacity
               style={styles.statsbox}
-              onPress={() => navigation.navigate('Followers', {mode: false,userID:fromWall})}>
+              onPress={() =>
+                navigation.navigate('Followers', {
+                  mode: false,
+                  userID: fromWall,
+                })
+              }>
               <Text style={st.tx30(darktheme)}>{metaData?.FLLWRS}</Text>
               <Text style={st.tx12(darktheme)}>Followers</Text>
             </TouchableOpacity>
@@ -183,62 +235,14 @@ const ViewOtherProfile = ({navigation, route}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.statsbox}
-              onPress={() => navigation.navigate('Followers', {mode: true,userID:fromWall})}>
+              onPress={() =>
+                navigation.navigate('Followers', {mode: true, userID: fromWall})
+              }>
               <Text style={st.tx30(darktheme)}>{metaData?.FLLWNG}</Text>
               <Text style={st.tx12(darktheme)}>Followings</Text>
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* <View>
-          <Text style={[st.tx18(darktheme), st.txAlignC]} numberOfLines={1}>
-            Interests List
-          </Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/pexels-1.jpg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/pexels-2..jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-          </ScrollView>
-        </View> */}
 
         <View style={st.pd_H20}>
           <View style={[st.editboxsty(darktheme), st.mt_t10]}>
@@ -264,7 +268,7 @@ const ViewOtherProfile = ({navigation, route}) => {
 
   useEffect(() => {
     getFeed();
-    console.log({fromWall})
+    console.log({fromWall});
   }, []);
 
   useEffect(() => {
@@ -345,8 +349,10 @@ const ViewOtherProfile = ({navigation, route}) => {
         // console.log('Before update: ', tempdata[objIndex]);
         if (like == 'true') {
           tempdata[objIndex].ULIKED = 'false';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES - 1;
         } else {
           tempdata[objIndex].ULIKED = 'true';
+          tempdata[objIndex].PLIKES = tempdata[objIndex].PLIKES + 1;
         }
         setData(tempdata);
       }
@@ -423,8 +429,8 @@ const ViewOtherProfile = ({navigation, route}) => {
   const gotoSavePost = PID => {
     navigation.navigate('SavePost', {postId: PID});
   };
-  const gotoReport = () => {
-    navigation.navigate('Report');
+  const gotoReport = (postId, userId) => {
+    navigation.navigate('Report', {postId: postId, userId: userId});
   };
   const gotoEditPost = PID => {
     navigation.navigate('EditPost', {postId: PID});
@@ -452,7 +458,7 @@ const ViewOtherProfile = ({navigation, route}) => {
         gotoDetails={gotoDetails}
         gotoSavePost={gotoSavePost}
         gotoEditPost={gotoEditPost}
-        gotoReport={gotoReport}
+        gotoReport={() => gotoReport(item?.PID, item.ZRUSERID)}
         gotoSharePost={() => gotoSharePost(item?.PID)}
         login_data={login_data}
         quizVote_handle={quizVote_handle}
