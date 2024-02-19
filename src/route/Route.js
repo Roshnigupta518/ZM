@@ -28,7 +28,7 @@ const Route = () => {
       setIsLoading(false);
     }, 2000);
   }, []);
-
+  // InitialRoute={login_data?.response?.ZRMV}
   return (
     <NavigationContainer fallback={<ActivityIndicator />}>
       {isLoading ? (

@@ -27,6 +27,9 @@ import {
   ValidatePassword,
 } from '../../../utils/helperfunctions/validations';
 import PopUpMessage from '../../../components/popup';
+import uuid from 'react-native-uuid';
+
+const GUID = uuid.v4();
 
 const INITIALINPUT = {
   userNumber: '',
@@ -129,6 +132,9 @@ const LoginScreen = ({navigation}) => {
       console.log('result', result.data, 'check result');
       if (result?.data?.IsSuccessed) {
         const data = result?.data;
+        await AsyncStorage.setItem('accessToken', data?.accessToken);
+        await AsyncStorage.setItem('ZRID', data?.response?.ZRID); //GUID
+        await AsyncStorage.setItem('GUID', GUID); 
         setLoading(false);
         dispatch(setLogin(data));
         dispatch(updateLogin(true));

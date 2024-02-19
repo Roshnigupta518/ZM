@@ -6,6 +6,7 @@ class Endpoints {
   SIGNUP = this.baseUrl + 'Signner/Signupv2';
   OTP_SEND = this.baseUrl + 'Signner/SendMobileOtpV2';
   OtpVarify = this.baseUrl + 'Signner/PhoneActconfirmV2';
+  PhoneActVarifi = this.baseUrl + 'Signner/PhoneActConfirmationV2'
   OTPActResend = this.baseUrl + 'Signner/PhoneActResendV2';
   NEWPOST = this.baseUrl + 'Posting/PostingNewPostV2';
   NEWMEDIAPOST = this.baseUrl + 'Posting/UserMediaPostingV2';
@@ -13,7 +14,7 @@ class Endpoints {
   GET_SAVED = this.baseUrl + 'posting/GetSavedPostsDataV2';
   GetSaveLabel = this.baseUrl + 'posting/GetSaveLabelListV2';
   GetComments = this.baseUrl + 'posting/GetPostCommentsDataV2';
-  DeletePost = this.baseUrl + 'posting/DeletePostItemV2';
+  DeletePost = this.baseUrl + 'posting/hidePostItemV2'; //DeletePostItemV2
   HidePost = this.baseUrl + 'posting/hidePostItemV2';
   ON_COMMENT = this.baseUrl + 'posting/WritePostCommentCallV2';
   COMMENT_REPLY = this.baseUrl + 'posting/WriteCommentReplyCallV2';
@@ -82,6 +83,7 @@ class Endpoints {
   SOCIAL_STATUS = this.baseUrl + 'BrainBit/GetSocialPaymentStatusV2?userId=';
   PROMOTIONAL_STATUS = this.baseUrl + 'BrainBit/GetPromotionalPaymentStatusV2?userId=';
   ACTIVITY_STATUS = this.baseUrl + 'BrainBit/GetBrainBitSocialActivityStatusV2?userid='
+  GET_BIO = this.baseUrl +'Surge/GetUserBio?userid='
 }
 
 export const API = new Endpoints();

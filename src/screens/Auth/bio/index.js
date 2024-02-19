@@ -14,19 +14,24 @@ import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../../../global/theme/Theme';
 import {icon_color} from '../../../utils/helperfunctions';
 import {API} from '../../../utils/endpoints';
-import {postApi} from '../../../utils/apicalls';
+import {getApi, postApi} from '../../../utils/apicalls';
 import Input from '../../../components/input';
 import {ValueEmpty} from '../../../utils/helperfunctions/validations';
+import Toast from 'react-native-simple-toast';
 
 const INITIAL_INPUT = {
   userBio: '',
 };
 
-export default function BioScreen({navigation}) {
+export default function BioScreen({navigation, route}) {
   const [inputs, setInputs] = useState(INITIAL_INPUT);
   const [inputsErr, setInputsErr] = useState(INITIAL_INPUT);
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
+
+  const initVal = route?.params?.data;
+
+  console.log({initVal});
 
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({...prevState, [input]: text}));
@@ -35,6 +40,7 @@ export default function BioScreen({navigation}) {
   const handleError = (error, input) => {
     setInputsErr(prevState => ({...prevState, [input]: error}));
   };
+  console.log({token: login_data.accessToken});
 
   const bioHandle = async () => {
     const url = API.UserBio;
@@ -45,7 +51,13 @@ export default function BioScreen({navigation}) {
       const result = await postApi(url, reqData, login_data.accessToken);
       console.log({result: result.data});
       if (result.status == 200) {
-        navigation.navigate('SuggestionScreen');
+        const data = result.data;
+        if (initVal == true) {
+          Toast.show(data?.message[1], Toast.LONG);
+          navigation.goBack();
+        } else {
+          navigation.navigate('SuggestionScreen');
+        }
       } else {
       }
     } catch (e) {
@@ -69,15 +81,38 @@ export default function BioScreen({navigation}) {
     }
   };
 
+  const getBiohandle = async () => {
+    const url = API.GET_BIO + login_data?.response.ZRID;
+
+    try {
+      const result = await getApi(url, login_data.accessToken);
+      console.log({result: result.data});
+      if (result.status == 200) {
+        const data = result.data;
+        console.log({getBiohandle: data});
+        const biodata = {userBio: data?.BIO}
+        setInputs(biodata);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getBiohandle();
+  }, []);
+
   return (
     <View style={[st.container(darktheme)]}>
-      <Header
-        title={'Add Bio'}
-        onPress={() => navigation.goBack()}
-        darktheme={darktheme}
-        onEditHandle={ validate}
-        edit={true}
-      />
+      {!initVal == true && (
+        <Header
+          title={'Add Bio'}
+          onPress={() => navigation.goBack()}
+          darktheme={darktheme}
+          onEditHandle={validate}
+          edit={true}
+        />
+      )}
 
       <View style={[st.pd20]}>
         <Text style={[st.tx18(darktheme), st.txAlignC]}>Describe yourself</Text>
@@ -85,21 +120,24 @@ export default function BioScreen({navigation}) {
         <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
           What's special about you? Describe yourSelf.
         </Text>
-        <View style={{marginTop:40}}>
-        <Input
-          onChangeText={text => handleOnchange(text, 'userBio')}
-          onFocus={() => handleError(null, 'userBio')}
-          placeholder={'Write something about you'}
-          placeholderTextColor="#808080"
-          error={inputsErr?.userBio}
-          darktheme={darktheme}
-          multiline
-        />
+        <View style={{marginTop: 40}}>
+          <Input
+            onChangeText={text => handleOnchange(text, 'userBio')}
+            onFocus={() => handleError(null, 'userBio')}
+            placeholder={'Write something about you'}
+            placeholderTextColor="#808080"
+            error={inputsErr?.userBio}
+            darktheme={darktheme}
+            multiline
+            value={inputs?.userBio}
+          />
         </View>
       </View>
-      {/* <View style={st.align_C}>
-        <Authbtn title={'Add Bio'} onPress={() => validate()} />
-      </View> */}
+      {initVal == true && (
+        <View style={st.align_C}>
+          <Authbtn title={'Add Bio'} onPress={() => validate()} />
+        </View>
+      )}
     </View>
   );
 }

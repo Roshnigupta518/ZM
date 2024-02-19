@@ -38,21 +38,23 @@ import PrivacyPolicy from '../screens/drawer/privacy';
 import UPI from '../screens/drawer/payments/Bank';
 import MyCoins from '../screens/drawer/wallContent/MyCoins';
 import Redeem from '../screens/drawer/payments/Redeem';
-
+import Help from '../screens/drawer/help';
+import helpDetails from '../screens/drawer/help/helpDetails';
 const Stack = createNativeStackNavigator();
 
 const HomeStack = ({InitialRoute}) => {
   console.log({InitialRoute});
   return (
     <Stack.Navigator
-      initialRouteName={
-        InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
-      }>
-      {/* <Stack.Screen
-        name="OtpScreen"
-        component={Otp}
+    initialRouteName={
+      InitialRoute == false ? 'ProfilePictureScreen' : 'DrawerNavigationRoutes'
+    }
+    >
+      <Stack.Screen
+        name="DrawerNavigationRoutes"
+        component={DrawerNavigatorRoutes}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="ProfilePictureScreen"
         component={ProfilePicture}
@@ -73,12 +75,6 @@ const HomeStack = ({InitialRoute}) => {
       <Stack.Screen
         name="InterestScreen"
         component={Interest}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name="DrawerNavigationRoutes"
-        component={DrawerNavigatorRoutes}
         options={{headerShown: false}}
       />
 
@@ -140,11 +136,16 @@ const HomeStack = ({InitialRoute}) => {
         options={{headerShown: false}}
       />
 
-      {/* <Stack.Screen
-        name="Notes"
-        component={Notes}
+      <Stack.Screen
+        name="Help"
+        component={Help}
         options={{headerShown: false}}
-      /> */}
+      />
+      <Stack.Screen
+        name="helpDetails"
+        component={helpDetails}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="NoteDetails"
         component={NoteDetails}
@@ -212,7 +213,7 @@ const HomeStack = ({InitialRoute}) => {
         component={MyCoins}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Redeem"
         component={Redeem}
         options={{headerShown: false}}

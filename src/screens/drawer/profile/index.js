@@ -47,6 +47,16 @@ const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
+  const formatNumber = num => {
+    if (num < 1000) {
+      return num.toString();
+    } else if (num < 1000000) {
+      return (num / 1000).toFixed(1) + 'k';
+    } else {
+      return (num / 1000000).toFixed(1) + 'm';
+    }
+  };
+
   const getFeed = async () => {
     const url = API.GetProfilePostsData;
     const reqData = {
@@ -204,14 +214,16 @@ const Profile = ({navigation, route}) => {
                   userID: metaData.PM,
                 })
               }>
-              <Text style={st.tx30(darktheme)}>{metaData?.FLLWRS}</Text>
+              <Text style={st.tx30(darktheme)}>
+                {formatNumber(metaData?.FLLWRS)}
+              </Text>
               <Text style={st.tx12(darktheme)}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.statsbox}
               onPress={() => onFabPress()}>
               <Text style={st.tx30(darktheme)}>
-                {data.length > 0 ? data[0]?.TOTAL : 0}
+                {data.length > 0 ? formatNumber(data[0]?.TOTAL) : 0}
               </Text>
               <Text style={st.tx12(darktheme)}>Posts</Text>
             </TouchableOpacity>
@@ -223,61 +235,13 @@ const Profile = ({navigation, route}) => {
                   userID: metaData.PM,
                 })
               }>
-              <Text style={st.tx30(darktheme)}>{metaData?.FLLWNG}</Text>
+              <Text style={st.tx30(darktheme)}>
+                {formatNumber(metaData?.FLLWNG)}
+              </Text>
               <Text style={st.tx12(darktheme)}>Followings</Text>
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* <View>
-          <Text style={[st.tx18(darktheme), st.txAlignC]} numberOfLines={1}>
-            Interests List
-          </Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/pexels-1.jpg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/pexels-2..jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/images/drawericons/backgroundimage.jpeg')}
-              />
-            </View>
-          </ScrollView>
-        </View> */}
 
         <View style={st.pd_H20}>
           <View style={[st.editboxsty(darktheme), st.mt_t10]}>
@@ -478,8 +442,8 @@ const Profile = ({navigation, route}) => {
   };
 
   const gotoInterest = () => {
-    navigation.navigate('Interest')
-  }
+    navigation.navigate('Interest');
+  };
 
   const gotoSharePost = PID => {
     navigation.navigate('SharePost', {shareId: PID});

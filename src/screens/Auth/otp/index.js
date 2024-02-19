@@ -12,6 +12,10 @@ import PopUpMessage from '../../../components/popup';
 import Loader from '../../../components/Loader';
 import {updateLogin, setLogin} from '../../../redux/reducers/Login';
 import BackgroundTimer from 'react-native-background-timer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+
+const GUID = uuid.v4();
 
 export default function OtpScreen({navigation, route}) {
   const [code, setOtp] = useState('');
@@ -53,14 +57,18 @@ export default function OtpScreen({navigation, route}) {
     const url = API.SIGNUP;
     try {
       setLoading(true);
-      const result = await postApi(url, reqData);
+      const result = await postApi(url, register_data);
       console.log({result: result.data});
       if (result.status == 200) {
         const data = result.data;
         setLoading(false);
         if (data?.IsSuccessed) {
           dispatch(setLogin(data));
-          // setInputs(INITIAL_INPUT);
+          const token = data?.accessToken;
+          console.log({token});
+          await AsyncStorage.setItem('accessToken', token);
+          await AsyncStorage.setItem('ZRID', data?.response?.ZRID);
+          await AsyncStorage.setItem('GUID', GUID); 
         } else {
           setTitle('Sorry');
           setSubtitle(data.message);
@@ -106,10 +114,13 @@ export default function OtpScreen({navigation, route}) {
     if (code) {
       const reqData = {
         // iDentity: 'string', // number
+        // iPhoneOTP: code,
+        // iOTPMode: 'Phone',
+
+        iMobile: register_data?.imRegIdentityId,
         iPhoneOTP: code,
-        iOTPMode: 'Phone',
       };
-      const url = API.OtpVarify;
+      const url = API.PhoneActVarifi;
       try {
         setLoading(true);
         const result = await postApi(url, reqData);

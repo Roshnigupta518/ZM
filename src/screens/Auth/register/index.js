@@ -283,7 +283,7 @@ const RegisterScreen = ({props, navigation}) => {
         const data = result.data;
         setLoading(false);
         if ((data[1] = 'Success')) {
-          navigation.navigate('OtpScreen', register_data);
+          navigation.navigate('OtpScreen', {register_data});
           // dispatch(setLogin(data));
           // setInputs(INITIAL_INPUT);
         } else {

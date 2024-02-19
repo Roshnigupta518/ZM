@@ -110,7 +110,12 @@ export default function Coins({navigation}) {
   };
 
   const getPromotionalPoint = async () => {
-    const url = API.PROMOTIONAL_POINT + login_data?.response.ZRID; //12345
+    const url = API.PROMOTIONAL_POINT + login_data?.response.ZRID;
+    console.log(
+      '************************************',
+      url,
+      login_data.accessToken,
+    );
     try {
       const result = await getApi(url, login_data.accessToken);
       console.log({pro_point: result.data});
@@ -186,7 +191,7 @@ export default function Coins({navigation}) {
 
   const getActivityStatusHandle = async () => {
     const url = API.ACTIVITY_STATUS + login_data.response.ZRID;
-
+    console.log({url});
     try {
       const result = await getApi(url, login_data.accessToken);
       console.log({getActivityStatusHandle: result.data});
@@ -198,6 +203,21 @@ export default function Coins({navigation}) {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      handleSubmitPress();
+      getPromotionalPoint();
+      getData();
+      getSocialStatusHandle();
+      getPromotionalStatusHandle();
+      getActivityStatusHandle();
+    });
+
+    return () => {
+      unsubscribe;
+    };
+  }, [navigation]);
 
   useEffect(() => {
     handleSubmitPress();
@@ -231,7 +251,7 @@ export default function Coins({navigation}) {
             </View>
           </TouchableOpacity>
 
-          {promotionalData?.SIGNUPREDIMSTATUS != 1 && (
+          {promotionalData?.IS_PAYMENT_PROCESSED != 1 && (
             <Animated.View>
               <TouchableOpacity
                 activeOpacity={0.7}
@@ -264,7 +284,7 @@ export default function Coins({navigation}) {
                         style={[st.tx20(darktheme)]}
                         numberOfLines={1}
                         adjustsFontSizeToFit>
-                        {promotionalData?.SIGNUPAMOUNT}
+                        {promotionalData?.SIGNUP_AMOUNT}
                         <Text style={st.tx14_s(darktheme)}>{' Points'}</Text>
                       </Text>
                     </View>
@@ -273,7 +293,11 @@ export default function Coins({navigation}) {
                 {showPromotional && (
                   <View style={[st.row, st.justify_S]}>
                     <TouchableOpacity
-                      // disabled={promoStatus != 'Pending' ? false : true}
+                      disabled={
+                        promoStatus != 'Inprocess' || promoStatus == ''
+                          ? false
+                          : true
+                      }
                       onPressIn={onPressIn}
                       onPressOut={onPressOut}
                       onPress={() => {
@@ -289,12 +313,12 @@ export default function Coins({navigation}) {
                       }}
                       style={[
                         styles.redeemBtn,
-                        // {
-                        //   backgroundColor:
-                        //     promoStatus != 'Pending'
-                        //       ? colors.green
-                        //       : colors.grey,
-                        // },
+                        {
+                          backgroundColor:
+                            promoStatus != 'Inprocess' || promoStatus == ''
+                              ? colors.green
+                              : colors.grey,
+                        },
                       ]}>
                       <Text
                         style={[st.tx14_s(darktheme), {color: colors.white}]}>
@@ -303,12 +327,14 @@ export default function Coins({navigation}) {
                     </TouchableOpacity>
 
                     <View style={st.mt_t10}>
-                      <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                        Status
-                      </Text>
+                      {promoStatus != '' && (
+                        <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                          Status
+                        </Text>
+                      )}
                       <Pressable
                         onPress={() => {
-                          if (promoStatus != 'Pending') {
+                          if (promoStatus != 'Inprocess' || promoStatus == '') {
                             navigation.navigate('MyCoins');
                           }
                         }}>
@@ -317,11 +343,13 @@ export default function Coins({navigation}) {
                             st.tx14(darktheme),
                             {
                               color:
-                                promoStatus != 'Pending'
+                                promoStatus != 'Inprocess' || promoStatus == ''
                                   ? colors.green
                                   : colors.danger,
                               textDecorationLine:
-                                promoStatus != 'Pending' ? 'underline' : 'none',
+                                promoStatus != 'Inprocess' || promoStatus == ''
+                                  ? 'underline'
+                                  : 'none',
                             },
                           ]}>
                           {promoStatus}
@@ -337,7 +365,7 @@ export default function Coins({navigation}) {
           <Animated.View>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPressIn={onPressInSocial}
+              onPressIn={onPressInSocial} 
               onPressOut={onPressOutSocial}
               onPress={() => {
                 setShowSocial(!showSocial);
@@ -366,77 +394,105 @@ export default function Coins({navigation}) {
                       style={[st.tx20(darktheme)]}
                       numberOfLines={1}
                       adjustsFontSizeToFit>
-                      {dataSource?.SOCIAL_ACTIVITY_POINT}
-                      <Text style={st.tx14_s(darktheme)}>{' Points'}</Text>
+                      {dataSource?.SOCIAL_ACTIVITY_POINT && (
+                        <Text style={st.tx14_s(darktheme)}>
+                          {dataSource?.SOCIAL_ACTIVITY_POINT}
+                          {` Points`}
+                        </Text>
+                      )}
                     </Text>
                   </View>
                 )}
               </View>
 
               {showSocial && (
-                <View style={[st.row, st.justify_S]}>
-                  {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
-                    <TouchableOpacity
-                      disabled={socialStatus != 'Pending' ? false : true}
-                      onPressIn={onPressInSocial}
-                      onPressOut={onPressOutSocial}
-                      onPress={() => {
-                        if (details?.length > 0) {
-                          onPopupMessageModalClick(!popupMessageVisibility);
-                          setData(dataSource);
-                          setPayment_Type(1);
-                        } else {
-                          navigation.navigate('UPI', {edit: false});
+                <View>
+                  <View style={[st.row, st.justify_S]}>
+                    {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
+                      <TouchableOpacity
+                        disabled={
+                          socialStatus != 'Inprocess' || socialStatus == ''
+                            ? false
+                            : true
                         }
-                      }}
-                      style={[
-                        styles.redeemBtn,
-                        {
-                          backgroundColor:
-                            promoStatus != 'Pending'
-                              ? colors.green
-                              : colors.grey,
-                        },
-                      ]}>
-                      <Text
-                        style={[st.tx14_s(darktheme), {color: colors.white}]}>
-                        Redeem
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                  {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
-                    <View style={st.mt_t10}>
-                      <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
-                        Status
-                      </Text>
-                      <Pressable
+                        onPressIn={onPressInSocial}
+                        onPressOut={onPressOutSocial}
                         onPress={() => {
-                          if (socialStatus != 'Pending') {
-                            navigation.navigate('MyCoins');
+                          if (details?.length > 0) {
+                            onPopupMessageModalClick(!popupMessageVisibility);
+                            setData(dataSource);
+                            setPayment_Type(1);
+                            setTitle('Are you sure ?');
+                            setSubtitle('Do you want to redeem it?');
+                          } else {
+                            navigation.navigate('UPI', {edit: false});
                           }
-                        }}>
+                        }}
+                        style={[
+                          styles.redeemBtn,
+                          {
+                            backgroundColor:
+                              socialStatus != 'Inprocess' || socialStatus == ''
+                                ? colors.green
+                                : colors.grey,
+                          },
+                        ]}>
                         <Text
-                          style={[
-                            st.tx14(darktheme),
-                            {
-                              color:
-                                socialStatus != 'Pending'
-                                  ? colors.green
-                                  : colors.danger,
-                              textDecorationLine:
-                                socialStatus != 'Pending'
-                                  ? 'underline'
-                                  : 'none',
-                            },
-                          ]}>
-                          {socialStatus}
+                          style={[st.tx14_s(darktheme), {color: colors.white}]}>
+                          Redeem
                         </Text>
-                      </Pressable>
-                    </View>
-                  )}
+                      </TouchableOpacity>
+                    )}
+                    {dataSource?.TOTAL_POINTS > dataSource?.THRESHOLD && (
+                      <View style={st.mt_t10}>
+                        {socialStatus != '' && (
+                          <Text style={[st.tx14_s(darktheme), st.txAlignC]}>
+                            Status
+                          </Text>
+                        )}
+                        <Pressable
+                          onPress={() => {
+                            if (
+                              socialStatus != 'Inprocess' ||
+                              socialStatus == ''
+                            ) {
+                              navigation.navigate('MyCoins');
+                            }
+                          }}>
+                          <Text
+                            style={[
+                              st.tx14(darktheme),
+                              {
+                                color:
+                                  socialStatus != 'Inprocess' ||
+                                  socialStatus == ''
+                                    ? colors.green
+                                    : colors.danger,
+                                textDecorationLine:
+                                  socialStatus != 'Inprocess' ||
+                                  socialStatus == ''
+                                    ? 'underline'
+                                    : 'none',
+                              },
+                            ]}>
+                            {socialStatus}
+                          </Text>
+                        </Pressable>
+                      </View>
+                    )}
+                  </View>
                 </View>
               )}
             </TouchableOpacity>
+            <View style={st.mt_B}>
+              {socialStatus == 'Inprocess' && (
+                <Text style={[st.tx12]}>
+                  Note: your payment are under inprogress, it will be reflect in
+                  your account within 24 hours. you can reclaim again once after
+                  current process is completed.
+                </Text>
+              )}
+            </View>
           </Animated.View>
 
           <View>
@@ -451,38 +507,56 @@ export default function Coins({navigation}) {
                 <Text style={[st.tx16(darktheme)]}>{'Activity'}</Text>
                 <Text style={[st.tx16(darktheme)]}>{'Status'}</Text>
               </View>
-
               <View style={{borderBottomWidth: 1, borderColor: colors.grey}} />
-              {/* {actStatus.map((i,n)=>{ */}
-              <View style={[st.row, st.justify_S, st.mt_t10]}>
-                <View style={st.row}>
-                  <Text style={[st.tx16(darktheme)]}>{'Nuggets'}</Text>
-                  <Icon
-                    name="information-outline"
-                    size={25}
-                    color={colors.black}
-                    style={st.ml_15}
-                    onPress={() => {
-                      setInfoStatus(true);
-                      setTitle('Information');
-                      setSubtitle('Nuggets details showing here');
-                      setPopupMessageVisibility(!popupMessageVisibility);
-                    }}
-                  />
+              {actStatus?.length > 0 && (
+                <View>
+                  <View style={[st.row, st.justify_S, st.mt_t10]}>
+                    <View style={st.row}>
+                      <Text style={[st.tx16(darktheme)]}>{'Nuggets'}</Text>
+                    </View>
+                    <Entypo
+                      name={actStatus[0].NUGGETS == 1 ? 'check' : 'cross'}
+                      size={25}
+                      color={
+                        actStatus[0].NUGGETS == 1 ? colors.green : colors.danger
+                      }
+                    />
+                  </View>
+
+                  <View style={[st.row, st.justify_S, st.mt_t10]}>
+                    <Text style={[st.tx16(darktheme)]}>{'Session'}</Text>
+                    <Entypo
+                      name={actStatus[0].SESSION == 1 ? 'check' : 'cross'}
+                      size={25}
+                      color={
+                        actStatus[0].SESSION == 1 ? colors.green : colors.danger
+                      }
+                    />
+                  </View>
+
+                  <View style={[st.row, st.justify_S, st.mt_t10]}>
+                    <Text style={[st.tx16(darktheme)]}>{'Quiz'}</Text>
+                    <Entypo
+                      name={actStatus[0].QUIZ == 1 ? 'check' : 'cross'}
+                      size={25}
+                      color={
+                        actStatus[0].QUIZ == 1 ? colors.green : colors.danger
+                      }
+                    />
+                  </View>
+
+                  <View style={[st.row, st.justify_S, st.mt_t10]}>
+                    <Text style={[st.tx16(darktheme)]}>{'Report'}</Text>
+                    <Entypo
+                      name={actStatus[0].REPORT == 1 ? 'check' : 'cross'}
+                      size={25}
+                      color={
+                        actStatus[0].REPORT == 1 ? colors.green : colors.danger
+                      }
+                    />
+                  </View>
                 </View>
-                <Icon name="check" size={25} color={colors.green} />
-              </View>
-              {/* })} */}
-
-              <View style={[st.row, st.justify_S, st.mt_t10]}>
-                <Text style={[st.tx16(darktheme)]}>{'Session'}</Text>
-                <Icon name="check" size={25} color={colors.green} />
-              </View>
-
-              <View style={[st.row, st.justify_S, st.mt_t10]}>
-                <Text style={[st.tx16(darktheme)]}>{'Quiz'}</Text>
-                <Entypo name="cross" size={25} color={colors.danger} />
-              </View>
+              )}
             </View>
           </View>
         </View>

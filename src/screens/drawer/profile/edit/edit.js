@@ -15,6 +15,7 @@ import AccountInformation from './AccountInformation';
 import PersonalInformation from './PersonalInformation';
 import Header from '../../../../components/header/Header';
 import {colors} from '../../../../global/theme/Theme'
+import BioScreen from '../../../Auth/bio';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -45,6 +46,13 @@ function TabStack() {
         component={PersonalInformation}
         options={{
           tabBarLabel: 'Personal Information',
+        }} />
+         <Tab.Screen
+        name="BioScreen"
+        component={BioScreen}
+        initialParams={{data:true}}
+        options={{
+          tabBarLabel: 'Bio',
         }} />
     </Tab.Navigator>
   );

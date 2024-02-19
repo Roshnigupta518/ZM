@@ -91,6 +91,7 @@ export default function PersonalInformation({navigation}) {
       console.log({url, param});
       if (result.status == 200) {
         const tempdata = JSON.parse(result.data.Response);
+        console.log('get----------------dataprofile', tempdata)
         let data = null;
         for (let i = 0; tempdata.length > i; i++) {
           let obj = {

@@ -3,6 +3,7 @@ import React from 'react';
 import st from '../../../global/styles/styles';
 import {useDispatch, useSelector} from 'react-redux';
 import Header from '../../../components/header/Header';
+import Guideline from '../guidelines';
 
 const Terms = ({navigation}) => {
   const darktheme = useSelector(state => state.darktheme?.data);
@@ -453,12 +454,11 @@ const Terms = ({navigation}) => {
             taken up with the designated Grievance Officer as mentioned below.
             You have the right to appeal against any action on your complaint or
             Content to the Grievance Officer. The Grievance Officer shall
-            endeavor to resolve the same in an expeditious manner. Mrs. Vaishali Yogesh Patil,
-            Grievance Officer.
+            endeavor to resolve the same in an expeditious manner. Mrs. Vaishali
+            Yogesh Patil, Grievance Officer.
             {'\n'}Reach out to us on info@zeros.co.in or whatsup on 8904703490
             or Telegram group "Zeros users" in case of any queries.
             {'\n'}
-            
             {'\n'}A Grievance Redressal Process in accordance with applicable
             law has been created and is available on the Compliance page on our
             website.
@@ -486,6 +486,9 @@ const Terms = ({navigation}) => {
             acceptance of all such revised terms. You may request for earlier
             versions of these Terms by writing to info@zeros.co.in.
           </Text>
+        </View>
+        <View style={{marginTop: '-80%'}}>
+          <Guideline />
         </View>
       </ScrollView>
     </View>
