@@ -459,7 +459,7 @@ const EditPost = ({navigation, route}) => {
           modal
           open={open}
           date={date}
-          textColor={darktheme === 'dark' ? colors.black : colors.white}
+          textColor={colors.skyblue}
           onConfirm={dateResp => {
             setOpen(false);
             setDate(dateResp);

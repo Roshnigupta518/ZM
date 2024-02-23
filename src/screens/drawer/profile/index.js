@@ -40,6 +40,7 @@ const Profile = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [isloading, setIsLoading] = useState(true);
   const [metaData, setMetaData] = useState(null);
+  const [createPost, setCreatePost] = useState(false);
 
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
@@ -265,10 +266,26 @@ const Profile = ({navigation, route}) => {
     );
   };
 
+  // useEffect(() => {
+  //   getFeed();
+  //   console.log({login_data});
+  // }, []);
+
   useEffect(() => {
-    getFeed();
-    console.log({login_data});
-  }, []);
+    console.log('createPost value', login_data);
+    if (!createPost) {
+      // console.log('inside if createPost value', createPost);
+      const unsubscribe = navigation.addListener('focus', () => {
+        setOffset(0);
+        setPageSize(5);
+        getFeed();
+      });
+
+      return () => {
+        unsubscribe;
+      };
+    }
+  }, [navigation]);
 
   useEffect(() => {
     getProfileMeta();

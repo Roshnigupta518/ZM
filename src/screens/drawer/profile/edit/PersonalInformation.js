@@ -372,7 +372,7 @@ export default function PersonalInformation({navigation}) {
                 open={open}
                 date={date}
                 mode={'date'}
-                textColor={darktheme === 'dark' ? colors.black : colors.white}
+                textColor={colors.skyblue}
                 onConfirm={dateResp => {
                   setOpen(false);
                   setDate(dateResp);

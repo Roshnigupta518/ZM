@@ -29,6 +29,7 @@ import {calculatedPoll} from '../../../utils/helperfunctions';
 import {
   requestUserPermission,
   notificationListner,
+  requestNotificationPermission,
 } from '../../../pushNoti/NotificationService';
 import moment from 'moment';
 
@@ -70,10 +71,10 @@ export default function Dashboard({navigation}) {
   }, []);
 
   const handleAppStateChange = nextAppState => {
-    console.log('App State: ' + nextAppState);
+    // console.log('App State: ' + nextAppState);
     if (appState != nextAppState) {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        console.log('App State: ' + 'App has come to the foreground!');
+        // console.log('App State: ' + 'App has come to the foreground!');
         // alert(
         //   'App State: ' +
         //   'App has come to the foreground!'
@@ -320,6 +321,7 @@ export default function Dashboard({navigation}) {
 
   useEffect(() => {
     getNuggests();
+    requestNotificationPermission();
     requestUserPermission();
     notificationListner();
   }, []);

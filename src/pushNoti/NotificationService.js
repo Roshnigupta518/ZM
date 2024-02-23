@@ -1,5 +1,37 @@
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {PermissionsAndroid,ToastAndroid} from 'react-native';
+
+export async function requestNotificationPermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      {
+        title: 'Notification Permission',
+        message: 'Zeros needs access to send you notifications',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('Notification permission granted');
+    } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+      console.log(
+        'Notification permission denied with "never_ask_again" selected',
+      );
+      // Provide a message to the user explaining how to enable permissions manually
+      ToastAndroid.show(
+        'Please enable notification permissions in settings',
+        ToastAndroid.LONG,
+      );
+    } else {
+      console.log('Notification permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+}
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();

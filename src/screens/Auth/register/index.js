@@ -429,9 +429,7 @@ const RegisterScreen = ({props, navigation}) => {
                       setOpen(false);
                     }}
                     maximumDate={moment()}
-                    textColor={
-                      darktheme === 'dark' ? colors.black : colors.white
-                    }
+                    textColor={colors.skyblue}
                     // maximumDate={moment()?.subtract(5, 'years')}
                   />
                 </View>
