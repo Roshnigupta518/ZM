@@ -6,6 +6,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // Add me --- \/
   [FIRApp configure];
   self.moduleName = @"ZM";
   // You can add your custom initial props in the dictionary below.

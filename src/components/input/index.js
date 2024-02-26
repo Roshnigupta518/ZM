@@ -65,6 +65,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     fontSize: 12,
     alignItems: 'center',
+    height:50
   },
 });
 
