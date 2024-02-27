@@ -428,7 +428,7 @@ const RegisterScreen = ({props, navigation}) => {
                     onCancel={() => {
                       setOpen(false);
                     }}
-                    maximumDate={moment()}
+                    maximumDate={new Date()}
                     textColor={
                       darktheme === 'dark' ? colors.black : colors.white
                     }
@@ -483,6 +483,7 @@ const RegisterScreen = ({props, navigation}) => {
             <View style={styles.termsStyles}>
               <CheckBox
                 value={checked}
+                style={{marginRight:10}}
                 onValueChange={value => {
                   setChecked(value);
                   handleOnchange(value, 'Terms');
@@ -571,6 +572,6 @@ const styles = StyleSheet.create({
   termsStyles: {
     flexDirection: 'row',
     // alignItems: 'center',
-    marginRight: 15,
+    marginRight: 35,
   },
 });
