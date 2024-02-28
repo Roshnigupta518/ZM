@@ -448,7 +448,7 @@ export default function Post({navigation}) {
         <DatePicker
           modal
           open={open}
-          textColor={darktheme === 'dark' ? colors.black : colors.white}
+          textColor={colors.skyblue}
           date={date}
           onConfirm={dateResp => {
             setOpen(false);

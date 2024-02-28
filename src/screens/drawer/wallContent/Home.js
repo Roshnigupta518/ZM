@@ -9,6 +9,8 @@ import {
   Dimensions,
   ActivityIndicator,
   AppState,
+  Linking,
+  Platform,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import st from '../../../global/styles/styles';
@@ -21,16 +23,16 @@ import {useFocusEffect} from '@react-navigation/native';
 import FloatingButton from '../../../components/floatingbtn';
 import {useDispatch, useSelector} from 'react-redux';
 import {API} from '../../../utils/endpoints';
-import {postApi} from '../../../utils/apicalls/index';
+import {getApi, postApi} from '../../../utils/apicalls/index';
 import {icon_color} from '../../../utils/helperfunctions';
 import Toast from 'react-native-simple-toast';
-import {environment} from '../../../utils/constant';
-import {calculatedPoll} from '../../../utils/helperfunctions';
-// import {
-//   requestUserPermission,
-//   notificationListner,
-// } from '../../../pushNoti/NotificationService';
+import {
+  requestUserPermission,
+  notificationListner,
+  requestNotificationPermission,
+} from '../../../pushNoti/NotificationService';
 import moment from 'moment';
+import DeviceInfo from 'react-native-device-info';
 
 export default function Dashboard({navigation}) {
   const [data, setData] = useState([]);
@@ -70,16 +72,64 @@ export default function Dashboard({navigation}) {
   }, []);
 
   const handleAppStateChange = nextAppState => {
-    console.log('App State: ' + nextAppState);
+    // console.log('App State: ' + nextAppState);
     if (appState != nextAppState) {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        console.log('App State: ' + 'App has come to the foreground!');
+        // console.log('App State: ' + 'App has come to the foreground!');
         // alert(
         //   'App State: ' +
         //   'App has come to the foreground!'
         // );
       }
       setAppState(nextAppState);
+    }
+  };
+
+  const getVersionApiHandle = async () => {
+    try {
+      const url = API.GET_VERSION;
+      const result = await getApi(url);
+      console.log({getVerisonHandle: result.data});
+      const data = result.data;
+      return data[0]?.CURRENT_VERSION;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const checkForUpdates = async () => {
+    try {
+      const currentVersion = DeviceInfo.getVersion();
+      const latestVersion = await getVersionApiHandle();
+      console.log({currentVersion, latestVersion});
+      if (latestVersion && currentVersion < latestVersion) {
+        Alert.alert(
+          'Update Required',
+          'A new version of the app is available. Please update to continue using the app.',
+          [
+            {
+              text: 'Update Now',
+              onPress: () => {
+                if(Platform.OS != 'ios'){
+                Linking.openURL(
+                  'https://play.google.com/store/apps/details?id=com.zm',
+                );
+                }else{
+                  Linking.openURL('https://apps.apple.com/app/com.zeros');
+                }
+
+              },
+            },
+            {
+              text: 'Remind me later',
+              onPress: () => {},
+            },
+          ],
+          {cancelable: false},
+        );
+      }
+    } catch (error) {
+      console.error('Error checking for updates:', error);
     }
   };
 
@@ -316,12 +366,19 @@ export default function Dashboard({navigation}) {
         unsubscribe;
       };
     }
+
+    // const unsubscribeVersion = navigation.addListener('focus', () => {
+    //   checkForUpdates();
+    // });
+    // return unsubscribeVersion;
   }, [navigation]);
 
   useEffect(() => {
     getNuggests();
-    // requestUserPermission();
-    // notificationListner();
+    requestNotificationPermission();
+    requestUserPermission();
+    notificationListner();
+    checkForUpdates();
   }, []);
 
   const onRefresh = () => {

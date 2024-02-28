@@ -40,7 +40,7 @@ const ViewOtherProfile = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [isloading, setIsLoading] = useState(true);
   const [metaData, setMetaData] = useState(null);
-
+  const [createPost, setCreatePost] = useState(false);
   const darktheme = useSelector(state => state.darktheme?.data);
   const login_data = useSelector(state => state.login?.data);
   const scrollRef = useRef();
