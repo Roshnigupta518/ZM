@@ -110,7 +110,7 @@ export default function Dashboard({navigation}) {
             {
               text: 'Update Now',
               onPress: () => {
-                if(Platform.OS != 'ios'){
+                if(Platform.OS !== 'ios'){
                 Linking.openURL(
                   'https://play.google.com/store/apps/details?id=com.zm',
                 );
