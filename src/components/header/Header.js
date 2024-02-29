@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import st from '../../global/styles/styles';
@@ -52,8 +53,8 @@ const Header = ({
           borderBottomColor: '#ccc',
           borderBottomWidth: 0.5,
         }}>
-        <View style={[st.row, st.justify_S, st.align_C, st.pd20, st.mt_t10]}>
-          <TouchableOpacity onPress={onPress} style={{width: 30}}>
+        <View style={[st.row, st.justify_S, st.align_C, st.pd20, {marginTop:Platform.OS == 'android'?10:40}]}>
+          <TouchableOpacity onPress={onPress} style={{width: 50}}>
             <Icon name="arrow-left" size={25} color={icon_color(darktheme)} />
           </TouchableOpacity>
           <View>

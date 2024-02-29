@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, TouchableOpacity, StatusBar, Text} from 'react-native';
+import {View, Image, TouchableOpacity, StatusBar, Text, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {colors, images} from '../../global/theme/Theme';
@@ -50,7 +50,7 @@ const NavigationDrawerHeader = props => {
         style={[
           styles.row,
           {
-            paddingTop: 40,
+            paddingTop: Platform.OS == 'android' ? 40 :60,
             paddingBottom: 20,
             justifyContent: 'center',
             alignItems: 'center',

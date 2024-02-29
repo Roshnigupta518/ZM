@@ -57,7 +57,7 @@ const getfcmToken = async () => {
       }
     } catch (e) {
       console.log(e);
-      alert(e);
+      // alert(e);
     }
   }
 };

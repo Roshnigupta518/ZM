@@ -34,7 +34,7 @@ import Header from '../../../components/header/Header';
 import {icon_color} from '../../../utils/helperfunctions';
 import {setLogin} from '../../../redux/reducers/Login';
 import PopUpMessage from '../../../components/popup';
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const INITIAL_INPUT = {
@@ -231,29 +231,29 @@ const RegisterScreen = ({props, navigation}) => {
     );
   };
 
-  // const getfcmToken = async () => {
-  //   let fcmtoken = await AsyncStorage.getItem('token');
-  //   console.log(fcmtoken, 'The old token');
+  const getfcmToken = async () => {
+    let fcmtoken = await AsyncStorage.getItem('token');
+    console.log(fcmtoken, 'The old token');
 
-  //   if (!fcmtoken) {
-  //     try {
-  //       const fcmtoken = await messaging().getToken();
-  //       if (fcmtoken) {
-  //         console.log('new genrated token', fcmtoken);
-  //         setFcmToken(fcmtoken);
-  //         await AsyncStorage.setItem('token', fcmtoken);
-  //       }
-  //     } catch (e) {
-  //       console.log(e);
-  //       // alert(e);
-  //     }
-  //   } else {
-  //     setFcmToken(fcmtoken);
-  //   }
-  // };
+    if (!fcmtoken) {
+      try {
+        const fcmtoken = await messaging().getToken();
+        if (fcmtoken) {
+          console.log('new genrated token', fcmtoken);
+          setFcmToken(fcmtoken);
+          await AsyncStorage.setItem('token', fcmtoken);
+        }
+      } catch (e) {
+        console.log(e);
+        // alert(e);
+      }
+    } else {
+      setFcmToken(fcmtoken);
+    }
+  };
 
   useEffect(() => {
-    //getfcmToken();
+    getfcmToken();
   }, []);
 
   const handleSubmitButton = async () => {

@@ -15,7 +15,7 @@
 		7699B88040F8A987B510C191 /* libPods-ZM-ZMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ZM-ZMTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		DB3376E42ACF3ED000CF6F54 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = DB3376E32ACF3ED000CF6F54 /* Fonts */; };
-		DB80879D2ACD6FA0004882B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB80879C2ACD6FA0004882B0 /* GoogleService-Info.plist */; };
+		DB877D112B8FAB6800412AE4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB877D102B8FAB6800412AE4 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,7 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-ZM-ZMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZM-ZMTests.release.xcconfig"; path = "Target Support Files/Pods-ZM-ZMTests/Pods-ZM-ZMTests.release.xcconfig"; sourceTree = "<group>"; };
 		DB3376E22ACF3B7600CF6F54 /* ZM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ZM.entitlements; path = ZM/ZM.entitlements; sourceTree = "<group>"; };
 		DB3376E32ACF3ED000CF6F54 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
-		DB80879C2ACD6FA0004882B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB877D102B8FAB6800412AE4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../appleDocuments/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -91,11 +91,11 @@
 		13B07FAE1A68108700A75B9A /* ZM */ = {
 			isa = PBXGroup;
 			children = (
+				DB877D102B8FAB6800412AE4 /* GoogleService-Info.plist */,
 				DB3376E22ACF3B7600CF6F54 /* ZM.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				DB80879C2ACD6FA0004882B0 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -253,7 +253,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				DB80879D2ACD6FA0004882B0 /* GoogleService-Info.plist in Resources */,
+				DB877D112B8FAB6800412AE4 /* GoogleService-Info.plist in Resources */,
 				DB3376E42ACF3ED000CF6F54 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,11 +514,13 @@
 				DEVELOPMENT_TEAM = 7FKHDNQQ4P;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ZM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zeros;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -526,8 +528,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeros;
 				PRODUCT_NAME = ZM;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -542,11 +548,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7FKHDNQQ4P;
 				INFOPLIST_FILE = ZM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zeros;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -554,7 +562,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeros;
 				PRODUCT_NAME = ZM;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -628,10 +640,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -701,10 +710,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

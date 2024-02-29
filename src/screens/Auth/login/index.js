@@ -10,8 +10,9 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ImageBackground,
+  Platform,
 } from 'react-native';
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../../components/Loader';
 import Authbtn from '../../../components/Authbtn';
@@ -58,28 +59,28 @@ const LoginScreen = ({navigation}) => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
 
-  // const getfcmToken = async () => {
-  //   let fcmtoken = await AsyncStorage.getItem('token');
-  //   console.log(fcmtoken, 'The old token');
-  //   if (!fcmtoken) {
-  //     try {
-  //       const fcmtoken = await messaging().getToken();
-  //       if (fcmtoken) {
-  //         console.log('new genrated token', fcmtoken);
-  //         setFcmToken(fcmtoken);
-  //         await AsyncStorage.setItem('token', fcmtoken);
-  //       }
-  //     } catch (e) {
-  //       console.log(e);
-  //       alert(e);
-  //     }
-  //   } else {
-  //     setFcmToken(fcmtoken);
-  //   }
-  // };
+  const getfcmToken = async () => {
+    let fcmtoken = await AsyncStorage.getItem('token');
+    console.log(fcmtoken, 'The old token');
+    if (!fcmtoken) {
+      try {
+        const fcmtoken = await messaging().getToken();
+        if (fcmtoken) {
+          console.log('new genrated token', fcmtoken);
+          setFcmToken(fcmtoken);
+          await AsyncStorage.setItem('token', fcmtoken);
+        }
+      } catch (e) {
+        console.log(e);
+        // alert(e);
+      }
+    } else {
+      setFcmToken(fcmtoken);
+    }
+  };
 
   useEffect(() => {
-    //getfcmToken();
+    getfcmToken();
     console.log({darktheme});
   }, []);
 
@@ -190,6 +191,7 @@ const LoginScreen = ({navigation}) => {
                 width: '50%',
                 height: 100,
                 resizeMode: 'contain',
+                marginTop:Platform.OS == 'android'?0:20
               }}
             />
           </View>
