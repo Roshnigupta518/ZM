@@ -59,6 +59,13 @@ target 'ZM' do
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    
+    installer.pods_project.targets.each do |target|
+      if target.name == "React-Core-AccessibilityResources"
+        target.remove_from_project
+      end
+    end
+
     react_native_post_install(
       installer,
       config[:reactNativePath],
@@ -67,3 +74,5 @@ target 'ZM' do
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
+
+
